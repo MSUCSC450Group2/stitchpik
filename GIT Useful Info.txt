@@ -1,0 +1,18 @@
+http://rogerdudler.github.io/git-guide/
+http://code.tutsplus.com/articles/team-collaboration-with-github--net-29876
+http://sixrevisions.com/resources/git-tutorials-beginners/
+
+1) Dowload git and make a github account.
+2) Go to an area on your computer you will be working on the project
+3) Right click to open up options with the folder and select 'git bash'
+ - This will open up bash where you can type in commands such as 'git add <file>' 
+4) Put in 'git clone https://github.com/MSUCSC450Group2/KnittingWithPython.git'
+ - This will create a clone of the repository on your computer
+ - Note we will not be directly modifying all these (known as the master branch). We will be creating branches for individual features mostly.
+
+Local Repo
+git add <file>
+git commit -m "commit message for what you are adding"
+
+Remote Repo
+git push origin <branch/master>
