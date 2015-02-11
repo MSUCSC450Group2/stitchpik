@@ -1,3 +1,11 @@
 from django.contrib import admin
+from .models import SignUp
 
-# Register your models here.
+# Remember this is just for developers!
+
+class SignUpAdmin(admin.ModelAdmin):
+    class Meta:
+        model = SignUp
+
+admin.site.register(SignUp, SignUpAdmin)
+
