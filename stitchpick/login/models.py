@@ -2,7 +2,7 @@ from django.db import models
 
 
 # Create your models here.
-class SignUp(models.Model):
+class Login(models.Model):
     # can't be blank
     user_name = models.CharField(max_length=50, null=False, blank=False)
     #last_name = models.CharField(null=True, blank=True)

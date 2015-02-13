@@ -3,9 +3,9 @@ from .models import SignUp
 
 # Remember this is just for developers!
 
-class SignUpAdmin(admin.ModelAdmin):
+class LoginAdmin(admin.ModelAdmin):
     class Meta:
-        model = SignUp
+        model = Login
 
-admin.site.register(SignUp, SignUpAdmin)
+admin.site.register(Login, LoginAdmin)
 
