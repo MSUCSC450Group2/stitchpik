@@ -6,6 +6,9 @@ urlpatterns = patterns('',
     # url(r'^$', 'stitchpick.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^login/', include(login.urls)),
+    url(r'^admin/$', include(admin.site.urls)),
+    url(r'^login/$', include(login.urls)),
+    url(r'^logout/$', include(login.urls)),
+    url(r'^signup/$', include(login.urls)),
+    url(r'^signup/success/$', include(login.urls)),
 )

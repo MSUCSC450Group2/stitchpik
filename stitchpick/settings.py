@@ -62,8 +62,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'stitchpick',
         'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'PASSWORD': '',
+        'HOST': '',
         'PORT': '',
     }
 }
@@ -86,8 +86,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
 #Template location
 TEMPLATE_DIRS = (
-    
+    os.path.join(BASE_DIR, "templates"),
 )
 
