@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_repsonse
 from django.http import HttpResponse
+from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from login.forms import *
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_protect
 
 # Create your views here.
 def loginTry(request):
@@ -28,8 +30,8 @@ def loginTry(request):
 
 def signUp(request):
     if request.method == 'POST':
-        # Use created form.py 
-        form = RegistrationForm(request.POST)
+        # Use created forms.py 
+        form = SignupForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user(
             # Not sure if it checks uniqueness of user name
@@ -38,20 +40,20 @@ def signUp(request):
             email=form.cleaned_data['email'])
             HttpResponseRedirect('/signup/success.html')
         else:
-            form = RegistrationForm()
-        variables = RequestContext(request, { 'form':form})
+            form = SignupForm()
+        variables = RequestContext(request, { 'form':form })
         
         return render_to_response('signup/signup.html', variables)
 
 def signupSuccess(request):
-    return render_to_response('signup/success.html')
+    return render_to_response('/signup/success/')
 
 def logoutPage(request):
     logout(request)
     return HttpResponseRedirect('/')
 
 def home(request):
-    return render_to_response('index.html', {'user':request.user})
+    return render_to_response('/home/', { 'user':request.user })
 
 
 

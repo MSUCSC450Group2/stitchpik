@@ -61,8 +61,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'stitchpick',
-        'USER': 'postgres',
-        'PASSWORD': '',
+        'USER': 'admin',
+        'PASSWORD': 'Password',
         'HOST': '',
         'PORT': '',
     }
