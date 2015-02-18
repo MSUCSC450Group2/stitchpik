@@ -2,7 +2,7 @@ from django.db import models
 
 
 # Create your models here.
-class Login(models.Model):
+class LoginOld(models.Model):
     # can't be blank
     user_name = models.CharField(max_length=50, null=False, blank=False)
 
