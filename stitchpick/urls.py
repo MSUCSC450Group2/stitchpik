@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     url(r'^accounts/login/$', loginTry),
     url(r'^admin/$', include(admin.site.urls)), 
     url(r'^logout/$', logoutPage),
-    url(r'^registration/$', registration),
+    url(r'^registration/$', registration, name ='signup'),
     url(r'^registration/success/$', registrationSuccess),
     url(r'^home/$', home),
 )
