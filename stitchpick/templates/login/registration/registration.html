@@ -1,0 +1,25 @@
+{% extends "loginbase.html" %}
+{% block title %}User Registration{% endblock %}
+{% block head %}Sign up as a new user{% endblock %}
+{% block content %}
+	<form method="post" action=".">
+		{% csrf_token %}
+		<table border="0">
+			{% if form.username.errors %}
+			<tr><th></th><td>{{ form.username.errors }}</td></tr>
+			{% endif %}
+			<tr><th>Username:</th><td>{{ form.username }}</td></tr>
+                        {% if form.email.errors %}
+                        <tr><th></th><td>{{ form.email.errors }}</td></tr>
+                        {% endif %}
+                        <tr><th>Email:</th><td>{{ form.email }}</td></tr>
+                        {% if form.non_field_errors %}
+                        <tr><th></th><td>{{ form.non_field_errors }}</td></tr>
+                        {% endif %}
+                        <tr><th>Pasword:</th><td>{{ form.password1 }}</td></tr>
+			<tr><th>Re-enter Password:</th><td>{{ form.password2 }}</td></tr>
+		</table>
+		<input type="submit" value="Signup" />
+	</form>
+	<a href="/">Login</a>
+{% endblock %}
