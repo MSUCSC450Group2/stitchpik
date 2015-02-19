@@ -8,5 +8,8 @@ class Image(models.Model):
   user = models.ForeignKey(User)
   private = models.BooleanField()
 
+  def __str__(self):
+    return self.image_path
+
 class Meta:
   app_label='stitchpick'
