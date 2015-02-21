@@ -36,7 +36,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'stitchpick.login',
+    'login',
+	'image_manipulation',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -87,11 +88,17 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "stichpick", "static"),
+    os.path.join(BASE_DIR, "static"),
+	#os.path.join(BASE_DIR, "appname", "static"),
 )
 
 #Template location
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, "stitchpick", "templates"),
+    os.path.join(BASE_DIR, "login", "templates"),
+    os.path.join(BASE_DIR, "templates"),
+)
 
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+	'django.template.loaders.app_directories.Loader',
 )
