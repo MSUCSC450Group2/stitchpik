@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # databasee models for images
 # Image class instantiates as a row in the table
