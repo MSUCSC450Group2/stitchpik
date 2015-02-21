@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from .login.views import *
+from login.views import *
 #    ^ this might be need to be changed to point correctly
 
 urlpatterns = patterns('',

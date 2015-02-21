@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'login',
-	'image_manipulation',
+    'image_manipulation',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -98,6 +98,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
 )
 
+# allows template loading from main folder and app folders
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
 	'django.template.loaders.app_directories.Loader',
