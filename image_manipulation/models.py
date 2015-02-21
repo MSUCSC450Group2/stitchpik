@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 # Image class instantiates as a row in the table
 
 class Image(models.Model):
-  image_path = models.CharField()
+  image_path = models.CharField(max_length=1000)
   user = models.ForeignKey(User)
-  private = models.BooleanField()
+  private = models.BooleanField(default=True)
 
   def __str__(self):
     return self.image_path
