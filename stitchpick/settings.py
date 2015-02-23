@@ -93,7 +93,7 @@ STATIC_URL = '/static/'
 	#os.path.join(BASE_DIR, "appname", "static"),
 #)
 STATICFILES_DIRS = (
-     os.path.join(os.path.dirname(BASE_DIR), "src", "static", "static"),
+     os.path.join(os.path.dirname(BASE_DIR), "stitchpik", "static", "static"),
 )
 
 
@@ -102,13 +102,13 @@ STATICFILES_DIRS = (
 #    os.path.join(BASE_DIR, "login", "templates"),
 #    os.path.join(BASE_DIR, "templates"),
 #)
-TEMPLATE_DIRS=os.path.join(os.path.dirname(BASE_DIR), "src", "static", "templates"),
+TEMPLATE_DIRS=os.path.join(os.path.dirname(BASE_DIR), "stitchpik", "static", "templates"),
 if DEBUG:
   MEDIA_URL = '/media/'
-  STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR), "src", "static", "static-only")
-  MEDIA_ROOT=os.path.join(os.path.dirname(BASE_DIR), "src", "static", "media")
+  STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR), "stitchpik", "static", "static-only")
+  MEDIA_ROOT=os.path.join(os.path.dirname(BASE_DIR), "stitchpik", "static", "media")
   STATICFILES_DIRS=(
-    os.path.join(os.path.dirname(BASE_DIR), "src", "static", "static"),
+    os.path.join(os.path.dirname(BASE_DIR), "stitchpik", "static", "static"),
 )
 
 # allows template loading from main folder and app folders
