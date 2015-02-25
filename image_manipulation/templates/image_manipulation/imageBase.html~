@@ -1,0 +1,23 @@
+{% extends "imgManipBase.html" %}
+
+{% block head %}{% endblock %}
+{% block content %}
+<div>
+	<!--form -->
+	<form method="post" 
+</div>
+
+<div>
+	<div>
+		<!-- toolbar -->
+	</div>
+
+	<div>
+		<!-- image canvas -->
+	</div>
+</div>
+
+<div>
+	<!-- colors -->
+</div>
+{% extends "base.html" %}

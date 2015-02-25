@@ -13,4 +13,4 @@ class Image(models.Model):
     return self.image_path
 
 class Meta:
-  app_label='login'
+  app_label='stitchpick'

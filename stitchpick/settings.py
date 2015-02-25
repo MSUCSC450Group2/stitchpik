@@ -89,12 +89,14 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "image_manipulation", "static"),
 	#os.path.join(BASE_DIR, "appname", "static"),
 )
 
 #Template location
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "login", "templates"),
+    os.path.join(BASE_DIR, "image_manipulation", "templates"),
     os.path.join(BASE_DIR, "templates"),
 )
 

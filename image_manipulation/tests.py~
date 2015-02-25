@@ -9,7 +9,7 @@ class RegistrationTestCase(TestCase):
     def testAppRedirect(self):
         # calls redirect url
         response = Client().post('/application')
-        self.assertEqual(response.status_code, 301, "urls to /application not working")
+        self.assertEqual(response.status_code, 301)
         
 	
     def testActiveAppPage(self):
