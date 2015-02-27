@@ -1,0 +1,18 @@
+<!-- Header -->
+<div class="container-fluid">
+	<!-- -->
+	<div class="row">
+		<div class="col-xs-4 text-right">
+			LOGO HERE
+		</div>
+		<!-- -->
+		<div class="col-xs-4 text-center">
+			|  x x x  |
+		</div>
+		<!-- -->
+		<div class="col-xs-4 text-right">
+			Login | Signup
+		</div>
+	</div>
+</div>
+<!-- End Header -->

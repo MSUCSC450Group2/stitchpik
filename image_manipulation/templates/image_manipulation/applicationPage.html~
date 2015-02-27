@@ -16,7 +16,7 @@
 			<tr><th>Height (in)</th></tr>
 			<tr><td>{{ form.canvasWidth }}</td></tr>
                         <tr><th>Knit Type</th></tr>
-                        <tr><td>{{ form.knitType.as_p }}</td></tr>
+                        <tr><td>{{ form.knitType }}</td></tr>
 		</table>
 		<input type="submit" value="Render" />
 	</form>

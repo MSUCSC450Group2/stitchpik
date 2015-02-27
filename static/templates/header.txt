@@ -1,8 +1,0 @@
-To include base.html header and footer into your html file, copy and pase this:
-
-{% extends 'base.html' %}
-{% block content %}
-
-    Your code here
-
-{% endblock %} 

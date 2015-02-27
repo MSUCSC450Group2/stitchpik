@@ -106,7 +106,7 @@ TEMPLATE_DIRS = (
 if DEBUG:
     # "The STATICFILES_DIRS setting should "
     # django.core.exceptions.ImproperlyConfigured: The STATICFILES_DIRS setting should not contain the STATIC_ROOT setting
-    # as of now this having the else code here messes up loading of files in local
+    # as of now this having the else code here messes up loading of files
     pass
 else:
     MEDIA_URL = '/media/'
