@@ -20,7 +20,7 @@ def loginTry(request):
         if user.is_active:
             login(request, user)
             # redirect to success page
-            return render(request, 'login/index.html')
+            return render(request, 'login/loginSuccess.html')
         else:
             # return a 'disabled account'
             return render(request, 'login/registration/login.html')

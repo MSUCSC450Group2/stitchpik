@@ -1,0 +1,18 @@
+{% extends "login/loginbase.html" %}
+{% block title %}Login{% endblock %}
+{% block heading %}Login here{% endblock %}
+{% block content %}
+	{% if form.errors %}
+		<p>Your username and password didn't match. Please try again.</p>
+	{% endif %}
+	<form method="post" action=".">
+		{% csrf_token %}
+		<table border="0">
+			<tr><th><label for="id_username">Username: </label></th><td><input type="text" name="username" value="" size="50" /></td></tr>
+			<tr><th><label for="id_password">Password: </label></th><td><input type="password" name="password" value="" size="30" /></td></tr>
+		</table>
+		<input type="submit" value="Login" />
+		<input type="hidden" name="next" value="/index/" />
+	</form>
+	<a href="/registration">Sign up here</a>
+{% endblock %}

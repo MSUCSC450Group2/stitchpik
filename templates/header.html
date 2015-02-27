@@ -7,11 +7,17 @@
 		</div>
 		<!-- -->
 		<div class="col-xs-4 text-center">
-			|  x x x  |
+			| x x <a href="/application">To Application</a> x x |
 		</div>
 		<!-- -->
 		<div class="col-xs-4 text-right">
-			Login | Signup
+			{# check login authentication #}
+			{% if user.is_authenticated %}
+				User: {{ user.username }} | <a href="/logout/">Logout</a>
+			{% else %}
+				<a href="/accounts/login">Login</a> | <a href="/registration">Signup</a>
+			{% endif %}
+
 		</div>
 	</div>
 </div>
