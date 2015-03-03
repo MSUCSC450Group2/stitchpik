@@ -24,7 +24,7 @@
     margin: 0px;
 }
 
-#id_knitType {
+#id_numberOfColors {
     list-style-type: none;
     padding: 0px;
     margin: 0px;

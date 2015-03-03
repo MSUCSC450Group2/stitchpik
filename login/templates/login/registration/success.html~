@@ -8,7 +8,7 @@
 			</div>
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <button onclick="location.href='/accounts/login'" class="btn btn-default btn-lg">To Login Page</button>
+                    <button onclick="location.href='/'" class="btn btn-default btn-lg">To Login Page</button>
                 </div>
             </div>
 		</div>

@@ -2,17 +2,33 @@
 {% block title %}Login{% endblock %}
 {% block heading %}Login here{% endblock %}
 {% block content %}
-	{% if form.errors %}
-		<p>Your username and password didn't match. Please try again.</p>
-	{% endif %}
-	<form method="post" action=".">
-		{% csrf_token %}
-		<table border="0">
-			<tr><th><label for="id_username">Username: </label></th><td><input type="text" name="username" value="" size="50" /></td></tr>
-			<tr><th><label for="id_password">Password: </label></th><td><input type="password" name="password" value="" size="30" /></td></tr>
-		</table>
-		<input type="submit" value="Login" />
-		<input type="hidden" name="next" value="/index/" />
-	</form>
-	<a href="/registration">Sign up here</a>
+    <div class="container loginContainer">
+        <form method="post" action="." class="form-signin">
+            <h2 class="form-signin-heading">Please sign in</h2>
+
+	        {% if form.errors %}		
+		        <div class="alert alert-danger" role="alert">
+				        <span class="glyphicon glyphicon-exclamation-sign"></span>
+                        <span class="sr-only">Error</span>
+                        Your username and password didn't match. Please try again.
+		        </div>
+	        {% endif %}
+
+            {% csrf_token %}
+            <label for="id_username" class="">Username</label>
+            <input type="text" name="username" value="" size="30" placeholder="John" class="form-control" required autofocus/>
+            
+            <label for="id_password" class="">Password</label>
+            <input type="password" name="password" value="" size="30" placeholder="...."  class="form-control" required/>
+
+            <div class="control-group">
+            <button type="submit" class="btn btn-lg btn-primary btn-block" value="Login" />Login</button>
+            <input type="hidden" name="next" value="/index/" />
+            </div>
+        </form>   
+
+        <div class="row">
+            <div class="col-xs-12"><button onclick="location.href='/registration/'" class="btn btn-default btn-lg btn-block">Sign up here</button></div>
+		</div>
+	</div>
 {% endblock %}
