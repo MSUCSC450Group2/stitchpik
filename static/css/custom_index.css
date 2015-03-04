@@ -1,31 +1,74 @@
+@import url(http://fonts.googleapis.com/css?family=Lemon);
 
-.loginContainer {
-    width: 50%;
-    max-width: 300px;
-    min-width: 150px;
+nav {	/*navigation bar*/
+  font-size: 1.5em;
 }
 
-/* adds space between bootstrap implemented buttons */
-.btn {
-    margin-bottom: 5px;
-    margin-top: 5px;
+#header {
+  margin-top: -30px;
+  margin-bottom: -30px;
+} 
+
+h1 {
+  margin-top: -10pt;
+  padding-bottom: 50px;
+  color: #FFFFFF;
+  text-align: center;
 }
 
-/* take bullet point from auto generated django forms */
-.errorlist {
-    list-style-type: none;
-    padding: 0px;
-    margin: 0px;
+body {
+ /*background-color: #221EC2;*/
+ background-color: #000000;
+ margin-top: 120px;
+ margin-left: 80px;
+ margin-right: 80px;
+ font-family: Lemon, Serif;
 }
 
-#id_guageSize {
-    list-style-type: none;
-    padding: 0px;
-    margin: 0px;
+.col-sm-8 {	/*left side*/
+  background: url('/static/img/ship.png');
+  height: 576px;
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 
-#id_knitType {
-    list-style-type: none;
-    padding: 0px;
-    margin: 0px;
+.col-sm-4 {	/*right side*/
+  background-color: #8585AD;
+  height: 576px;
+  border: 10px;
+  /*border-left: solid black 10px;*/
 }
+
+.btn {	/*button*/
+  /*background-color: #221EC2;*/
+  margin-left: 130px;
+}
+
+#index_img {
+  width: 350px;
+  height: 250px;
+  box-shadow: 20px 20px 5px #888888;
+  border: solid #260000 20px;
+  border-style: ridge;
+}
+
+#image {
+  padding-top: 30px;
+  padding-left: 10px;
+}					
+
+#footer {
+  padding-top: 50px;
+  color: #FFFFFF;
+}
+
+
+
+
+
+
+
+
+
+
+
