@@ -1,4 +1,75 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends "base.html" %}
+{% block title %}index page{% endblock %}
 
+{% block style %}<link href="/static/css/custom_index.css" rel="stylesheet" /> {% endblock %} <!--YOUR CUSTOM CSS STYLE-->
+
+{% block content %}
+<!-- NAVIGATION BAR
+<div class="container">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">L O G O</a>
+    </div>
+    
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+          
+	<li><a href='{% url "index" %}'>HOME</a></li>
+        <li><a href='{% url "login" %}'>LOGIN</a></li>
+        <li><a href='{% url "signup" %}'>REGISTER</a></li>
+        <li><a href='{% url "application" %}'>APPLICATION</a></li>
+            
+       </ul>
+    </div>
+      
+  </nav>
+</div>-->
+
+
+<div id="header">
+  <h1> Knit with...</h1>
+</div>
+
+
+<div class="container-fluid">    
+  <div class="row">
+  
+    <div class="col-sm-8"> 
+      <p id="image"><img id="index_img" src='/static/img/ship.png' alt="Ship"></p>
+    </div><!--column -->
+	  
+    <div class="col-sm-4">
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+      <p><a class="btn btn-primary btn-lg" href='{% url "signup" %}' role="button">Join us now &raquo;</a></p>
+    </div><!--column -->
+	
+  </div><!--row -->
+</div><!--container-fluid-->   
+
+
+<div id="footer">
+  <hr>
+  <footer>
+    <p>&copy; FOOTER</p>       <!-- edit footer! -->
+  </footer>
+</div><!--footer-->														
+	
 {% endblock %}
+			
