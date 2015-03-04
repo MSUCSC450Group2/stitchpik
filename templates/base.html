@@ -1,5 +1,5 @@
-
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -19,8 +19,8 @@
     <link href="{% static "/static/css/bootstrap.css" %}" rel="stylesheet">
 
     <!-- Custom styles for your HTML file -->
-    <!--<link href="{% static "/static/css/THE_NAME_OF_YOUR_CUSTOM_CSS_FILE.css" %}" rel="stylesheet">--> <!-- CHANGE IT IF YOU USE CUSTOM STYLES!!! -->
-    <link href="{% static "/static/css/custom_index.css" %}" rel="stylesheet" />
+    
+    {% block style %}{% endblock %}  <!--YOUR CUSTOM CSS STYLE-->
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="{% static "../../assets/js/ie8-responsive-file-warning.js" %}"></script><![endif]-->
@@ -32,7 +32,30 @@
       <script src="{% static "https://oss.maxcdn.com/respond/1.4.2/respond.min.js" %}"></script>
     <![endif]-->
 
-{% include "header.html" %}
+    <!--NAVBAR-->
+<div class="container">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">L O G O</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+          
+	<li><a href='{% url "index" %}'>HOME</a></li>
+        <li><a href='{% url "login" %}'>LOGIN</a></li>
+        <li><a href='{% url "signup" %}'>REGISTER</a></li>
+        <li><a href='{% url "application" %}'>APPLICATION</a></li>
+            
+       </ul>
+    </div>
+      
+  </nav>
+</div> 
   
 {% block content %}
 
