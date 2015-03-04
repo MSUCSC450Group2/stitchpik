@@ -2,52 +2,41 @@
 {% block title %}Application{% endblock %}
 {% block head %}{% endblock %}
 {% block content %}
-<div>
-	<!--form -->
-	<form method="post" action=".">
-		{% csrf_token %}
-		<table border="0">
-			<tr><th>Number of Colors</th><tr>
-			<tr><td>{{ form.numberOfColors }}</td></tr>
-			<tr><th>Guage Size</th></tr>
-			<tr><td>{{ form.guageSize }}</td></tr>
-                        <tr><th>Width (in)</th></tr>
-                        <tr><td>{{ form.canvasLength }}</td></tr>
-			<tr><th>Height (in)</th></tr>
-			<tr><td>{{ form.canvasWidth }}</td></tr>
-                        <tr><th>Knit Type</th></tr>
-                        <tr><td>{{ form.knitType }}</td></tr>
-		</table>
-		<input type="submit" value="Render" />
-	</form>
+<hr>
+
+<div class="container-fluid">
+  <div class="">
+    <!-- image canvas -->
+    <div>
+      {# will have django img var here #}
+      {% load staticfiles %}
+      <img src="{% static image %}" alt="image" /></img>
+    </div>
+  </div>
+
+  <hr>
+  <div class="well">
+    <form method="post" action=".">
+      {% csrf_token %}
+
+      <div class="">
+        <h4>Number of Colors</h4>
+        {{ form.numberOfColors }}
+        <h4>Guage Size</h4>
+        {{ form.guageSize }}
+        <h4>Width (in)</h4>
+        {{ form.canvasLength }}
+        <h4>Height (in)</h4>
+        {{ form.canvasWidth }}
+        <h4>Knit Type</h4>
+        {{ form.knitType }}
+      </div>
+
+      <hr>
+      <input type="submit" class="btn btn-primary" value="Render" />
+    </form>
+  </div>
+
 </div>
 
-<div>
-	<div>
-		<!-- top toolbar -->
-		<div>
-			toolbar
-		</div>
-	</div>
-
-	<div>
-		<!-- image canvas -->
-		<div>
-			{# will have django img var here #}
-			{% load staticfiles %}
-			<img src="{% static image %}" alt="image" />
-		</div>
-	</div>
-</div>
-
-<div>
-	<!-- colors -->
-	<div>
-		{# will have django colors vars here #}
-		<ul>
-			<li>Blue</li>
-			<li>Red</li>
-		</ul>
-	</div>
-</div>
 {% endblock %}

@@ -19,7 +19,7 @@ class ManipulateImageForm(forms.Form):
     numberOfColors = forms.IntegerField(max_value=32, min_value=2, label='Number of Colors', initial='8')
 
     # 
-    guageSize = forms.ChoiceField(widget=forms.RadioSelect, choices=GUAGE_SIZES, label="Guage Size", initial='8')
+    guageSize = forms.ChoiceField(choices=GUAGE_SIZES, label="Guage Size", initial='8')
 
     # in inches
     canvasLength = forms.DecimalField(label="Canvas Length (in)")
