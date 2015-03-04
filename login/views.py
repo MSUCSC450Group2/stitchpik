@@ -7,6 +7,12 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+def index(request):
+  return render_to_response("index.html", locals(),
+			    context_instance = RequestContext(request))
+
+
 def loginTry(request):
     
     if request.method == 'POST' and request.POST.get('username', False) != False:
@@ -52,9 +58,9 @@ def logoutPage(request):
     logout(request)
     return HttpResponseRedirect('/')
 
-@login_required
-def home(request):
-    return render_to_response('login/index.html', { 'user':request.user })
+#@login_required
+#def home(request):
+#    return render_to_response('login/index.html', { 'user':request.user })
 
 
 
