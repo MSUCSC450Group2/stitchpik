@@ -1,5 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Lemon);
 
+
 nav {	/*navigation bar*/
   font-size: 1.5em;
 }
@@ -17,8 +18,8 @@ h1 {
 }
 
 body {
- /*background-color: #221EC2;*/
- background-color: #000000;
+ background-color: #181F7D;
+ /*background-color: #000000;*/
  margin-top: 120px;
  margin-left: 80px;
  margin-right: 80px;
@@ -40,7 +41,8 @@ body {
 }
 
 .btn {	/*button*/
-  /*background-color: #221EC2;*/
+  background-color: #101010;
+  color: gray;
   margin-left: 130px;
 }
 
