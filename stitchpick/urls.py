@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from login.views import *
 from image_manipulation.views import *
+admin.autodiscover()
 #    ^ this might be need to be changed to point correctly
 
 urlpatterns = patterns('',
@@ -18,5 +19,12 @@ urlpatterns = patterns('',
     url(r'^registration/$', registration, name ='signup'),
     url(r'^registration/success/$', registrationSuccess),
     url(r'^application/$', fetchApplication, name='application'),
-    #url(r'^home/$', home),
+    
+    # Change Password URLs:
+    url(r'^accounts/password_change/$', 
+        'django.contrib.auth.views.password_change', 
+        {'post_change_redirect' : '/accounts/password_change/done/'}, ), 
+    url(r'^accounts/password_change/done/$', 
+        'django.contrib.auth.views.password_change_done',{'template_name': 'done.html'}),
+    
 )
