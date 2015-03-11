@@ -4,20 +4,25 @@
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 	<span class="sr-only">Toggle navigation</span>
-	<span class="icon-bar"></span>
+        <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">L O G O</a>
+      <a class="navbar-brand" href="{% url 'index' %}">L O G O</a>
     </div>
+    
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
           
 	<li><a href='{% url "index" %}'>HOME</a></li>
-        <li><a href='{% url "login" %}'>LOGIN</a></li>
-        <li><a href='{% url "signup" %}'>REGISTER</a></li>
         <li><a href='{% url "application" %}'>APPLICATION</a></li>
-            
+        {% if user.is_authenticated %}
+            <li>{{ user.name }}</li>
+			<li><a href="{% url 'logout' %}">LOGOUT</a></li>
+		{% else %}
+			<li><a href='{% url "login" %}'>LOGIN</a></li>
+            <li><a href='{% url "signup" %}'>REGISTER</a></li>
+		{% endif %}
        </ul>
     </div>
       
   </nav>
-</div> 
+</div>
