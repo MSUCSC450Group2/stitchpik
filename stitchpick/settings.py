@@ -145,10 +145,14 @@ if DEBUG:
    DEFAULT_FROM_EMAIL = 'testing@example.com'
    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #else:
-#EMAIL_HOST = ''
-#EMAIL_HOST_PASSWORD = ''
-#EMAIL_HOST_USER = ''
-#EMAIL_PORT = ''
-#EMAIL_USE_TLS = True (or EMAIL_USE_SSL)
-#DEFAULT_FROM_EMAIL = ''
-#SERVER_EMAIL = ''
+	#EMAIL_HOST = ''
+	#EMAIL_HOST_PASSWORD = ''
+	#EMAIL_HOST_USER = ''
+	#EMAIL_PORT = ''
+	#EMAIL_USE_TLS = True (or EMAIL_USE_SSL)
+	#DEFAULT_FROM_EMAIL = ''
+	#SERVER_EMAIL = ''
+
+# Session data
+# Uses 
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
