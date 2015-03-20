@@ -21,26 +21,29 @@ def fetchApplication(request):
             
       pic = Picture('image_manipulation/static/image_manipulation/img/bubblegum.jpg')
       resultImage = 'image_manipulation/static/image_manipulation/img/bubblegum2.jpg'
-      #currently runs properly every time, if image is not done processing when page loads the image is not displayed.
-      #can possibly fix with adding a delayed load to the image through jquery or similar.
       pic.pixelate(numColors, pixSize, resultImage)
 
       # Add variables to session
       request.session.set_expiry(31536000) # 1 year
-			
-			# Add logic to specify picture id
-			request.session['picId'] = {'numberOfColors':form.cleaned_data['numberOfColors'], 'guageSize':form.cleaned_data['guageSize'], 'canvasLength':form.cleaned_data['canvasLength'],'canvasWidth':form.cleaned_data['canvasWidth'], 'knitType':form.cleaned_data['knitType']}
+      
+      # save in dictionary for savedForm
+      request.session['savedFormOptions'] = {'numberOfColors':int(form.cleaned_data['numberOfColors']), 'guageSize':int(form.cleaned_data['guageSize']), 'canvasLength':int(form.cleaned_data['canvasLength']),'canvasWidth':int(form.cleaned_data['canvasWidth']), 'knitType':int(form.cleaned_data['knitType'])}
 
+      # save form variables
       variables = RequestContext(request, { 'form':form, 'image':'image_manipulation/img/bubblegum2.jpg'})
       return render_to_response('image_manipulation/applicationPage.html', variables)
+  else:
+    # Check for session data and load it
+    if request.session.get('savedFormOptions'):
+      savedOptions = request.session.get('savedFormOptions')      
+
+      form = ManipulateImageForm({'numberOfColors':int(savedOptions.get('numberOfColors')),'guageSize':int(savedOptions.get('guageSize')),'canvasLength':int(savedOptions.get('canvasLength')),'canvasWidth':int(savedOptions.get('canvasWidth')),'knitType':int(savedOptions.get('knitType'))})
+
     else:
       form = ManipulateImageForm()
-		
-			# Check if there is session data for the picture
-			if request.session.get('picId'):
-				form = ManipulateImageForm({'numberOfColors':
 
     variables = RequestContext(request, { 'form':form, 'image':'image_manipulation/img/bubblegum.jpg'})
         
     return render_to_response('image_manipulation/applicationPage.html', variables)     
+
 
