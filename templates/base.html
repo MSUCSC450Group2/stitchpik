@@ -40,11 +40,15 @@
     <ul class="nav navbar-nav">
         <li><a href="#"><img id="logo_small" src='/static/img/logo_small.png' alt="logo"></a></li>  
 	<li><a href='{% url "index" %}'>HOME</a></li>
-        <li><a href='{% url "login" %}'>LOGIN</a></li>
-        <li><a href='{% url "signup" %}'>REGISTER</a></li>
         <li><a href='{% url "application" %}'>APPLICATION</a></li>
-            
-    </ul>
+		{% if user.is_authenticated %}
+            <li>{{ user.username }}</li>
+			<li><a href="{% url 'logout' %}">LOGOUT</a></li>
+		{% else %}
+			<li><a href='{% url "login" %}'>LOGIN</a></li>
+            <li><a href='{% url "signup" %}'>REGISTER</a></li>
+		{% endif %}
+        </ul>
   </div>
 </nav>
     
