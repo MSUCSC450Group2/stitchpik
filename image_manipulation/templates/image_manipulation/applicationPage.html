@@ -2,41 +2,59 @@
 {% block title %}Application{% endblock %}
 {% block head %}{% endblock %}
 {% block content %}
-<hr>
 
-<div class="container-fluid">
-  <div class="">
-    <!-- image canvas -->
-    <div>
-      {# will have django img var here #}
-      {% load staticfiles %}
-      <img class="delay" src="{% static image %}" alt="image" /></img>
-    </div>
-  </div>
 
-  <hr>
-  <div class="well">
-    <form method="post" action=".">
-      {% csrf_token %}
+<div class="container-fluid" id="app">
 
-      <div class="">
-        <h4>Number of Colors</h4>
-        {{ form.numberOfColors }}
-        <h4>Guage Size</h4>
-        {{ form.guageSize }}
-        <h4>Width (in)</h4>
-        {{ form.canvasLength }}
-        <h4>Height (in)</h4>
-        {{ form.canvasWidth }}
-        <h4>Knit Type</h4>
-        {{ form.knitType }}
+  <div class="row">
+
+    <div class="col-sm-3">
+	  <div class="">
+	<div class="well">
+	  <form method="post" action=".">
+	    {% csrf_token %}
+
+	    <div class="">
+	      <h4>Number of Colors</h4>
+	      {{ form.numberOfColors }}
+	      <h4>Guage Size</h4>
+	      {{ form.guageSize }}
+	      <h4>Width (in)</h4>
+	      {{ form.canvasLength }}
+	      <h4>Height (in)</h4>
+	      {{ form.canvasWidth }}
+	      <h4>Knit Type</h4>
+	      {{ form.knitType }}
+	    </div>
+
+	   
+	    <input type="submit" class="btn btn-primary" value="Render" />
+	  </form>
+	</div>
+	  </div>
       </div>
 
-      <hr>
-      <input type="submit" class="btn btn-primary" value="Render" />
-    </form>
-  </div>
-
-</div>
+  
+      <div class="col-sm-6">
+	<div class="">
+	<!-- image canvas -->
+	  <div>
+	    {# will have django img var here #}
+	    {% load staticfiles %}
+	    <img class="delay" src="{% static image %}" alt="image" /></img>
+	  </div>
+	</div>
+      </div>
+      
+      
+      <div class="col-sm-3">
+      
+      </div>
+      
+  </div><!--row-->
+   
+   
+</div><!--container-->
+			      
 
 {% endblock %}
