@@ -81,6 +81,7 @@ nav {	/*navigation bar*/
 }
 
 .form-row li{
+  width: 550px;
   color: #A94442;
   background-color: #F2DEDE;
 }
@@ -105,6 +106,10 @@ nav {	/*navigation bar*/
   margin-top: 200px;
   font-size: 18px;
   margin-left: 200px;
+}
+
+.alert.alert-danger{
+  width: 590px;
 }
 
 /*application page*/
