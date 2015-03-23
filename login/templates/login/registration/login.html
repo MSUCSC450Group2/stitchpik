@@ -4,7 +4,7 @@
 {% block content %}
     <div class="container loginContainer">
         <form method="post" action="." class="form-signin">
-            <h2 class="form-signin-heading">Please sign in</h2>
+            <h4 class="form-signin-heading">Please sign in</h4>
 
 	        {% if form.errors %}		
 		        <div class="alert alert-danger" role="alert">
@@ -22,7 +22,7 @@
             <input type="password" name="password" value="" size="30" placeholder="...."  class="form-control" required/>
 
             <div class="control-group">
-            <button type="submit" class="btn btn-lg btn-primary btn-block" value="Login" />Login</button>
+            <p id="btn"><button type="submit" class="btn btn-lg btn-primary btn-block" value="Login" />Login</button></p>
             <input type="hidden" name="next" value="/index/" />
             </div>
         </form>   
