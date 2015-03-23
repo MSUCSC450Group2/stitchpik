@@ -5,6 +5,10 @@ nav {	/*navigation bar*/
   font-size: 1.5em;
 }
 
+.navbar.navbar-inverse.navbar-fixed-top{
+  background-color: #181F7D;
+}
+
 #header {
   margin-top: -30px;
   margin-bottom: -30px;
@@ -18,7 +22,7 @@ h1 {
 }
 
 body {
- background-color: #181F7D;
+ background-color: #3333CC;/*#181F7D;*/
  /*background-color: #000000;*/
  margin-top: 120px;
  margin-left: 80px;
@@ -41,7 +45,7 @@ body {
 }
 
 .btn {	/*button*/
-  background-color: #101010;
+  background-color: #141452;
   color: gray;
   margin-left: 130px;
 }
