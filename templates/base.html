@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!--<link rel="icon" href="/static/img/OUR_FAVICON_IMAGE">--><!-- CHANGE IT!!! -->
+    <link rel="icon" href="/static/img/favicon.png"><!-- CHANGE IT!!! -->
 
     <title>Stitchpik | {% block title %}{% endblock %}</title>
 
@@ -33,7 +33,7 @@
     <![endif]-->
   </head>
   <body>
-    <!--NAVBAR-->
+    <!--NAVBAR
 <nav class="navbar navbar-default navbar-static-top">
   <div class="container-fluid" id="nav">
     
@@ -50,7 +50,32 @@
 		{% endif %}
         </ul>
   </div>
-</nav>
+</nav>-->
+    
+<div class="container">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"></a>
+    </div>
+    
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="#"><img id="logo" src='/static/img/logo_s.png' alt="logo"></a></li>
+	<li><a href='{% url "index" %}'>HOME</a></li>
+        <li><a href='{% url "login" %}'>LOGIN</a></li>
+        <li><a href='{% url "signup" %}'>REGISTER</a></li>
+        <li><a href='{% url "application" %}'>APPLICATION</a></li>
+            
+       </ul>
+    </div>
+      
+  </nav>
+</div>
     
     
     
