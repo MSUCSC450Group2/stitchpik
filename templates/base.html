@@ -33,44 +33,30 @@
     <![endif]-->
   </head>
   <body>
-    <!--NAVBAR
-<nav class="navbar navbar-default navbar-static-top">
-  <div class="container-fluid" id="nav">
-    
-    <ul class="nav navbar-nav">
-        <li><a href="#"><img id="logo_small" src='/static/img/logo_small.png' alt="logo"></a></li>  
-	<li><a href='{% url "index" %}'>HOME</a></li>
-        <li><a href='{% url "application" %}'>APPLICATION</a></li>
-		{% if user.is_authenticated %}
-            <li>{{ user.username }}</li>
-			<li><a href="{% url 'logout' %}">LOGOUT</a></li>
-		{% else %}
-			<li><a href='{% url "login" %}'>LOGIN</a></li>
-            <li><a href='{% url "signup" %}'>REGISTER</a></li>
-		{% endif %}
-        </ul>
-  </div>
-</nav>-->
     
 <div class="container">
   <nav class="navbar navbar-inverse navbar-fixed-top">
       
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-	<span class="sr-only">Toggle navigation</span>
+        <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#"></a>
     </div>
-    
+   
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-	<li><a href="#"><img id="logo" src='/static/img/logo_s.png' alt="logo"></a></li>
-	<li><a href='{% url "index" %}'>HOME</a></li>
-        <li><a href='{% url "login" %}'>LOGIN</a></li>
-        <li><a href='{% url "signup" %}'>REGISTER</a></li>
-        <li><a href='{% url "application" %}'>APPLICATION</a></li>
-            
+        <li><a href="#"><img id="logo" src='/static/img/logo_s.png' alt="logo"></a></li>
+        <li><a href='{% url "index" %}'>HOME</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="#">User: {{ user.username }}</a></li>
+          <li><a href="/logout/">LOGOUT</a></li>
+        {% else %}
+          <li><a href='{% url "login" %}'>LOGIN</a></li>
+          <li><a href='{% url "signup" %}'>REGISTER</a></li>
+        {% endif %}
+        <li><a href='{% url "application" %}'>APPLICATION</a></li>            
        </ul>
     </div>
       
