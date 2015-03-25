@@ -23,7 +23,7 @@ def imageUpload(request):
     return imgForm  
    
 def saveFormDataToSession(form, request):
-    request.session.set_expiry(31536000) # 1 year
+    request.session.set_expiry(31536000) # one year
     request.session['savedFormOptions'] = {
         'numberOfColors': int(form.cleaned_data['numberOfColors']), 
         'guageSize': int(form.cleaned_data['guageSize']), 
