@@ -22,7 +22,7 @@ def imageUpload(request):
         imgForm = ImageUploadForm()
     return imgForm  
    
-def saveFormDataToSession(request):
+def saveFormDataToSession(form, request):
     request.session.set_expiry(31536000) # 1 year
     request.session['savedFormOptions'] = {
         'numberOfColors': int(form.cleaned_data['numberOfColors']), 
@@ -45,7 +45,7 @@ def savedSessionData(savedOptions):
            )
 
 def fetchApplication(request):
-    inputImage = 'image_manipulation/static/image_manipulation/img/bubblegum.jpg'
+    inputImage = 'image_manipulation/img/bubblegum.jpg'
     resultImage = 'image_manipulation/static/image_manipulation/img/bubblegum2.jpg'
     requestImage = inputImage
     if request.method == 'POST':
@@ -54,9 +54,9 @@ def fetchApplication(request):
             requestImage = resultImage
             numColors = form.cleaned_data['numberOfColors']
             pixSize = 8
-            pic = Picture(inputImage)
+            pic = Picture('image_manipulation/static/' + inputImage)
             pic.pixelate(numColors, pixSize, resultImage)
-            saveFormDataToSession(request)
+            saveFormDataToSession(form, request)
     else:
         form = ManipulateImageForm()
         if isSavedSessionData(request):

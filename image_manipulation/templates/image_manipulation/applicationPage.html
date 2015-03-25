@@ -10,7 +10,7 @@
     <div>
       {# will have django img var here #}
       {% load staticfiles %}
-      <img class="delay" src="{% static image %}" alt="image" /></img>
+      <img class="delay" src="{% static image %}" alt="image" />
     </div>
   </div>
 
@@ -43,6 +43,7 @@
         <h4>Knit Type</h4>
         {{ form.knitType }}
       </div>
+      <input type="submit" class="btn btn-primary" value="Render" />
     </form>
   </div>
 </div>
