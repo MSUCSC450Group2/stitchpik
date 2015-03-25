@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'stitchpick',
     'login',
     'image_manipulation',
 )
@@ -54,7 +55,6 @@ ROOT_URLCONF = 'stitchpick.urls'
 
 WSGI_APPLICATION = 'stitchpick.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
@@ -62,8 +62,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'stitchpick',
-        'USER': 'root',
-        'PASSWORD': 'password',
+        'USER': 'postgres',
+        'PASSWORD': 'x0password0x',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -102,7 +102,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "image_manipulation", "static"),
-	#os.path.join(BASE_DIR, "appname", "static"),
 )
 
 
@@ -126,7 +125,6 @@ else:
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, "static"),
         os.path.join(BASE_DIR, "image_manipulation", "static"),
-	#os.path.join(BASE_DIR, "appname", "static"),
     )
 
 
@@ -134,7 +132,7 @@ else:
 # allows template loading from main folder and app folders
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
-	'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.app_directories.Loader',
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -144,11 +142,3 @@ if DEBUG:
    EMAIL_USE_TLS = False
    DEFAULT_FROM_EMAIL = 'testing@example.com'
    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-#else:
-#EMAIL_HOST = ''
-#EMAIL_HOST_PASSWORD = ''
-#EMAIL_HOST_USER = ''
-#EMAIL_PORT = ''
-#EMAIL_USE_TLS = True (or EMAIL_USE_SSL)
-#DEFAULT_FROM_EMAIL = ''
-#SERVER_EMAIL = ''

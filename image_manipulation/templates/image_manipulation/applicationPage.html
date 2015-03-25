@@ -14,6 +14,18 @@
     </div>
   </div>
 
+  <!-- Upload form. Note enctype attribute! -->
+  <form method="post" action="." enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>{{ imgForm.non_field_errors }}</p>
+    <p>{{ imgForm.imgFile.label_tag }} </p>
+    <p>
+        {{ imgForm.imgFile.errors }}
+        {{ imgForm.imgFile }}
+    </p>
+    <p><input type="submit" value="Upload" /></p>
+  </form>
+
   <hr>
   <div class="well">
     <form method="post" action=".">
