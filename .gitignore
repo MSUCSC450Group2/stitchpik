@@ -1,4 +1,5 @@
 *.py~
+*.html~
 env/
 images/
 *.cpython-34.pyc
