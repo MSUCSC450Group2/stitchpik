@@ -1,3 +1,4 @@
 *.py~
 env/
 images/
+*.cpython-34.pyc

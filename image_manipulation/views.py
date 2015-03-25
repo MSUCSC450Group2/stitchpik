@@ -22,6 +22,28 @@ def imageUpload(request):
         imgForm = ImageUploadForm()
     return imgForm  
    
+def saveFormDataToSession(request):
+    request.session.set_expiry(31536000) # 1 year
+    request.session['savedFormOptions'] = {
+        'numberOfColors': int(form.cleaned_data['numberOfColors']), 
+        'guageSize': int(form.cleaned_data['guageSize']), 
+        'canvasLength': int(form.cleaned_data['canvasLength']),
+        'canvasWidth': int(form.cleaned_data['canvasWidth']), 
+        'knitType': int(form.cleaned_data['knitType'])
+    }
+
+def isSavedSessionData(request):
+    return request.session.get('savedFormOptions')
+
+def savedSessionData(savedOptions):
+    return ManipulateImageForm(
+            {'numberOfColors': int(savedOptions.get('numberOfColors')),
+             'guageSize': int(savedOptions.get('guageSize')),
+             'canvasLength': int(savedOptions.get('canvasLength')),
+             'canvasWidth': int(savedOptions.get('canvasWidth')),
+             'knitType': int(savedOptions.get('knitType')) }
+           )
+
 def fetchApplication(request):
     inputImage = 'image_manipulation/static/image_manipulation/img/bubblegum.jpg'
     resultImage = 'image_manipulation/static/image_manipulation/img/bubblegum2.jpg'
@@ -34,8 +56,14 @@ def fetchApplication(request):
             pixSize = 8
             pic = Picture(inputImage)
             pic.pixelate(numColors, pixSize, resultImage)
+            saveFormDataToSession(request)
     else:
         form = ManipulateImageForm()
+        if isSavedSessionData(request):
+          savedOptions = request.session.get('savedFormOptions')      
+          form = savedSessionData(savedOptions)
+        else:
+          form = ManipulateImageForm()
     return render_to_response(applicationPage(), {'imgForm': imageUpload(request), 
                               'form' : form, 
                               'image' : requestImage },

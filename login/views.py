@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 
 # Create your views here.
 

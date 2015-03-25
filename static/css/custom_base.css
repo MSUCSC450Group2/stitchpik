@@ -1,8 +1,128 @@
-
-#nav {
+@import url(http://fonts.googleapis.com/css?family=Lemon);
+/*#nav {
   background-color: #337ab7;
 } 
 
 .navbar.navbar-default.navbar-static-top a {
   color: #FFFFFF;
+}*/
+body{
+  font-family: Lemon, Serif;
+  background: url('/static/img/background1.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/*navbar*/
+nav {	/*navigation bar*/
+  font-size: 1.5em;
+}
+
+.navbar.navbar-inverse.navbar-fixed-top{
+  background-color: #181F7D;
+}
+
+/*login*/
+.form-signin-heading {
+  margin-top: 180px;
+}
+
+#btn{
+  margin-top: 7px;
+}
+
+.container.loginContainer{
+  width: 750px;
+}
+
+.btn.btn-default.btn-lg.btn-block{
+  background-color: #BABAD1;
+}
+
+/*register*/
+.panel-body {
+  margin-top: 20px;
+}
+
+.panel-default > .panel-heading{
+  background-color: #FFFFFF;
+  border: none;
+}
+
+.btn.btn-default.btn-lg{
+  background-color: #BABAD1;
+  width: 718px;
+}
+
+.form-control.input-xlarge{
+  background-color: #FFFFB8;
+}
+
+#move-left{
+  margin-left: 12px;
+}
+
+#font{
+  color: #000000;
+}
+
+/*change password*/
+#content-main{
+  margin-top: 180px;
+  margin-left: 100px;
+}
+
+.submit-row {
+  font-size: 18px;
+}
+
+#enter{
+  font-size: 18px;
+}
+
+.form-row li{
+  width: 550px;
+  color: #A94442;
+  background-color: #F2DEDE;
+}
+
+#bg-color{
+  background-color: #BABAD1;
+}
+
+/*reset password*/
+.move{
+  margin-top: 180px;
+  margin-left: 100px;
+}
+
+#button{
+  font-size: 18px;
+  margin-left: 125px;
+}
+
+/*change/reset password done*/
+#done {
+  margin-top: 200px;
+  font-size: 18px;
+  margin-left: 200px;
+}
+
+.alert.alert-danger{
+  width: 590px;
+}
+
+/*application page*/
+#app{
+  margin-top: 80px;
+}
+
+/*login success*/
+btn.btn-default.btn-lg.btn-primary{
+  margin-top: 180px;
+  margin-left: 100px;
+}
+
+#margin{
+  margin-top: 5px;
 }

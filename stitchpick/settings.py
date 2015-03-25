@@ -142,3 +142,6 @@ if DEBUG:
    EMAIL_USE_TLS = False
    DEFAULT_FROM_EMAIL = 'testing@example.com'
    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#for sessions
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
