@@ -1,11 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Lemon);
-/*#nav {
-  background-color: #337ab7;
-} 
 
-.navbar.navbar-default.navbar-static-top a {
-  color: #FFFFFF;
-}*/
 body{
   font-family: Lemon, Serif;
   background: url('/static/img/background1.png');

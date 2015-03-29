@@ -1,14 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Lemon);
 
-
-nav {	/*navigation bar*/
-  font-size: 1.5em;
-}
-
-.navbar.navbar-inverse.navbar-fixed-top{
-  background-color: #181F7D;
-}
-
 /* Code to make header text all the same */
 .navbar .navText {
   color: #9D9D9D;
@@ -29,8 +20,8 @@ h1 {
 }
 
 body {
+ background: none; /* no image */
  background-color: #3333CC;/*#181F7D;*/
- /*background-color: #000000;*/
  margin-top: 120px;
  margin-left: 80px;
  margin-right: 80px;
