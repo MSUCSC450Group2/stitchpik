@@ -32,7 +32,6 @@ def saveFormDataToSession(form, request):
         'canvasWidth': float(form.cleaned_data['canvasWidth']), 
         'knitType': int(form.cleaned_data['knitType'])
     }
-    print("guageSize is " + str(float(form.cleaned_data['guageSize'])))
 
 def isSavedSessionData(request):
     return request.session.get('savedFormOptions')
@@ -53,10 +52,8 @@ def fetchApplication(request):
     requestImage = inputImage
 
     if request.method == 'POST':
-        form = ManipulateImageForm(request.POST)
-        print("\nrecieved post")
+        form = ManipulateImageForm(request.POST) 
         if form.is_valid():
-            print("form is valid")
             requestImage = resultImage
             numColors = form.cleaned_data['numberOfColors']
             pixSize = 8
@@ -64,20 +61,15 @@ def fetchApplication(request):
             pic.pixelate(numColors, pixSize, resultImage)
             saveFormDataToSession(form, request)
         else:
-            print("form is not valid")
             form = ManipulateImageForm()
             if isSavedSessionData(request):
-                print("have session form")
                 savedOptions = request.session.get('savedFormOptions')
                 form = savedSessionData(savedOptions)
     else:
-        print("not a post request")
         if isSavedSessionData(request):
-            print("have session form still")
             savedOptions = request.session.get('savedFormOptions')
             form = savedSessionData(savedOptions)
         else:
-            print("have no session form")
             form = ManipulateImageForm()
 
     return render_to_response(applicationPage(), {'imgForm': imageUpload(request), 
