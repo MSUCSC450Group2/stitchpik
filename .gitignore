@@ -3,3 +3,4 @@
 env/
 images/
 *.cpython-34.pyc
+Cython.egg-info/

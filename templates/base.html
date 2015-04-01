@@ -7,19 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/static/img/favicon.png"><!-- CHANGE IT!!! -->
+    <link rel="icon" href="/static/img/favicon.png">
 
     <title>Stitchpik | {% block title %}{% endblock %}</title>
 
     <!-- Personal css -->
     {% load staticfiles %}
-    <script src="{% static "/static/js/ie-emulation-modes-warning.js" %}"></script>
+    <script src="{% static '/static/js/ie-emulation-modes-warning.js' %}"></script>
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static "/static/css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static '/static/css/bootstrap.css' %}" rel="stylesheet">
 
     <!-- Custom styles for your HTML file -->
-    <link href="/static/css/custom_base.css" rel="stylesheet" /> <!--NAVBAR STYLE-->
+    <link href="{% static '/static/css/custom_base.css' %}" rel="stylesheet" />
+
     {% block style %}{% endblock %}  <!--YOUR CUSTOM CSS STYLE-->
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -34,35 +35,7 @@
   </head>
   <body>
     
-<div class="container">
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-      
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#"></a>
-    </div>
-   
-    <div id="navbar" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li><a href="#"><img id="logo" src='/static/img/logo_s.png' alt="logo"></a></li>
-        <li><a href='{% url "index" %}'>HOME</a></li>
-        {% if user.is_authenticated %}
-          <li><a href="#">User: {{ user.username }}</a></li>
-          <li><a href="/logout/">LOGOUT</a></li>
-        {% else %}
-          <li><a href='{% url "login" %}'>LOGIN</a></li>
-          <li><a href='{% url "signup" %}'>REGISTER</a></li>
-        {% endif %}
-        <li><a href='{% url "application" %}'>APPLICATION</a></li>            
-       </ul>
-    </div>
-      
-  </nav>
-</div>
-<hr>    
+{% include "navbar.html" %}
     
     
 {% block content %}

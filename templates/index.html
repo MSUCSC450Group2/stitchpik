@@ -1,39 +1,11 @@
-{% extends "base_index.html" %}
+{% extends "base.html" %}
 {% block title %}index page{% endblock %}
 
-{% block style %}<link href="/static/css/custom_index.css" rel="stylesheet" /> {% endblock %} <!--CUSTOM CSS STYLE-->
+{% block style %}
+<link href="/static/css/custom_index.css" rel="stylesheet" /> 
+{% endblock %} <!--CUSTOM CSS STYLE-->
 
 {% block content %}
-
-<div class="container">
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-      
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-	<span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#"></a>
-    </div>
-    
-    <div id="navbar" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li><a href="#"><img id="logo" src='/static/img/logo_s.png' alt="logo"></a></li>
-        <li><a href='{% url "index" %}'>HOME</a></li>
-        {% if user.is_authenticated %}
-          <li><a href="#">User: {{ user.username }}</a></li>
-          <li><a href="/logout/">LOGOUT</a></li>
-        {% else %}
-          <li><a href='{% url "login" %}'>LOGIN</a></li>
-          <li><a href='{% url "signup" %}'>REGISTER</a></li>
-        {% endif %}
-        <li><a href='{% url "application" %}'>APPLICATION</a></li>
-       </ul>
-    </div>
-      
-  </nav>
-</div>
-
 
 <div id="header">
   <h1> <img id="logo_img" src='/static/img/logo.png' alt="logo">Knit with...</h1>
@@ -70,9 +42,10 @@
 <div id="footer">
   <hr>
   <footer>
-    <p>&copy; FOOTER</p>       <!-- edit footer! -->
+    <p>&copy; FOOTER</p><!-- edit footer! -->
   </footer>
-</div><!--footer-->														
+</div><!--footer-->
+													
 	
 {% endblock %}
 			

@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .forms import *
 from .manipulate_lib.imageclass import *
 from .models import Image
@@ -22,15 +23,15 @@ def imageUpload(request):
         newImg.save()
     else:
         imgForm = ImageUploadForm()
-    return imgForm  
+    return imgForm
    
 def saveFormDataToSession(form, request):
     request.session.set_expiry(31536000) # one year
     request.session['savedFormOptions'] = {
         'numberOfColors': int(form.cleaned_data['numberOfColors']), 
-        'guageSize': int(form.cleaned_data['guageSize']), 
-        'canvasLength': int(form.cleaned_data['canvasLength']),
-        'canvasWidth': int(form.cleaned_data['canvasWidth']), 
+        'guageSize': float(form.cleaned_data['guageSize']), 
+        'canvasLength': float(form.cleaned_data['canvasLength']),
+        'canvasWidth': float(form.cleaned_data['canvasWidth']), 
         'knitType': int(form.cleaned_data['knitType'])
     }
 
@@ -40,18 +41,20 @@ def isSavedSessionData(request):
 def savedSessionData(savedOptions):
     return ManipulateImageForm(
             {'numberOfColors': int(savedOptions.get('numberOfColors')),
-             'guageSize': int(savedOptions.get('guageSize')),
-             'canvasLength': int(savedOptions.get('canvasLength')),
-             'canvasWidth': int(savedOptions.get('canvasWidth')),
+             'guageSize': float(savedOptions.get('guageSize')),
+             'canvasLength': float(savedOptions.get('canvasLength')),
+             'canvasWidth': float(savedOptions.get('canvasWidth')),
              'knitType': int(savedOptions.get('knitType')) }
            )
 
+@login_required
 def fetchApplication(request):
     inputImage = Image.latestUserImageFile(request.user)
     resultImage = 'image_manipulation/static/image_manipulation/img/result.jpg'
     requestImage = inputImage
+
     if request.method == 'POST':
-        form = ManipulateImageForm(request.POST)
+        form = ManipulateImageForm(request.POST) 
         if form.is_valid():
             requestImage = resultImage
             numColors = form.cleaned_data['numberOfColors']
@@ -60,13 +63,18 @@ def fetchApplication(request):
             pic.pixelate(numColors, pixSize, resultImage)
             time.sleep(5) #TODO: REPLACE WITH JQUERY
             saveFormDataToSession(form, request)
-    else:
-        form = ManipulateImageForm()
-        if isSavedSessionData(request):
-          savedOptions = request.session.get('savedFormOptions')      
-          form = savedSessionData(savedOptions)
         else:
-          form = ManipulateImageForm()
+            form = ManipulateImageForm()
+            if isSavedSessionData(request):
+                savedOptions = request.session.get('savedFormOptions')
+                form = savedSessionData(savedOptions)
+    else:
+        if isSavedSessionData(request):
+            savedOptions = request.session.get('savedFormOptions')
+            form = savedSessionData(savedOptions)
+        else:
+            form = ManipulateImageForm()
+
     return render_to_response(applicationPage(), {'imgForm': imageUpload(request), 
                               'form' : form, 
                               'image' : requestImage },
