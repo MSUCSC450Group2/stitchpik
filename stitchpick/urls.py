@@ -3,6 +3,8 @@ from django.contrib import admin
 from login.views import *
 from image_manipulation.views import *
 from django.contrib.auth.views import login, password_reset, password_reset_confirm, password_reset_done, password_reset_complete
+from django.conf import settings
+from django.conf.urls.static import static
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -35,7 +37,4 @@ urlpatterns = patterns('',
              'django.contrib.auth.views.password_reset_confirm'),
     url(r'^user/password/reset/complete/$', 
              'django.contrib.auth.views.password_reset_complete'),
-    #
-    
-    )
-  
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
