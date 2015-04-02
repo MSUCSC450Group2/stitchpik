@@ -8,12 +8,14 @@ from .forms import *
 from .manipulate_lib.imageclass import *
 from .models import Image
 from image_manipulation.models import Image
+import time
 
 def applicationPage():
     return 'image_manipulation/applicationPage.html'
 
 def newUploadedImage(request):
-    return Image(imgFile = request.FILES['imgFile'], user = request.user, private = True)
+    return Image(imgFile = request.FILES['imgFile'], user = request.user, 
+                 private = True)
 
 def imageUpload(request):
     imgForm = ImageUploadForm(request.POST, request.FILES)
@@ -81,8 +83,8 @@ def set_cookie(response, key, value, days_expire = 7):
 
 @login_required
 def fetchApplication(request):
-    inputImage = 'image_manipulation/img/bubblegum.jpg'
-    resultImage = 'image_manipulation/static/image_manipulation/img/bubblegum2.jpg'
+    inputImage = Image.latestUserImageFile(request.user)
+    resultImage = 'image_manipulation/static/image_manipulation/img/result.jpg'
     requestImage = inputImage
 
     if request.method == 'POST':
@@ -91,8 +93,9 @@ def fetchApplication(request):
             requestImage = resultImage
             numColors = form.cleaned_data['numberOfColors']
             pixSize = 8
-            pic = Picture('image_manipulation/static/' + inputImage)
+            pic = Picture(inputImage)
             pic.pixelate(numColors, pixSize, resultImage)
+            time.sleep(5) #TODO: REPLACE WITH JQUERY
             saveFormDataToSession(form, request)
             cookieAction = 0;
         else:

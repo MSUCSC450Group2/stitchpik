@@ -96,14 +96,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
+STATIC_ROOT = ''
 STATIC_URL = '/static/'
-
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "image_manipulation", "static"),
 )
-
 
 #Template folder locations
 TEMPLATE_DIRS = (
@@ -111,23 +112,6 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "image_manipulation", "templates"),
     os.path.join(BASE_DIR, "templates"),
 )
-
-# may need to change to also set media_url and static_root for production
-if DEBUG:
-    # "The STATICFILES_DIRS setting should "
-    # django.core.exceptions.ImproperlyConfigured: The STATICFILES_DIRS setting should not contain the STATIC_ROOT setting
-    # as of now this having the else code here messes up loading of files in local
-    pass
-else:
-    MEDIA_URL = '/media/'
-    STATIC_ROOT=os.path.join(BASE_DIR, "static")
-    MEDIA_ROOT=os.path.join(BASE_DIR, "image_manipulation", "static", "img")
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, "static"),
-        os.path.join(BASE_DIR, "image_manipulation", "static"),
-    )
-
-
 
 # allows template loading from main folder and app folders
 TEMPLATE_LOADERS = (
