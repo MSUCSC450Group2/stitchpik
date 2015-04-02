@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+import datetime
 from .forms import *
 from .manipulate_lib.imageclass import *
 from .models import Image
@@ -23,6 +24,31 @@ def imageUpload(request):
         imgForm = ImageUploadForm()
     return imgForm
    
+def saveFormDataToCookie(form, request):
+    return
+
+def isSavedCookieData(request):
+    return request.COOKIES.get('savedFormOptions', None)
+
+def getSavedCookieData(savedOptions):
+    return ManipulateImageForm( {
+        'numberOfColors':int(savedOptions.get('numberOfColors')),
+        'guageSize':float(savedOptions.get('guageSize')),
+        'canvasLength':float(savedOptions.get('canvasLength')),
+        'canvasWidth':float(savedOptions.get('canvasWidth')),
+        'knitType':int(savedOptions.get('knitType'))
+    } )
+#    return ManipulateImageForm(
+#        {
+#        'numberOfColors':int(request.COOKIE.get('numberOfColors')),
+#        'guageSize':float(request.COOKIES.get('guageSize')),
+#        'canvasLength':float(request.COOKIES.get('canvasLength')),
+#        'canvasWidth':float(request.COOKIES.get('canvasWidth')),
+#        'knitType':int(request.COOKIES.get('knitType'))
+#        } )
+
+
+
 def saveFormDataToSession(form, request):
     request.session.set_expiry(31536000) # one year
     request.session['savedFormOptions'] = {
@@ -45,6 +71,14 @@ def savedSessionData(savedOptions):
              'knitType': int(savedOptions.get('knitType')) }
            )
 
+def set_cookie(response, key, value, days_expire = 7):
+    if days_expire is None:
+        max_age = 365 * 24 * 60 * 60  #one year
+    else:
+        max_age = days_expire * 24 * 60 * 60 
+    expires = datetime.datetime.strftime(datetime.datetime.utcnow() + datetime.timedelta(seconds=max_age), "%a, %d-%b-%Y %H:%M:%S GMT")
+    response.set_cookie(key, value, max_age=max_age, expires=expires, domain=settings.SESSION_COOKIE_DOMAIN, secure=settings.SESSION_COOKIE_SECURE or None)
+
 @login_required
 def fetchApplication(request):
     inputImage = 'image_manipulation/img/bubblegum.jpg'
@@ -60,20 +94,37 @@ def fetchApplication(request):
             pic = Picture('image_manipulation/static/' + inputImage)
             pic.pixelate(numColors, pixSize, resultImage)
             saveFormDataToSession(form, request)
+            cookieAction = 0;
         else:
             form = ManipulateImageForm()
             if isSavedSessionData(request):
                 savedOptions = request.session.get('savedFormOptions')
                 form = savedSessionData(savedOptions)
+                coookieAction = 1;
     else:
         if isSavedSessionData(request):
             savedOptions = request.session.get('savedFormOptions')
             form = savedSessionData(savedOptions)
+            cookieAction = 2;
         else:
             form = ManipulateImageForm()
+            cookieAction=3;
 
-    return render_to_response(applicationPage(), {'imgForm': imageUpload(request), 
+    response = render_to_response(applicationPage(), {'imgForm': imageUpload(request), 
                               'form' : form, 
                               'image' : requestImage },
                               context_instance = RequestContext(request))
+
+    # meddle with saved cookie information
+    # if new valid inputs
+    if cookieAction = 0:
+        saveFormDataToCookie(response, form)
+    elif cookieAction = 1:
+        if isSavedCookieDate(request)
+
+    # if cookie data can be used
+
+    # if no cookie data
+
+    return response
 

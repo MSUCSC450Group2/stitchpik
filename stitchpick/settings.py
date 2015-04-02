@@ -145,3 +145,5 @@ if DEBUG:
 
 #for sessions
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_HTTPONLY = True # deny js access
+SESSION_COOKIE_AGE = 31536000
