@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}index page{% endblock %}
+
+{% block style %}
+<link href="/static/css/custom_index.css" rel="stylesheet" /> 
+{% endblock %} <!--CUSTOM CSS STYLE-->
+
+{% block content %}
+
+<div id="header">
+  <h1> <img id="logo_img" src='/static/img/logo.png' alt="logo">Knit with...</h1>
+</div>
+
+<div class="container-fluid">    
+  <div class="row">
+  
+    <div class="col-sm-8"> 
+      <p id="image"><img id="index_img" src='/static/img/ship.png' alt="Ship"></p>
+    </div><!--column -->
+	  
+    <div class="col-sm-4">
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+	  <p>TEXT HERE</p>
+      <p><a class="btn btn-primary btn-lg" href='{% url "signup" %}' role="button">Join us now &raquo;</a></p>
+    </div><!--column -->
+	
+  </div><!--row -->
+</div><!--container-fluid-->   
+
+
+<div id="footer">
+  <hr>
+  <footer>
+    <p>&copy; FOOTER</p><!-- edit footer! -->
+  </footer>
+</div><!--footer-->
+													
+	
+{% endblock %}
+			
