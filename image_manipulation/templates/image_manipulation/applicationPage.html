@@ -5,7 +5,7 @@
 <hr>
 
 <div class="container-fluid">
-  <div class="">
+  <div id="userimage">
     <!-- image canvas -->
     <div>
       {# will have django img var here #}
@@ -13,9 +13,19 @@
       <img class="delay" src="../media/{{ image }}" alt="image" />
     </div>
   </div>
-
+<div hidden id="loadingimage">
+image is loading. Please wait
+    <!-- image canvas -->
+    <div>
+      {# will have django img var here #}
+      {% load staticfiles %}
+      <img class="delay" src="{% static "/static/image_manipulation/img/loading.gif" %}" alt="image" />
+    </div>
+        Image is Processing. Please Wait.
+  </div>
+    <div class="imageupload" >
   <!-- Upload form. Note enctype attribute! -->
-  <form method="post" action="." enctype="multipart/form-data">
+  <form method="post" classaction="." enctype="multipart/form-data">
     {% csrf_token %}
     <p>{{ imgForm.non_field_errors }}</p>
     <p>{{ imgForm.imgFile.label_tag }} </p>
@@ -25,10 +35,10 @@
     </p>
     <p><input type="submit" value="Upload" /></p>
   </form>
-
+    </div>
   <hr>
   <div class="well">
-    <form method="post" action=".">
+    <form id='my_form' method="post" action=".">
       {% csrf_token %}
 
       <div class="">
@@ -47,4 +57,26 @@
     </form>
   </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+
+$(function(){
+    $('#my_form').submit(function(event){
+       
+       $('#loadingimage').show();
+        $('#userimage').hide();
+        $('.well').hide();
+        $('.imageupload').hide();
+          
+    });
+
+});
+S(document).ready(function(){
+       $('#userimage').hide();
+       $('#loadingimage').hide();
+        $('#userimage').show(); 
+        alert('reloaded');
+});
+</script>
 {% endblock %}

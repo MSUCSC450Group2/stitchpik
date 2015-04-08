@@ -56,12 +56,12 @@ def fetchApplication(request):
     if request.method == 'POST':
         form = ManipulateImageForm(request.POST) 
         if form.is_valid():
-            requestImage = "../" + resultImage
+            requestImage = '../' + resultImage
             numColors = form.cleaned_data['numberOfColors']
             pixSize = 8
             pic = Picture(inputImage)
             pic.pixelate(numColors, pixSize, resultImage)
-            time.sleep(5) #TODO: REPLACE WITH JQUERY
+            #time.sleep(5) #TODO: REPLACE WITH JQUERY
             saveFormDataToSession(form, request)
         else:
             form = ManipulateImageForm()
