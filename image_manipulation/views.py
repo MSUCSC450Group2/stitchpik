@@ -50,18 +50,18 @@ def savedSessionData(savedOptions):
 @login_required
 def fetchApplication(request):
     inputImage = Image.latestUserImageFile(request.user)
-    resultImage = 'image_manipulation/static/image_manipulation/img/result.jpg'
+    resultImage = 'media/result.jpg'
     requestImage = inputImage
 
     if request.method == 'POST':
         form = ManipulateImageForm(request.POST) 
         if form.is_valid():
-            requestImage = resultImage
+            requestImage = '../' + resultImage
             numColors = form.cleaned_data['numberOfColors']
             pixSize = 8
             pic = Picture(inputImage)
             pic.pixelate(numColors, pixSize, resultImage)
-            time.sleep(5) #TODO: REPLACE WITH JQUERY
+            #time.sleep(5) #TODO: REPLACE WITH JQUERY
             saveFormDataToSession(form, request)
         else:
             form = ManipulateImageForm()
