@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+import datetime
 from .forms import *
 from .manipulate_lib.imageclass import *
 from .models import Image
@@ -25,6 +26,25 @@ def imageUpload(request):
         imgForm = ImageUploadForm()
     return imgForm
    
+def saveFormDataToCookie(form, response):
+    setCookie(response, 'numberOfColors', int(form.cleaned_data['numberOfColors']))
+    setCookie(response, 'guageSize', float(form.cleaned_data['guageSize']))
+    setCookie(response, 'canvasLength', float(form.cleaned_data['canvasLength']))
+    setCookie(response, 'canvasWidth', float(form.cleaned_data['canvasWidth']))
+    setCookie(response, 'knitType', int(form.cleaned_data['knitType']))
+
+def isSavedCookieData(request):
+    return ('numberOfColors' in request.COOKIES) if True else False
+
+def getSavedCookieData(request):
+    return ManipulateImageForm( {
+        'numberOfColors':int(request.COOKIES['numberOfColors']),
+        'guageSize':float(request.COOKIES['guageSize']),
+        'canvasLength':float(request.COOKIES['canvasLength']),
+        'canvasWidth':float(request.COOKIES['canvasWidth']),
+        'knitType':int(request.COOKIES['knitType'])
+    } )
+
 def saveFormDataToSession(form, request):
     request.session.set_expiry(31536000) # one year
     request.session['savedFormOptions'] = {
@@ -47,6 +67,20 @@ def savedSessionData(savedOptions):
              'knitType': int(savedOptions.get('knitType')) }
            )
 
+def setCookie(response, key, value, days_expire = 365):
+    if days_expire is None:
+        max_age = 365 * 24 * 60 * 60  # one year
+    else:
+        max_age = days_expire * 24 * 60 * 60 
+
+    expires = datetime.datetime.strftime(datetime.datetime.utcnow() + datetime.timedelta(seconds=max_age), "%a, %d-%b-%Y %H:%M:%S GMT")
+
+    response.set_cookie(key, value, max_age=max_age, expires=expires)
+
+def deleteCookie(response):
+    print("deleting cookie data")
+    response.delete_cookie('savedFormOptions')
+
 @login_required
 def fetchApplication(request):
     inputImage = Image.latestUserImageFile(request.user)
@@ -56,27 +90,31 @@ def fetchApplication(request):
     if request.method == 'POST':
         form = ManipulateImageForm(request.POST) 
         if form.is_valid():
-            requestImage = '../' + resultImage
+            requestImage = "../" + resultImage # django is preappending /media
             numColors = form.cleaned_data['numberOfColors']
             pixSize = 8
             pic = Picture(inputImage)
             pic.pixelate(numColors, pixSize, resultImage)
-            #time.sleep(5) #TODO: REPLACE WITH JQUERY
-            saveFormDataToSession(form, request)
+            cookieAction = 0;
         else:
-            form = ManipulateImageForm()
-            if isSavedSessionData(request):
-                savedOptions = request.session.get('savedFormOptions')
-                form = savedSessionData(savedOptions)
+            cookieAction = 1
     else:
-        if isSavedSessionData(request):
-            savedOptions = request.session.get('savedFormOptions')
-            form = savedSessionData(savedOptions)
-        else:
-            form = ManipulateImageForm()
+        cookieAction = 1
 
-    return render_to_response(applicationPage(), {'imgForm': imageUpload(request), 
-                              'form' : form, 
-                              'image' : requestImage },
+    # Load saved cookie data if available
+    if cookieAction == 1:
+        if isSavedCookieData(request):
+            form = getSavedCookieData(request)
+        else:
+            form  = ManipulateImageForm()
+
+    response = render_to_response(applicationPage(), {
+                              'imgForm': imageUpload(request),
+                              'form': form,
+                              'image': requestImage },
                               context_instance = RequestContext(request))
 
+    # Save any valid data to cookie
+    if cookieAction == 0:
+        saveFormDataToCookie(form, response)
+    return response
