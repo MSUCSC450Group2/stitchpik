@@ -27,35 +27,23 @@ def imageUpload(request):
     return imgForm
    
 def saveFormDataToCookie(form, response):
-    setCookie(response, 'savedFormOptions', {
-        'numberOfColors': int(form.cleaned_data['numberOfColors']), 
-        'guageSize': float(form.cleaned_data['guageSize']), 
-        'canvasLength': float(form.cleaned_data['canvasLength']),
-        'canvasWidth': float(form.cleaned_data['canvasWidth']), 
-        'knitType': int(form.cleaned_data['knitType'])
-    } )
+    setCookie(response, 'numberOfColors', int(form.cleaned_data['numberOfColors']))
+    setCookie(response, 'guageSize', float(form.cleaned_data['guageSize']))
+    setCookie(response, 'canvasLength', float(form.cleaned_data['canvasLength']))
+    setCookie(response, 'canvasWidth', float(form.cleaned_data['canvasWidth']))
+    setCookie(response, 'knitType', int(form.cleaned_data['knitType']))
 
 def isSavedCookieData(request):
-    return ('savedFormOptions' in request.COOKIES) if True else False
+    return ('numberOfColors' in request.COOKIES) if True else False
 
-def getSavedCookieData(savedOptions):
+def getSavedCookieData(request):
     return ManipulateImageForm( {
-        'numberOfColors':int(savedOptions.get('numberOfColors')),
-        'guageSize':float(savedOptions.get('guageSize')),
-        'canvasLength':float(savedOptions.get('canvasLength')),
-        'canvasWidth':float(savedOptions.get('canvasWidth')),
-        'knitType':int(savedOptions.get('knitType'))
+        'numberOfColors':int(request.COOKIES['numberOfColors']),
+        'guageSize':float(request.COOKIES['guageSize']),
+        'canvasLength':float(request.COOKIES['canvasLength']),
+        'canvasWidth':float(request.COOKIES['canvasWidth']),
+        'knitType':int(request.COOKIES['knitType'])
     } )
-#    return ManipulateImageForm(
-#        {
-#        'numberOfColors':int(request.COOKIE.get('numberOfColors')),
-#        'guageSize':float(request.COOKIES.get('guageSize')),
-#        'canvasLength':float(request.COOKIES.get('canvasLength')),
-#        'canvasWidth':float(request.COOKIES.get('canvasWidth')),
-#        'knitType':int(request.COOKIES.get('knitType'))
-#        } )
-
-
 
 def saveFormDataToSession(form, request):
     request.session.set_expiry(31536000) # one year
@@ -87,7 +75,11 @@ def setCookie(response, key, value, days_expire = 365):
 
     expires = datetime.datetime.strftime(datetime.datetime.utcnow() + datetime.timedelta(seconds=max_age), "%a, %d-%b-%Y %H:%M:%S GMT")
 
-    response.set_cookie(key, value, max_age=max_age, expires=expires, domain=settings.SESSION_COOKIE_DOMAIN, secure=settings.SESSION_COOKIE_SECURE or None)
+    response.set_cookie(key, value, max_age=max_age, expires=expires)
+
+def deleteCookie(response):
+    print("deleting cookie data")
+    response.delete_cookie('savedFormOptions')
 
 @login_required
 def fetchApplication(request):
@@ -103,37 +95,26 @@ def fetchApplication(request):
             pixSize = 8
             pic = Picture(inputImage)
             pic.pixelate(numColors, pixSize, resultImage)
-            time.sleep(5) #TODO: REPLACE WITH JQUERY
-            saveFormDataToSession(form, request)
             cookieAction = 0;
         else:
-            form = ManipulateImageForm()
-            cookieAction = 1;
-            if isSavedSessionData(request):
-                savedOptions = request.session.get('savedFormOptions')
-                form = savedSessionData(savedOptions)
+            cookieAction = 1
     else:
-        cookieAction = 1;
-        if isSavedSessionData(request):
-            savedOptions = request.session.get('savedFormOptions')
-            form = savedSessionData(savedOptions)
-        else:
-            form = ManipulateImageForm()
+        cookieAction = 1
 
-    response = render_to_response(applicationPage(), {'imgForm': imageUpload(request), 
-                              'form' : form, 
-                              'image' : requestImage },
+    # Load saved cookie data if available
+    if cookieAction == 1:
+        if isSavedCookieData(request):
+            form = getSavedCookieData(request)
+        else:
+            form  = ManipulateImageForm()
+
+    response = render_to_response(applicationPage(), {
+                              'imgForm': imageUpload(request),
+                              'form': form,
+                              'image': requestImage },
                               context_instance = RequestContext(request))
 
-    # meddle with saved cookie information
-    if cookieAction == 0: # If new valid inputs
+    # Save any valid data to cookie
+    if cookieAction == 0:
         saveFormDataToCookie(form, response)
-    elif cookieAction == 1: # If no inputs specified try to load cookies
-        if isSavedCookieData(request):
-            savedOptions = request.COOKIES['savedFormOptions']
-            response['form'] = getSavedCookieData(savedOptions)
-        else: 
-            response['form'] = ManipulateImageForm()
-
     return response
-
