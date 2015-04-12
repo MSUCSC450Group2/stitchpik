@@ -1,8 +1,10 @@
 from django import forms
 from .models import Image
+from .imageFileConstraint import RestrictedImageField
 
 class ImageUploadForm(forms.Form):
-    imgFile = forms.FileField(label='Select a file',)
+    imgFile = RestrictedImageField(content_types=RestrictedImageField.getPillowSupportedImageTypes(), max_upload_size=RestrictedImageField.getBytesFromMegaBytes(1))
+
 
 class ManipulateImageForm(forms.Form):
   KNIT_TYPES = (

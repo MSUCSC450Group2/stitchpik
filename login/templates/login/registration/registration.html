@@ -23,7 +23,8 @@
 						
                             {% if form.username.errors %}
 		                    <div class="alert alert-danger" role="alert">
-				                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+									{% load staticfiles %}
+				                    <img src="{% static 'img/error_red_triangle_20.png' %}" label="!"/>
                                     <span class="sr-only">Error</span>
                                     {{ form.username.errors }}
 		                    </div>
@@ -39,7 +40,7 @@
 
 						    {% if form.email.errors %}
 						    <div class="alert alert-danger" role="alert">
-				                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				                    <img src="{% static 'img/error_red_triangle_20.png' %}" label="!"/>
                                     <span class="sr-only">Error</span>
                                     {{ form.email.errors }}
 		                    </div>
@@ -52,7 +53,7 @@
 
 						    {% if form.non_field_errors %}
 						    <div class="alert alert-danger" role="alert">
-				                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				                    <img src="{% static 'img/error_red_triangle_20.png' %}" label="!"/>
                                     <span class="sr-only">Error</span>
                                     {{ form.non_field_errors }}
 		                    </div>
@@ -84,7 +85,7 @@
 
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-				<button onclick="location.href='/'" class="btn btn-default btn-lg">Login</button>
+				<button onclick="location.href='/accounts/login'" class="btn btn-default btn-lg">Login</button>
 			</div>
 		</div>
 	</div>
