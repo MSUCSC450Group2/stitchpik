@@ -13,5 +13,8 @@ class Image(models.Model):
       images = Image.userImages(user)
       return images.reverse()[0].imgFile if images else None
 
+  def resultImageLocation(imgFile, user):
+      return 'result_' + user.username + '_' + str(imgFile).split('/')[-1]
+
   class Meta:
       app_label = 'image_manipulation'

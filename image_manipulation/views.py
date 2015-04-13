@@ -84,13 +84,13 @@ def deleteCookie(response):
 @login_required
 def fetchApplication(request):
     inputImage = Image.latestUserImageFile(request.user)
-    resultImage = 'media/result.jpg'
+    resultImage = 'media/' + Image.resultImageLocation(inputImage, request.user)
     requestImage = inputImage
 
     if request.method == 'POST':
         form = ManipulateImageForm(request.POST) 
         if form.is_valid():
-            requestImage = "../" + resultImage # django is preappending /media
+            requestImage = '../' + resultImage # django is preappending /media
             numColors = form.cleaned_data['numberOfColors']
             pixSize = 8
             pic = Picture(inputImage)
