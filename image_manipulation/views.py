@@ -19,11 +19,11 @@ def newUploadedImage(request):
 
 def imageUpload(request):
     imgForm = ImageUploadForm(request.POST, request.FILES)
-    if imgForm.is_valid():
+    if "required" in str(imgForm['imgFile'].errors): # for when no image is uploaded
+        imgForm = ImageUploadForm()
+    elif imgForm.is_valid():
         newImg = newUploadedImage(request)
         newImg.save()
-    else:
-        imgForm = ImageUploadForm()
     return imgForm
    
 def saveFormDataToCookie(form, response):
@@ -78,7 +78,6 @@ def setCookie(response, key, value, days_expire = 365):
     response.set_cookie(key, value, max_age=max_age, expires=expires)
 
 def deleteCookie(response):
-    print("deleting cookie data")
     response.delete_cookie('savedFormOptions')
 
 @login_required

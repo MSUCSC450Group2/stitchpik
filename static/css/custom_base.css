@@ -8,6 +8,12 @@ body{
   background-repeat: no-repeat;
 }
 
+/* template error rep */
+ul.errorlist {
+    list-style:none;
+    padding-left:0;
+}
+
 /*navbar*/
 nav {	/*navigation bar*/
   font-size: 1.5em;
