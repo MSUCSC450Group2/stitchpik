@@ -1,16 +1,9 @@
-@import url(http://fonts.googleapis.com/css?family=Lemon);
-
 /* Code to make header text all the same */
 .navbar .navText {
   color: #9D9D9D;
   padding: 15px;
   font-size: 21px;
 }
-
-#header {
-  margin-top: -30px;
-  margin-bottom: -30px;
-} 
 
 h1 {
   margin-top: -10pt;
@@ -20,46 +13,31 @@ h1 {
 }
 
 body {
- background: none; /* no image */
- background-color: #3333CC;/*#181F7D;*/
+ background-color: #E0EADD;
  margin-top: 120px;
  margin-left: 80px;
  margin-right: 80px;
- font-family: Lemon, Serif;
+ font-family: sans-serif
+}				
+
+#header {
+  margin-top: -30px;
+  margin-bottom: -30px;
+} 
+
+#section {
+  border-radius: 25px;
+  background: #909090;
+  padding: 20px;
 }
 
-.col-sm-8 {	/*left side*/
-  background: url('/static/img/ship.png');
-  height: 576px;
-  background-size: 100%;
-  background-repeat: no-repeat;
+#leftCol {
+//jklj;
 }
 
-.col-sm-4 {	/*right side*/
-  background-color: #8585AD;
-  height: 576px;
-  border: 10px;
-  /*border-left: solid black 10px;*/
-}
+#rightCol {
 
-.btn {	/*button*/
-  background-color: #141452;
-  color: gray;
-  margin-left: 130px;
 }
-
-#index_img {
-  width: 350px;
-  height: 250px;
-  box-shadow: 20px 20px 5px #888888;
-  border: solid #260000 20px;
-  border-style: ridge;
-}
-
-#image {
-  padding-top: 30px;
-  padding-left: 10px;
-}					
 
 #footer {
   padding-top: 50px;

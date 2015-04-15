@@ -11,8 +11,7 @@
     
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="#"><img id="logo" src='/static/img/logo_s.png' alt="logo"></a></li>
-        <li><a href='{% url "index" %}'>HOME</a></li>
+        <li><a href='{% url "index" %}'><img id="logo" src='/static/img/logo_s.png' alt="logo"></a></li>
         {% if user.is_authenticated %}
           <li><a href="#">User: {{ user.username }}</a></li>
           <li><a href="/logout/">LOGOUT</a></li>

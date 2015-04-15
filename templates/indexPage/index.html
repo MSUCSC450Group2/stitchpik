@@ -11,31 +11,21 @@
   <h1>Welcome to Stitchpik!</h1>
 </div>
 
-<div class="container-fluid">    
-  <div class="row">
+<div id="section"> 
+  <div id="leftCol">
+    <p id="image"><img id="index_img" src='/static/img/bubblegum2.jpg' alt="splashpic"></p>
+  </div>
+	    
+  <div id="rightCol">
+    <p>Stitchpik is a picture to pattern converter. With it you can upload an image and have it transformed to either a cross-stitch, knitting,or crochet pattern.</p>
+    <p>If you decide to create an account, by      selecting "Register", you'll be able to save your   created patterns. If you already have an account "Login." Otherwise jump right into pattern making on the "Application" page.</p>
+  </div>
+</div>
   
-    <div class="col-sm-8"> 
-      <p id="image"><img id="index_img" src='/static/img/ship.png' alt="Ship"></p>
-    </div><!--column -->
-	  
-    <div class="col-sm-4">
-	  <p>Stitchpik is a picture to pattern converter.
-	  With it you can upload an image and have it
-	  transformed to either a cross-stitch, knitting,
-	  or crochet pattern.</p>
-	  <p>If you decide to create an account, by selecting "Register", you'll be able to save your created patterns. If you already have an account "Login." Otherwise jump right into pattern making on the "Application" page.</p>
-
-      <p><a class="btn btn-primary btn-lg" href='{% url "signup" %}' role="button">Join us now &raquo;</a></p>
-    </div><!--column -->
-	
-  </div><!--row -->
-</div><!--container-fluid-->   
-
-
 <div id="footer">
   <hr>
   <footer>
-    <p>Missouri State University CSC Students</p><!-- edit footer! -->
+    <p>Missouri State University CSC Students</p>
   </footer>
 </div><!--footer-->
 													
