@@ -18,6 +18,30 @@ class Picture: #class assumes input checking will occur before class creation
 				for y in range(result2.height):
 					for x in range(result2.width):
 						draw.rectangle((x*pixSize,y*pixSize,x*pixSize+(pixSize-1),y*pixSize+(pixSize-1)),fill=(result.palette[result2.array[y][x]][0], result.palette[result2.array[y][x]][1], result.palette[result2.array[y][x]][2]))
+						if(y>0):
+							greyHorizT = 0.299*result.palette[result2.array[y-1][x]][0] + 0.587*result.palette[result2.array[y-1][x]][1] + 0.114*result.palette[result2.array[y-1][x]][2]  
+							greyHorizB = 0.299*result.palette[result2.array[y][x]][0] + 0.587*result.palette[result2.array[y][x]][1] + 0.114*result.palette[result2.array[y][x]][2]  
+							maxValue = int(max(greyHorizT,greyHorizB))
+							minValue = int(min(greyHorizT,greyHorizB))
+							inside = maxValue - minValue
+							outside = 255-inside
+							if(inside > outside):
+								gval = minValue + inside // 2
+							else:
+								gval = (maxValue + outside // 2) % 256
+							draw.rectangle((x*pixSize,y*pixSize,x*pixSize+(pixSize-1),y*pixSize),fill=(gval,gval,gval))
+						if(x>0):
+							greyHorizL = 0.299*result.palette[result2.array[y][x-1]][0] + 0.587*result.palette[result2.array[y][x-1]][1] + 0.114*result.palette[result2.array[y][x-1]][2]  
+							greyHorizR = 0.299*result.palette[result2.array[y][x]][0] + 0.587*result.palette[result2.array[y][x]][1] + 0.114*result.palette[result2.array[y][x]][2]
+							maxValue = int(max(greyHorizL,greyHorizR))
+							minValue = int(min(greyHorizL,greyHorizR))
+							inside = maxValue - minValue
+							outside = 255-inside
+							if(inside > outside):
+								gval = minValue + inside // 2
+							else:
+								gval = (maxValue + outside // 2) % 256
+							draw.rectangle((x*pixSize,(y*pixSize)+1,x*pixSize,y*pixSize+(pixSize-1)),fill=(gval,gval,gval))
 				canvas.save(resultFile)
 			except:
 				print("pixelization error, check pixSize and resultFile")
