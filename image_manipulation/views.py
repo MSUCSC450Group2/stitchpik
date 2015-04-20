@@ -28,7 +28,7 @@ def imageUpload(request):
    
 def saveFormDataToCookie(form, response):
     setCookie(response, 'numberOfColors', int(form.cleaned_data['numberOfColors']))
-    setCookie(response, 'guageSize', float(form.cleaned_data['guageSize']))
+    setCookie(response, 'gaugeSize', float(form.cleaned_data['gaugeSize']))
     setCookie(response, 'canvasLength', float(form.cleaned_data['canvasLength']))
     setCookie(response, 'canvasWidth', float(form.cleaned_data['canvasWidth']))
     setCookie(response, 'knitType', int(form.cleaned_data['knitType']))
@@ -39,7 +39,7 @@ def isSavedCookieData(request):
 def getSavedCookieData(request):
     return ManipulateImageForm( {
         'numberOfColors':int(request.COOKIES['numberOfColors']),
-        'guageSize':float(request.COOKIES['guageSize']),
+        'gaugeSize':float(request.COOKIES['gaugeSize']),
         'canvasLength':float(request.COOKIES['canvasLength']),
         'canvasWidth':float(request.COOKIES['canvasWidth']),
         'knitType':int(request.COOKIES['knitType'])
@@ -49,7 +49,7 @@ def saveFormDataToSession(form, request):
     request.session.set_expiry(31536000) # one year
     request.session['savedFormOptions'] = {
         'numberOfColors': int(form.cleaned_data['numberOfColors']), 
-        'guageSize': float(form.cleaned_data['guageSize']), 
+        'gaugeSize': float(form.cleaned_data['gaugeSize']), 
         'canvasLength': float(form.cleaned_data['canvasLength']),
         'canvasWidth': float(form.cleaned_data['canvasWidth']), 
         'knitType': int(form.cleaned_data['knitType'])
@@ -61,7 +61,7 @@ def isSavedSessionData(request):
 def savedSessionData(savedOptions):
     return ManipulateImageForm(
             {'numberOfColors': int(savedOptions.get('numberOfColors')),
-             'guageSize': float(savedOptions.get('guageSize')),
+             'gaugeSize': float(savedOptions.get('gaugeSize')),
              'canvasLength': float(savedOptions.get('canvasLength')),
              'canvasWidth': float(savedOptions.get('canvasWidth')),
              'knitType': int(savedOptions.get('knitType')) }
@@ -91,7 +91,7 @@ def fetchApplication(request):
         if form.is_valid():
             requestImage = '../' + resultImage # django is preappending /media
             numColors = form.cleaned_data['numberOfColors']
-            pixSize = 8
+            pixSize = int(form.cleaned_data['gaugeSize'])
             pic = Picture(inputImage)
             pic.pixelate(numColors, pixSize, resultImage)
             cookieAction = 0;
