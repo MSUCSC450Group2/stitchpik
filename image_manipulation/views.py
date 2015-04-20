@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 import datetime
 from .forms import *
-from .manipulate_lib.imageclass import *
+from .manipulate_lib.pixelator import *
 from .models import Image
 from image_manipulation.models import Image
 import time
@@ -92,8 +92,8 @@ def fetchApplication(request):
             requestImage = '../' + resultImage # django is preappending /media
             numColors = form.cleaned_data['numberOfColors']
             pixSize = int(form.cleaned_data['gaugeSize'])
-            pic = Picture(inputImage)
-            pic.pixelate(numColors, pixSize, resultImage)
+            pixelatedImg = Pixelator(inputImage)
+            pixelatedImg.pixelate(numColors, pixSize, resultImage)
             cookieAction = 0;
         else:
             cookieAction = 1
