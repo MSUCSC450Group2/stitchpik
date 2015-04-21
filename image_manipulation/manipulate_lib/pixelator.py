@@ -3,14 +3,21 @@ import sys
 from .kmeans import *
 from .pixel import *
 
-class Picture: #class assumes input checking will occur before class creation
+class Pixelator: #class assumes input checking will occur before class creation
 	def __init__(self, imgfile):
 		self.file = imgfile
 		self.img = Image.open(imgfile)
-
+		self.pal = ""
 	def pixelate(self, numColors, pixSize, resultFile):# numcolors, and pixelsize are integers, the desired number of colors and pixelation block size. resultfile is the location to save the resulting pixelated image
 		try:
 			result = scanalyze(self.img, numColors)
+			for c in range(len(result.palette)):
+				if c > 0:
+					self.pal += ','
+				self.pal += "#"
+				self.pal += hex(result.palette[c][0])[2:].zfill(2)
+				self.pal += hex(result.palette[c][1])[2:].zfill(2)
+				self.pal += hex(result.palette[c][2])[2:].zfill(2)
 			try:
 				result2 = pixelate(result.image, result.width, result.height, numColors, pixSize)
 				canvas = Image.new(size=(result2.width*pixSize,result2.height*pixSize),mode="RGB")

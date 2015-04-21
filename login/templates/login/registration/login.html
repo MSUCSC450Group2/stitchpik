@@ -8,9 +8,10 @@
 
 	        {% if form.errors %}		
 		        <div class="alert alert-danger" role="alert">
-				        <span class="glyphicon glyphicon-exclamation-sign"></span>
+			{% load staticfiles %}
+			<img src="{% static 'img/error_red_triangle_20.png' %}" label="!"/>
                         <span class="sr-only">Error</span>
-                        Your username and password didn't match. Please try again.
+                        <p>Your username and password didn't match. Please try again.</p>
 		        </div>
 	        {% endif %}
 
@@ -37,7 +38,6 @@
 	    
 		<!--<p><a href="/accounts/password_change">change password</a></p>-->
 		<!--<p><a href="/accounts/password_reset">forgot password</a></p>-->
-	    
        
 	  </div>
        </div>

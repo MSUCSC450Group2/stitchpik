@@ -1,11 +1,21 @@
 @import url(http://fonts.googleapis.com/css?family=Lemon);
 
 body{
+<<<<<<< HEAD
   font-family: sans-serif;
+=======
+  font-family: Lemon, Serif;
+>>>>>>> cd4ca1dc486c82e7aa6d7f022f36313686efed56
   background: none;
   background-color: #FFFFFF;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+/* template error rep */
+ul.errorlist {
+    list-style:none;
+    padding-left:0;
 }
 
 /*navbar*/
