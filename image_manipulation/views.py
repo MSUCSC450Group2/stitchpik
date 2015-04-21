@@ -94,6 +94,7 @@ def fetchApplication(request):
             pixSize = int(form.cleaned_data['gaugeSize'])
             pixelatedImg = Pixelator(inputImage)
             pixelatedImg.pixelate(numColors, pixSize, resultImage)
+            print(pixelatedImg.pal)
             cookieAction = 0;
         else:
             cookieAction = 1
