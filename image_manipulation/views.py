@@ -88,6 +88,8 @@ def deleteSavedFormCookieData(response):
 
 @login_required
 def fetchApplication(request):
+    imgUploadForm = imageUpload(request) # upload image first
+
     inputImage = Image.latestUserImageFile(request.user)
     resultImage = 'media/' + Image.resultImageLocation(inputImage, request.user)
     requestImage = inputImage
@@ -114,7 +116,7 @@ def fetchApplication(request):
             form  = ManipulateImageForm()
 
     response = render_to_response(applicationPage(), {
-                              'imgForm': imageUpload(request),
+                              'imgForm': imgUploadForm, #imageUpload(reques
                               'form': form,
                               'image': requestImage },
                               context_instance = RequestContext(request))
