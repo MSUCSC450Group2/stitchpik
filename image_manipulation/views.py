@@ -27,6 +27,8 @@ def imageUpload(request):
     return imgForm
    
 def saveFormDataToCookie(form, response):
+    deleteSavedFormCookieData(response)
+
     setCookie(response, 'numberOfColors', int(form.cleaned_data['numberOfColors']))
     setCookie(response, 'gaugeSize', float(form.cleaned_data['gaugeSize']))
     setCookie(response, 'canvasLength', float(form.cleaned_data['canvasLength']))
@@ -77,8 +79,12 @@ def setCookie(response, key, value, days_expire = 365):
 
     response.set_cookie(key, value, max_age=max_age, expires=expires)
 
-def deleteCookie(response):
-    response.delete_cookie('savedFormOptions')
+def deleteSavedFormCookieData(response):
+    response.delete_cookie('numberOfColors')
+    response.delete_cookie('gaugeSize')
+    response.delete_cookie('canvasLength')
+    response.delete_cookie('canvasWidth')
+    response.delete_cookie('knitType')
 
 @login_required
 def fetchApplication(request):
