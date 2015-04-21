@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Lemon);
 
 body{
-  font-family: Lemon, Serif;
+  font-family: sans-serif;
   background: none;
   background-color: #FFFFFF;
   background-size: cover;
@@ -11,6 +11,10 @@ body{
 /*navbar*/
 nav {	/*navigation bar*/
   font-size: 1.5em;
+}
+
+nav a {
+  color: #FFFFFF;
 }
 
 .navbar.navbar-inverse.navbar-fixed-top{
