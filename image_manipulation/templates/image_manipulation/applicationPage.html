@@ -1,6 +1,8 @@
 {% extends "image_manipulation/imageManipBase.html" %}
 {% block title %}Application{% endblock %}
-{% block head %}{% endblock %}
+{% block style %}
+{% endblock %}
+
 {% block content %}
 <hr>
 
@@ -36,6 +38,22 @@
   </form>
     </div>
   <hr>
+    <div id=imageChooser class="well">
+        <form id="imageChooserForm" method="post" action=".">
+        {% csrf_token %}
+        <div class="">
+        {{ chooseform.chosenImage }}
+        </div>
+    <button id="showChooser">Choose a different image</button>
+    <div id="imagechoices" class="well">
+    {% load staticfiles %}
+    {% for picture in imagegallery %}
+        <img class="imageList" src="../media/{{picture.imgFile}}" alt="{{picture.imgFile}}" />
+    {% endfor %}
+    <input type="submit"  value="Change Image" />
+        </div>  
+    </form>
+    </div>
   <div class="well">
     <form id='my_form' method="post" action=".">
       {% csrf_token %}
@@ -58,24 +76,6 @@
 </div>
 {% endblock %}
 {% block script %}
-<script>
-
-$(function(){
-    $('#my_form').submit(function(event){
-       
-       $('#loadingimage').show();
-        $('#userimage').hide();
-        $('.well').hide();
-        $('.imageupload').hide();
-          
-    });
-
-});
-S(document).ready(function(){
-       $('#userimage').hide();
-       $('#loadingimage').hide();
-        $('#userimage').show(); 
-        alert('reloaded');
-});
-</script>
+<script src="{% static "/static/js/ApplicationPage.js" %}"></script>
+    
 {% endblock %}

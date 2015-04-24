@@ -9,6 +9,29 @@ from .models import Image
 from image_manipulation.models import Image
 import time
 
+def getUserImages(request):
+    if request.method == 'POST':
+        chooseform = ChooseImageForm(request.POST)
+        if chooseform.is_valid():
+            gallery = Image.userImages(request.user)
+            imagesDiv=""
+            for x in gallery:
+                imagesDiv=imagesDiv + '<img src="../media/'+ str(x.imgFile) +'"/>'
+            resultImage = 'media/result.jpg'
+            #requestImage = request.chosenImage
+            form = ManipulateImageForm()
+           
+            return render_to_response(applicationPage(), {'imgForm': imageUpload(request), 
+                                  'form' : form, 
+                                  'imagegallery' : gallery, 
+                                   'chooseform' : ChooseImageForm(),
+                                    
+                                  'image' : chooseform.cleaned_data['chosenImage'] },
+                                  context_instance = RequestContext(request))   
+    else:    
+        chooseform=ChooseImageForm()
+    return chooseform
+
 def applicationPage():
     return 'image_manipulation/applicationPage.html'
 
@@ -25,6 +48,9 @@ def imageUpload(request):
         imgForm = ImageUploadForm()
     return imgForm
    
+
+    
+    
 def saveFormDataToSession(form, request):
     request.session.set_expiry(31536000) # one year
     request.session['savedFormOptions'] = {
@@ -50,11 +76,21 @@ def savedSessionData(savedOptions):
 @login_required
 def fetchApplication(request):
     inputImage = Image.latestUserImageFile(request.user)
+    #imagechooser setup
+    
+    gallery = Image.userImages(request.user)
+    imagesDiv=""
+    for x in gallery:
+        imagesDiv=imagesDiv + '<img src="../media/'+ str(x.imgFile) +'"/>'
     resultImage = 'media/result.jpg'
     requestImage = inputImage
+    imgForm = ChooseImageForm(request.POST)
+    if imgForm.is_valid():
+        print(imgForm.cleaned_data['chosenImage'])
+        requestImage=imgForm.cleaned_data['chosenImage']
 
     if request.method == 'POST':
-        form = ManipulateImageForm(request.POST) 
+        form = ManipulateImageForm(request.POST)     
         if form.is_valid():
             requestImage = '../' + resultImage
             numColors = form.cleaned_data['numberOfColors']
@@ -64,7 +100,7 @@ def fetchApplication(request):
             #time.sleep(5) #TODO: REPLACE WITH JQUERY
             saveFormDataToSession(form, request)
         else:
-            form = ManipulateImageForm()
+                
             if isSavedSessionData(request):
                 savedOptions = request.session.get('savedFormOptions')
                 form = savedSessionData(savedOptions)
@@ -74,9 +110,13 @@ def fetchApplication(request):
             form = savedSessionData(savedOptions)
         else:
             form = ManipulateImageForm()
+            
 
     return render_to_response(applicationPage(), {'imgForm': imageUpload(request), 
                               'form' : form, 
+                              'imagegallery' : gallery, 
+                               'chooseform' : getUserImages(request),
+                              
                               'image' : requestImage },
                               context_instance = RequestContext(request))
 
