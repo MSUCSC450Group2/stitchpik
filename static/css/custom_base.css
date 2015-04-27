@@ -1,7 +1,11 @@
 @import url(http://fonts.googleapis.com/css?family=Lemon);
 
 body{
+<<<<<<< HEAD
+  font-family: sans-serif;
+=======
   font-family: Lemon, Serif;
+>>>>>>> cd4ca1dc486c82e7aa6d7f022f36313686efed56
   background: none;
   background-color: #FFFFFF;
   background-size: cover;
@@ -17,6 +21,10 @@ ul.errorlist {
 /*navbar*/
 nav {	/*navigation bar*/
   font-size: 1.5em;
+}
+
+nav a {
+  color: #FFFFFF;
 }
 
 .navbar.navbar-inverse.navbar-fixed-top{

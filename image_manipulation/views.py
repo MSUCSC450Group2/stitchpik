@@ -91,7 +91,9 @@ def fetchApplication(request):
     imgUploadForm = imageUpload(request) # upload image first
 
     inputImage = Image.latestUserImageFile(request.user)
+
     resultImage = 'media/' + Image.resultImageLocation(inputImage, request.user)
+
     requestImage = inputImage
     pixelPal = ""
 

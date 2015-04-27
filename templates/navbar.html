@@ -1,3 +1,7 @@
+<style>
+li {display: inline; margin-right: 10px; color: #FFFFFF;}
+#navImg {display: inline; vertical-align: middle;}
+</style>
 <div class="container">
   <nav class="navbar navbar-inverse navbar-fixed-top">
 
@@ -9,10 +13,11 @@
       <a class="navbar-brand" href="#"></a>
     </div>
     
-    <div id="navbar" class="collapse navbar-collapse">
+    <div id="navbar" class="collapse navbar-collapse">     
       <ul class="nav navbar-nav">
-        <li><a href="#"><img id="logo" src='/static/img/logo_s.png' alt="logo"></a></li>
-        <li><a href='{% url "index" %}'>HOME</a></li>
+	  <span id="navImg">
+	  <li><a href='{% url "index" %}'><img id="logo" src='/static/img/stitchPikLogo.png' alt="logo" width="150px" height="50px"></a>
+	  </span>
         {% if user.is_authenticated %}
           <li><a href="#">User: {{ user.username }}</a></li>
           <li><a href="/logout/">LOGOUT</a></li>

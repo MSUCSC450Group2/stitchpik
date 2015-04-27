@@ -11,7 +11,7 @@ from django.core.urlresolvers import reverse
 
 def index(request):
   return render_to_response("index.html", locals(),
-			    context_instance = RequestContext(request))
+            context_instance = RequestContext(request))
 
 
 def loginTry(request):
@@ -23,9 +23,13 @@ def loginTry(request):
 
     # check the authentication
     user = authenticate(username=request.POST.get('username', None), password=request.POST.get('password', None))
+
     if user is not None:
         if user.is_active:
             login(request, user)
+
+            checkRememberMe(request)
+
             # redirect to success page
             return render(request, 'login/loginSuccess.html')
         else:
@@ -34,6 +38,12 @@ def loginTry(request):
     else:
         variables = RequestContext(request, { 'form':form })
         return render_to_response('login/registration/login.html', variables)
+
+def checkRememberMe(request):
+    rememberMeOption = request.POST.get('rememberMe', False) == 'on' if True else False
+    if not rememberMeOption:
+        request.session.set_expiry(0)
+
 
 def registration(request):
     if request.method == 'POST':
@@ -45,6 +55,7 @@ def registration(request):
             username=form.cleaned_data['username'],
             password=form.cleaned_data['password1'],
             email=form.cleaned_data['email'])
+
             return HttpResponseRedirect('/registration/success/')
     else:
         form = RegistrationForm()
@@ -58,12 +69,4 @@ def registrationSuccess(request):
 def logoutPage(request):
     logout(request)
     return HttpResponseRedirect('/')
-
-#@login_required
-#def home(request):
-#    return render_to_response('login/index.html', { 'user':request.user })
-
-
-
-
 
