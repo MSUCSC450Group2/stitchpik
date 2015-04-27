@@ -54,8 +54,7 @@ def registration(request):
             # Not sure if it checks uniqueness of user name
             username=form.cleaned_data['username'],
             password=form.cleaned_data['password1'],
-            email=form.cleaned_data['email'],
-            rememberMe=form.cleaned_data['rememberMe'])
+            email=form.cleaned_data['email'])
 
             return HttpResponseRedirect('/registration/success/')
     else:
