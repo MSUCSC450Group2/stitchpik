@@ -5,12 +5,42 @@
 <hr>
 
 <div class="container-fluid">
+  <!--The form -->
+    <form id='my_form' method="post" action=".">
+
+	{% csrf_token %}
+      <fieldset>
+	<legend>Colors</legend>
+	<label># of Colors{{ form.numberOfColors }}</label>
+      </fieldset>
+      <fieldset>
+	<legend>Gauge</legend>
+	<label>sts/in{{ form.gaugeSize }}</label>
+      </fieldset>
+      <fieldset>
+	<legend>Project Size</legend>
+	<label>Width(in){{ form.canvasLength }}</label>
+	<label>Height(in){{ form.canvasWidth }}</label>
+      </fieldset>
+      <fieldset>
+	<legend>Stitches</legend>
+	<label class="radio">Type{{ form.knitType }}</label>
+      </fieldset>
+      <fieldset>
+        <legend>Submit Changes</legend>
+	<input type="submit" class="btn btn-primary render" value="Render"/>
+      </fieldset>
+    </form>
+
+
+
+
   <div id="userimage">
     <!-- image canvas -->
     <div>
       {# will have django img var here #}
       {% load staticfiles %}
-      <img class="delay" src="../media/{{ image }}" alt="image" />
+      <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
     </div>
   </div>
   <div hidden id="loadingimage">
@@ -22,6 +52,7 @@
     </div>
         Image is Processing. Please Wait.
   </div>
+
   <div class="imageupload" >
   <!-- Upload form. Note enctype attribute! -->
   <form method="post" classaction="." enctype="multipart/form-data">
@@ -38,24 +69,7 @@
   </form>
   </div>
   <hr>
-  <div class="well">
-    <form id='my_form' method="post" action=".">
-      {% csrf_token %}
-      <div>
-        <h4>Number of Colors</h4>
-        {{ form.numberOfColors }}
-        <h4>Gauge Size</h4>
-        {{ form.gaugeSize }}
-        <h4>Width (in)</h4>
-        {{ form.canvasLength }}
-        <h4>Height (in)</h4>
-        {{ form.canvasWidth }}
-        <h4>Knit Type</h4>
-        {{ form.knitType }}
-      </div>
-      <input type="submit" class="btn btn-primary" value="Render" />
-    </form>
-  </div>
+  
 </div>
 {% endblock %}
 {% block script %}
