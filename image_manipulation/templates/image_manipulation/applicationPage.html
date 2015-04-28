@@ -45,9 +45,9 @@
         <h4>Number of Colors</h4>
         {{ form.numberOfColors }}
         <h4>Gauge Size</h4>
-        {{ form.gaugeSize }}
+        {{ form.gaugeSize }}<a href="{% url 'instructions' %}#instr" name="app">Instructions</a>
         <h4>Width (in)</h4>
-        {{ form.canvasLength }}
+        {{ form.canvasLength }}<a href="{% url 'instructions' %}#convert" name="inch">Convert centimeters to inches</a>
         <h4>Height (in)</h4>
         {{ form.canvasWidth }}
         <h4>Knit Type</h4>
