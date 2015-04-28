@@ -95,6 +95,7 @@ def fetchApplication(request):
     resultImage = 'media/' + Image.resultImageLocation(inputImage, request.user)
 
     requestImage = inputImage
+    pixelPal = ""
 
     if request.method == 'POST':
         form = ManipulateImageForm(request.POST) 
@@ -104,7 +105,7 @@ def fetchApplication(request):
             pixSize = int(form.cleaned_data['gaugeSize'])
             pixelatedImg = Pixelator(inputImage)
             pixelatedImg.pixelate(numColors, pixSize, resultImage)
-            print(pixelatedImg.pal)
+            pixelPal = pixelatedImg.pal
             cookieAction = 0;
         else:
             cookieAction = 1
@@ -121,10 +122,14 @@ def fetchApplication(request):
     response = render_to_response(applicationPage(), {
                               'imgForm': imgUploadForm, #imageUpload(reques
                               'form': form,
-                              'image': requestImage },
+                              'image': requestImage,
+                              'colorList': pixelPal},
                               context_instance = RequestContext(request))
 
     # Save any valid data to cookie
     if cookieAction == 0:
         saveFormDataToCookie(form, response)
     return response
+  
+def instructions(request):
+    return render_to_response('image_manipulation/instructions.html')

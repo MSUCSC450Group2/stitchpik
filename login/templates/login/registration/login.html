@@ -6,14 +6,14 @@
         <form method="post" action="." class="form-signin">
             <h4 class="form-signin-heading">Please sign in</h4>
 
-	        {% if form.errors %}		
-		        <div class="alert alert-danger" role="alert">
-			{% load staticfiles %}
-			<img src="{% static 'img/error_red_triangle_20.png' %}" label="!"/>
-                        <span class="sr-only">Error</span>
-                        <p>Your username and password didn't match. Please try again.</p>
-		        </div>
-	        {% endif %}
+            {% if form.errors %}        
+            <div class="alert alert-danger" role="alert">
+                {% load staticfiles %}
+                <img src="{% static 'img/error_red_triangle_20.png' %}" label="!"/>
+                <span class="sr-only">Error</span>
+                <p>Your username and password didn't match. Please try again.</p>
+            </div>
+            {% endif %}
 
             {% csrf_token %}
             <label for="id_username" class="">Username</label>
@@ -22,28 +22,29 @@
             <label for="id_password" class="">Password</label>
             <input type="password" name="password" value="" size="30" placeholder="...."  class="form-control" required/>
 
+            <div class="control-group text-center">
+                {{ form.rememberMe.label_tag }}{{ form.rememberMe }}
+            </div>
+
             <div class="control-group">
-            <p id="btn"><button type="submit" class="btn btn-lg btn-primary btn-block" value="Login" />Login</button></p>
-            <input type="hidden" name="next" value="/index/" />
+                 <p id="btn"><button type="submit" class="btn btn-lg btn-primary btn-block" value="Login" />Login</button></p>
+                <input type="hidden" name="next" value="/index/" />
             </div>
         </form>   
 
         <div class="row">
             <div class="col-xs-12">
-		<button onclick="location.href='/registration/'" class="btn btn-default btn-lg btn-block">Sign up here</button>
-	
-	
-	<!--Change/reset password links-->
-		<button onclick="location.href='/accounts/password_reset'" class="btn btn-default btn-lg btn-block">Can`t remember your password?</button>
-	    
-		<!--<p><a href="/accounts/password_change">change password</a></p>-->
-		<!--<p><a href="/accounts/password_reset">forgot password</a></p>-->
+        <button onclick="location.href='/registration/'" class="btn btn-default btn-lg btn-block">Sign up here</button>
+    
+    
+    <!--Change/reset password links-->
+        <button onclick="location.href='/accounts/password_reset'" class="btn btn-default btn-lg btn-block">Can`t remember your password?</button>
        
-	  </div>
-       </div>
+            </div>
+        </div>
     </div>
-	
-	
-	
-	
+    
+    
+    
+    
 {% endblock %}

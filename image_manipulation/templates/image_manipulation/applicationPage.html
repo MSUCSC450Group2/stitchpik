@@ -70,6 +70,26 @@
   </div>
   <hr>
   
+
+  <div class="well">
+    <form id='my_form' method="post" action=".">
+      {% csrf_token %}
+      <div>
+        <h4>Number of Colors</h4>
+        {{ form.numberOfColors }}
+        <h4>Gauge Size</h4>
+        {{ form.gaugeSize }}<a href="{% url 'instructions' %}#instr" name="app">Instructions</a>
+        <h4>Width (in)</h4>
+        {{ form.canvasLength }}<a href="{% url 'instructions' %}#convert" name="inch">Convert centimeters to inches</a>
+        <h4>Height (in)</h4>
+        {{ form.canvasWidth }}
+        <h4>Knit Type</h4>
+        {{ form.knitType }}
+      </div>
+      <input type="submit" class="btn btn-primary" value="Render" />
+    </form>
+  </div>
+
 </div>
 {% endblock %}
 {% block script %}
