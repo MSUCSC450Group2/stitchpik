@@ -130,3 +130,6 @@ def fetchApplication(request):
     if cookieAction == 0:
         saveFormDataToCookie(form, response)
     return response
+  
+def instructions(request):
+    return render_to_response('image_manipulation/instructions.html')
