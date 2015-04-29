@@ -9,6 +9,7 @@ from .manipulate_lib.pixelator import *
 from .models import Image
 from image_manipulation.models import Image
 import time
+import random
 
 def applicationPage():
     return 'image_manipulation/applicationPage.html'
@@ -89,6 +90,10 @@ def deleteSavedFormCookieData(response):
 @login_required
 def fetchApplication(request):
     imgUploadForm = imageUpload(request) # upload image first
+    
+    # hidden form logic that will change what the hidden form is
+    options = ["hi", "world", ""]
+    hiddenPostVal = options[random.randrange(0,3)]
 
     inputImage = Image.latestUserImageFile(request.user)
 
@@ -100,6 +105,8 @@ def fetchApplication(request):
     if request.method == 'POST':
         form = ManipulateImageForm(request.POST) 
         if form.is_valid():
+            print("the current hidden value is " + form.cleaned_data['hiddenVal'])
+            hiddenPostVal = form.cleaned_data['hiddenVal'] # if rendering then keep valiue
             requestImage = '../' + resultImage # django is preappending /media
             numColors = form.cleaned_data['numberOfColors']
             pixSize = int(form.cleaned_data['gaugeSize'])
@@ -123,6 +130,7 @@ def fetchApplication(request):
                               'imgForm': imgUploadForm, #imageUpload(reques
                               'form': form,
                               'image': requestImage,
+                              'hiddenPostVal': hiddenPostVal,
                               'colorList': pixelPal},
                               context_instance = RequestContext(request))
 

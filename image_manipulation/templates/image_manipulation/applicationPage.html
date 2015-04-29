@@ -26,14 +26,16 @@
 	<legend>Stitches</legend>
 	<label class="radio">Type{{ form.knitType }}</label>
       </fieldset>
+      {% if hiddenPostVal == "" %}
+        <input type="text" hidden id="id_hiddenVal" name="hiddenVal" value=""/>
+      {% else %}
+        <input type="text" hidden id="id_hiddenVal" name="hiddenVal" value="{{ hiddenPostVal }}"/>
+      {% endif %}
       <fieldset>
         <legend>Submit Changes</legend>
 	<input type="submit" class="btn btn-primary render" value="Render"/>
       </fieldset>
     </form>
-
-
-
 
   <div id="userimage">
     <!-- image canvas -->
@@ -69,26 +71,6 @@
   </form>
   </div>
   <hr>
-  
-
-  <div class="well">
-    <form id='my_form' method="post" action=".">
-      {% csrf_token %}
-      <div>
-        <h4>Number of Colors</h4>
-        {{ form.numberOfColors }}
-        <h4>Gauge Size</h4>
-        {{ form.gaugeSize }}<a href="{% url 'instructions' %}#instr" name="app">Instructions</a>
-        <h4>Width (in)</h4>
-        {{ form.canvasLength }}<a href="{% url 'instructions' %}#convert" name="inch">Convert centimeters to inches</a>
-        <h4>Height (in)</h4>
-        {{ form.canvasWidth }}
-        <h4>Knit Type</h4>
-        {{ form.knitType }}
-      </div>
-      <input type="submit" class="btn btn-primary" value="Render" />
-    </form>
-  </div>
 
 </div>
 {% endblock %}
