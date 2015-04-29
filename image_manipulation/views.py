@@ -132,4 +132,4 @@ def fetchApplication(request):
     return response
   
 def instructions(request):
-    return render_to_response('image_manipulation/instructions.html')
+    return render_to_response('image_manipulation/instructions.html', context_instance=RequestContext(request))
