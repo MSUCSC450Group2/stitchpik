@@ -54,7 +54,7 @@
   </div>
   <div hidden id="loadingimage">
     <!-- image canvas -->
-    <div>
+    <div class="autoresize">
       {# will have django img var here #}
       {% load staticfiles %}
       <img class="delay" src="{% static "/static/image_manipulation/img/loading.gif" %}" alt="image" />
@@ -74,7 +74,7 @@
       </div>
     {% endif %}
     {{ imgForm.imgFile }}
-    <input type="submit" value="Upload" />
+	<input type="submit" value="Upload" />
   </form>
   </div>
   <hr>
