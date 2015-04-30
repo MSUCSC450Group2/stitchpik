@@ -1,12 +1,14 @@
-import Image
 import PIL
+from PIL import Image
+import os
 
-def reSize(image,option):
+def reSize(imgFile,option):
     '''
-    Assumes first parameter image is already a image object
+    Assumes first parameter image is a file path to the image
     Option can be either a string in the from a XUnit:YUnit ratio
     or a tuple containing (newWidth,newHeight)
     '''
+    image = Image.open(imgFile)
     if(type(option) == str):  # Scale by ratio
         index = option.find(":")  # finds the index of : in width:height
         if(index == -1): # ':' not found, wrong format
@@ -24,9 +26,12 @@ def reSize(image,option):
         elif(option[0] <= 0 or option[1] <= 0):
             raise ValueError("desired height and width must be greater than zero")
         newImage = image.resize((option[0],option[1]))
+        pathInfo = str(imgFile).split('.',1)
+        newPath = "media/" + pathInfo[0] + "copy." + pathInfo[1] 
+        newImage.save(newPath)
     else:
         raise TypeError("second argument must be an string or a tuple")
-    return newImage
+    return newPath
 
 
 def scale(image,xUnit,yUnit):

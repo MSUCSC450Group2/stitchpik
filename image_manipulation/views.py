@@ -7,8 +7,9 @@ import datetime
 from .forms import *
 from .manipulate_lib.pixelator import *
 from .models import Image
-from image_manipulation.models import Image
+from .manipulate_lib.sizemanip import reSize
 import time
+
 
 def applicationPage():
     return 'image_manipulation/applicationPage.html'
@@ -88,6 +89,7 @@ def deleteSavedFormCookieData(response):
 
 @login_required
 def fetchApplication(request):
+    
     imgUploadForm = imageUpload(request) # upload image first
 
     inputImage = Image.latestUserImageFile(request.user)
@@ -103,6 +105,9 @@ def fetchApplication(request):
             requestImage = '../' + resultImage # django is preappending /media
             numColors = form.cleaned_data['numberOfColors']
             pixSize = int(form.cleaned_data['gaugeSize'])
+            imgWidth = 96 * int(form.cleaned_data['canvasWidth'])
+            imgHeight = 96 * int(form.cleaned_data['canvasLength'])
+            inputImage = reSize(inputImage,(imgWidth,imgHeight))
             pixelatedImg = Pixelator(inputImage)
             pixelatedImg.pixelate(numColors, pixSize, resultImage)
             pixelPal = pixelatedImg.pal
