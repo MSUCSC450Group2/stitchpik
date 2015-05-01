@@ -3,6 +3,7 @@
 {% block script %}<script src="/static/js/instructions.js"></script>{% endblock %}
 {% block content %}
 
+<br /><br />
 
 <div class="container-fluid">
    <h1>Instructions</h1>
@@ -50,7 +51,7 @@
 			  var numStitches = parseInt(document.getElementById("numStitches").value);
 			  var height = parseFloat(document.getElementById("sampleHeight").value);
 			  var numRows = parseInt(document.getElementById("numRows").value);
-			  var result = Math.abs(((width/numStitches)+(height/numRows))/2);
+			  var result = ((Math.abs(width/numStitches)+Math.abs(height/numRows))/2);
 			  if(result){
 			      document.getElementById("gaugeSize").innerHTML = result.toFixed(2);}
 			  else{
@@ -105,7 +106,18 @@
     </div>
     
   </div>
+
   
+  
+  <div>
+  <hr/>
+  <h3>Need to learn basics?</h3>
+	      <h4>For knitting and crochet</h4>
+		  <a href="http://pattern-knit.com/index.html"  name="links">http://pattern-knit.com/index.html</a><br/>
+	      <h4>For cross stitching</h4>
+		  <a href="http://crossstitch.about.com">http://crossstitch.about.com</a><br/>
+		  <hr/>
+  </div>
   
 </div>
 
