@@ -39,6 +39,13 @@
         <label class="radio">Type{{ form.knitType }}</label>
       </fieldset>
       <fieldset>
+  <legend>Select colors</legend>
+    {{ form.colorSelect }}
+    <input type="text" id="colorList" hidden name="colorList" value="{{ cList }}"/>
+    <div class="colorBox" id="box"></div>
+      </fieldset>
+
+      <fieldset>
         <legend>Submit Changes</legend>
 	<input type="submit" class="btn btn-primary render" value="Render"/>
       </fieldset>
@@ -48,11 +55,7 @@
     <!-- image canvas -->
     <div>
       {# will have django img var here #}
-<<<<<<< HEAD
-      <img class="delay" src="{% static "/static/image_manipulation/img/loading.gif" %}" alt="image" />
-=======
       <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
->>>>>>> 5022e7b4796ad09b002fdf42fcb228b8dcd8d291
     </div>
   </div>
 
@@ -71,10 +74,9 @@
 	<input type="submit" value="Upload" />
   </form>
   </div>
-<<<<<<< HEAD
   <hr>
   <div class="well">
-    <form id='my_form' method="post" action=".">
+    <!-- <form id='my_form' method="post" action=".">
       {% csrf_token %}
       <div>
         <h4>Number of Colors</h4>
@@ -87,14 +89,9 @@
         {{ form.canvasWidth }}
         <h4>Knit Type</h4>
         {{ form.knitType }}
-        <h4>Select colors</h4>
-        {{ form.colorSelect }}
-        <input type="text" id="colorList" hidden name="colorList" value="{{ cList }}"/>
-      	<div class="colorBox" id="box"></div>
-      </div>
+              </div>
       <input type="submit" class="btn btn-primary" value="Render" />
-    </form>
-=======
+    </form> -->
   <div id="instructionsArea" class="row">
     {% if instructions == "" %}
     {% else %}
@@ -106,7 +103,6 @@
   <div id="help">
     <h4>Need to learn basics?</h4>
     <a href="{% url 'instructions' %}#links">Useful links</a>
->>>>>>> 5022e7b4796ad09b002fdf42fcb228b8dcd8d291
   </div>
 
 </div>

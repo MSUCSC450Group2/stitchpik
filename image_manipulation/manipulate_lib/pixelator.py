@@ -85,8 +85,6 @@ class Pixelator: #class assumes input checking will occur before class creation
     except:
       print("Error from scanalyze function, check numColors or imagefile")
 
-<<<<<<< HEAD
-
   def palettize(self, palette, pixSize, resultFile):
     result = palletize(self.img,palette)
     result2 = pixelate(result.image, result.width, result.height, len(palette), pixSize)
@@ -120,6 +118,5 @@ class Pixelator: #class assumes input checking will occur before class creation
             gval = (maxValue + outside // 2) % 256
           draw.rectangle((x*pixSize,(y*pixSize)+1,x*pixSize,y*pixSize+(pixSize-1)),fill=(gval,gval,gval))
     canvas.save(resultFile)
-=======
->>>>>>> 5022e7b4796ad09b002fdf42fcb228b8dcd8d291
+    return palette
 

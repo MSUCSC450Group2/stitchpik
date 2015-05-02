@@ -106,42 +106,36 @@ def fetchApplication(request):
     if request.method == 'POST':
         form = ManipulateImageForm(request.POST) 
         if form.is_valid():
-<<<<<<< HEAD
             getPalette = request.POST['colorList']
             if(getPalette == "" or request.POST['colorSelect'] == '0'):
                 requestImage = '../' + resultImage # django is preappending /media
                 numColors = form.cleaned_data['numberOfColors']
                 pixSize = int(form.cleaned_data['gaugeSize'])
+                imgWidth = 96 * int(form.cleaned_data['canvasWidth'])
+                imgHeight = 96 * int(form.cleaned_data['canvasLength'])
+                inputImage = reSize(inputImage,(imgWidth,imgHeight))
                 pixelatedImg = Pixelator(inputImage)
-                pixelatedImg.pixelate(numColors, pixSize, resultImage)
+                numPie = pixelatedImg.pixelate(numColors, pixSize, resultImage)
                 pixelPal = pixelatedImg.pal
-                cookieAction = 0;
+                dasInstructions = generateInstructions(form.cleaned_data['knitType'], numPie)
+                cookieAction = 0
             else:
                 requestImage = '../' + resultImage # django is preappending /media
-                pixelatedImg = Pixelator(inputImage)
                 pixSize = int(form.cleaned_data['gaugeSize'])
+                imgWidth = 96 * int(form.cleaned_data['canvasWidth'])
+                imgHeight = 96 * int(form.cleaned_data['canvasLength'])
+                inputImage = reSize(inputImage,(imgWidth,imgHeight))
+                pixelatedImg = Pixelator(inputImage)
                 palItems = getPalette.split(',')
                 tempPal = np.zeros((len(palItems),3),dtype=int)
                 for i in range(len(palItems)):
                     tempPal[i][0] = int(palItems[i][1:3],16)
                     tempPal[i][1] = int(palItems[i][3:5],16)
                     tempPal[i][2] = int(palItems[i][5:7],16)
-                pixelatedImg.palettize(tempPal, pixSize, resultImage)
+                numPie = pixelatedImg.palettize(tempPal, pixSize, resultImage)
                 pixelPal = getPalette
+                dasInstructions = generateInstructions(form.cleaned_data['knitType'], numPie)
                 cookieAction = 0
-=======
-            requestImage = '../' + resultImage # django is preappending /media
-            numColors = form.cleaned_data['numberOfColors']
-            pixSize = int(form.cleaned_data['gaugeSize'])
-            imgWidth = 96 * int(form.cleaned_data['canvasWidth'])
-            imgHeight = 96 * int(form.cleaned_data['canvasLength'])
-            inputImage = reSize(inputImage,(imgWidth,imgHeight))
-            pixelatedImg = Pixelator(inputImage)
-            numPie = pixelatedImg.pixelate(numColors, pixSize, resultImage)
-            pixelPal = pixelatedImg.pal
-            dasInstructions = generateInstructions(form.cleaned_data['knitType'], numPie)
-            cookieAction = 0;
->>>>>>> 5022e7b4796ad09b002fdf42fcb228b8dcd8d291
         else:
             cookieAction = 1
     else:
@@ -158,12 +152,9 @@ def fetchApplication(request):
                               'imgForm': imgUploadForm, #imageUpload(reques
                               'form': form,
                               'image': requestImage,
-<<<<<<< HEAD
-                              'cList': pixelPal},
-=======
+                              'cList': pixelPal,
                               'colorList': pixelPal,
                               'instructions': dasInstructions},
->>>>>>> 5022e7b4796ad09b002fdf42fcb228b8dcd8d291
                               context_instance = RequestContext(request))
 
     # Save any valid data to cookie
