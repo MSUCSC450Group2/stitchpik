@@ -192,6 +192,10 @@ nav a {
 	display: block;
 }
 
+#help {
+	margin-bottom:20px;
+}
+
 .render {
 	margin-bottom: 10px;
 }

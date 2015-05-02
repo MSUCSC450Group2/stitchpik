@@ -78,8 +78,10 @@ class Pixelator: #class assumes input checking will occur before class creation
                              y*pixSize + (pixSize-1)),
                              fill=(gval,gval,gval))
         canvas.save(resultFile)
+        return result.palette
       except:
         print("pixelization error, check pixSize and resultFile")
     except:
       print("Error from scanalyze function, check numColors or imagefile")
+
 

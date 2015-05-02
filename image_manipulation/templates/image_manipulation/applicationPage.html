@@ -6,8 +6,7 @@
 
 <div class="container-fluid">
   <!--The form -->
-    <form id='my_form' method="post" action=".">
-
+    <form id='my_form' class="row" method="post" action=".">
 	{% csrf_token %}
       <fieldset>
 	<legend>Colors</legend>
@@ -42,27 +41,15 @@
       </fieldset>
     </form>
 
-
-
-
-  <div id="userimage">
+  <div id="userimage" class="row">
     <!-- image canvas -->
     <div>
       {# will have django img var here #}
       <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
     </div>
   </div>
-  <div hidden id="loadingimage">
-    <!-- image canvas -->
-    <div class="autoresize">
-      {# will have django img var here #}
-      {% load staticfiles %}
-      <img class="delay" src="{% static "/static/image_manipulation/img/loading.gif" %}" alt="image" />
-    </div>
-        Image is Processing. Please Wait.
-  </div>
 
-  <div class="imageupload" >
+  <div class="row imageupload" >
   <!-- Upload form. Note enctype attribute! -->
   <form method="post" classaction="." enctype="multipart/form-data">
     {% csrf_token %}
@@ -77,39 +64,31 @@
 	<input type="submit" value="Upload" />
   </form>
   </div>
-  <hr>
-  
-<<<<<<< HEAD
-=======
-
-  <div class="well">
-    <form id='my_form' method="post" action=".">
-      {% csrf_token %}
-      <div>
-        <h4>Number of Colors</h4>
-        {{ form.numberOfColors }}
-        <h4>Gauge Size</h4>
-        {{ form.gaugeSize }}<a href="{% url 'instructions' %}#instr" name="app">Instructions</a>
-        <h4>Width (in)</h4>
-        {{ form.canvasLength }}<a href="{% url 'instructions' %}#convert" name="inch">Convert centimeters to inches</a>
-        <h4>Height (in)</h4>
-        {{ form.canvasWidth }}
-        <h4>Knit Type</h4>
-        {{ form.knitType }}
-      </div>
-      <input type="submit" class="btn btn-primary" value="Render" />
-    </form>
-    
-    <hr/>
-    
-    <h4>Need to learn basics?</h4>
-    <a href="{% url 'instructions' %}#links">Useful links</a>
-    
-    
+  <div id="instructionsArea" class="row">
+    {% if instructions == "" %}
+    {% else %}
+      <h2>Instructions</h2>
+      <pre>{{instructions}}</pre>
+    {% endif %}
   </div>
 
->>>>>>> 08a382f88409893802515d8d7e71703354666c06
+  <div id="help">
+    <h4>Need to learn basics?</h4>
+    <a href="{% url 'instructions' %}#links">Useful links</a>
+  </div>
+
 </div>
+
+<div hidden id="loadingimage">
+    <!-- image canvas -->
+    <div class="autoresize">
+      {# will have django img var here #}
+      <img class="delay" src="{% static "/static/image_manipulation/img/loading.gif" %}" alt="image" />
+    </div>
+        Image is Processing. Please Wait.
+  </div> <!--end loadingImage -->
+
+
 {% endblock %}
 {% block script %}
 <script>
@@ -119,17 +98,20 @@ $(function(){
        
        $('#loadingimage').show();
         $('#userimage').hide();
-        $('.well').hide();
         $('.imageupload').hide();
-          
+	$('#my_form').hide();
+        $('#help').hide();
+	$('#instructionsArea').hide();
     });
 
 });
 S(document).ready(function(){
-       $('#userimage').hide();
+       $('#userimage').show();
        $('#loadingimage').hide();
-        $('#userimage').show(); 
-        alert('reloaded');
+       $('#my_form').show();
+	$('.imageupload').show();
+	$('#help').show();
+	$('#instructionsArea').show();
 });
 </script>
 {% endblock %}
