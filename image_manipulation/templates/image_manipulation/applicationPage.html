@@ -8,23 +8,55 @@
 <hr>
 
 <div class="container-fluid">
-  <div id="userimage">
+  <!--The form -->
+    <form id='my_form' class="row" method="post" action=".">
+	{% csrf_token %}
+      <fieldset>
+	<legend>Colors</legend>
+	<label># of Colors{{ form.numberOfColors }}</label>
+      </fieldset>
+      <fieldset>
+	<legend>Gauge
+          {% load staticfiles %}
+          <a href="{% url 'instructions' %}#instr" title="Guage Help">
+            <img src="{% static 'img/question_20.png' %}" alt="help" />
+          </a>
+        </legend>
+        <label>sts/in {{ form.gaugeSize }}
+        </label>
+      </fieldset>
+      <fieldset>
+	<legend>Project Size
+          <a href="{% url 'instructions' %}#convert" title="Metric Conversion">
+            <img src="{% static 'img/question_20.png' %}" alt="help"/>
+          </a>
+        </legend>
+	<label>Width(in){{ form.canvasLength }}</label>
+	<label>Height(in){{ form.canvasWidth }}</label>
+      </fieldset>
+      <fieldset>
+	<legend>Stitches</legend>
+        <label class="radio">Type{{ form.knitType }}</label>
+      </fieldset>
+      <fieldset>
+        <legend>Submit Changes</legend>
+	<input type="submit" class="btn btn-primary render" value="Render"/>
+      </fieldset>
+    </form>
+
+  <div id="userimage" class="row">
     <!-- image canvas -->
     <div>
       {# will have django img var here #}
-      {% load staticfiles %}
-      <img class="delay" src="../media/{{ image }}" alt="image" />
-    </div>
-  </div>
-  <div hidden id="loadingimage">
-    <!-- image canvas -->
-    <div>
-      {# will have django img var here #}
+<<<<<<< HEAD
       <img class="delay" src="{% static "/static/image_manipulation/img/loading.gif" %}" alt="image" />
+=======
+      <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
+>>>>>>> 5022e7b4796ad09b002fdf42fcb228b8dcd8d291
     </div>
-        Image is Processing. Please Wait.
   </div>
-  <div class="imageupload" >
+
+  <div class="row imageupload" >
   <!-- Upload form. Note enctype attribute! -->
   <form method="post" classaction="." enctype="multipart/form-data">
     {% csrf_token %}
@@ -36,9 +68,10 @@
       </div>
     {% endif %}
     {{ imgForm.imgFile }}
-    <input type="submit" value="Upload" />
+	<input type="submit" value="Upload" />
   </form>
   </div>
+<<<<<<< HEAD
   <hr>
   <div class="well">
     <form id='my_form' method="post" action=".">
@@ -61,8 +94,33 @@
       </div>
       <input type="submit" class="btn btn-primary" value="Render" />
     </form>
+=======
+  <div id="instructionsArea" class="row">
+    {% if instructions == "" %}
+    {% else %}
+      <h2>Instructions</h2>
+      <pre>{{instructions}}</pre>
+    {% endif %}
   </div>
+
+  <div id="help">
+    <h4>Need to learn basics?</h4>
+    <a href="{% url 'instructions' %}#links">Useful links</a>
+>>>>>>> 5022e7b4796ad09b002fdf42fcb228b8dcd8d291
+  </div>
+
 </div>
+
+<div hidden id="loadingimage">
+    <!-- image canvas -->
+    <div class="autoresize">
+      {# will have django img var here #}
+      <img class="delay" src="{% static "/static/image_manipulation/img/loading.gif" %}" alt="image" />
+    </div>
+        Image is Processing. Please Wait.
+  </div> <!--end loadingImage -->
+
+
 {% endblock %}
 {% block script %}
 <script src="{% static 'image_manipulation/js/spectrum.js' %}"></script>
@@ -75,17 +133,20 @@ $(function(){
        
        $('#loadingimage').show();
         $('#userimage').hide();
-        $('.well').hide();
         $('.imageupload').hide();
-          
+	$('#my_form').hide();
+        $('#help').hide();
+	$('#instructionsArea').hide();
     });
 
 });
 S(document).ready(function(){
-       $('#userimage').hide();
+       $('#userimage').show();
        $('#loadingimage').hide();
-        $('#userimage').show(); 
-        alert('reloaded');
+       $('#my_form').show();
+	$('.imageupload').show();
+	$('#help').show();
+	$('#instructionsArea').show();
 });
 </script>
 {% endblock %}

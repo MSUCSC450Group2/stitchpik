@@ -8,8 +8,10 @@ from .forms import *
 import numpy as np
 from .manipulate_lib.pixelator import *
 from .models import Image
-from image_manipulation.models import Image
+from .manipulate_lib.sizemanip import reSize
 import time
+import numpy as np
+
 
 def applicationPage():
     return 'image_manipulation/applicationPage.html'
@@ -90,6 +92,7 @@ def deleteSavedFormCookieData(response):
 
 @login_required
 def fetchApplication(request):
+    
     imgUploadForm = imageUpload(request) # upload image first
 
     inputImage = Image.latestUserImageFile(request.user)
@@ -98,10 +101,12 @@ def fetchApplication(request):
 
     requestImage = inputImage
     pixelPal = ""
+    dasInstructions = ""
 
     if request.method == 'POST':
         form = ManipulateImageForm(request.POST) 
         if form.is_valid():
+<<<<<<< HEAD
             getPalette = request.POST['colorList']
             if(getPalette == "" or request.POST['colorSelect'] == '0'):
                 requestImage = '../' + resultImage # django is preappending /media
@@ -124,6 +129,19 @@ def fetchApplication(request):
                 pixelatedImg.palettize(tempPal, pixSize, resultImage)
                 pixelPal = getPalette
                 cookieAction = 0
+=======
+            requestImage = '../' + resultImage # django is preappending /media
+            numColors = form.cleaned_data['numberOfColors']
+            pixSize = int(form.cleaned_data['gaugeSize'])
+            imgWidth = 96 * int(form.cleaned_data['canvasWidth'])
+            imgHeight = 96 * int(form.cleaned_data['canvasLength'])
+            inputImage = reSize(inputImage,(imgWidth,imgHeight))
+            pixelatedImg = Pixelator(inputImage)
+            numPie = pixelatedImg.pixelate(numColors, pixSize, resultImage)
+            pixelPal = pixelatedImg.pal
+            dasInstructions = generateInstructions(form.cleaned_data['knitType'], numPie)
+            cookieAction = 0;
+>>>>>>> 5022e7b4796ad09b002fdf42fcb228b8dcd8d291
         else:
             cookieAction = 1
     else:
@@ -140,10 +158,125 @@ def fetchApplication(request):
                               'imgForm': imgUploadForm, #imageUpload(reques
                               'form': form,
                               'image': requestImage,
+<<<<<<< HEAD
                               'cList': pixelPal},
+=======
+                              'colorList': pixelPal,
+                              'instructions': dasInstructions},
+>>>>>>> 5022e7b4796ad09b002fdf42fcb228b8dcd8d291
                               context_instance = RequestContext(request))
 
     # Save any valid data to cookie
     if cookieAction == 0:
         saveFormDataToCookie(form, response)
     return response
+  
+def instructions(request):
+    return render_to_response('image_manipulation/instructions.html', context_instance=RequestContext(request))
+
+def getStitchType(needleworkType):
+    if needleworkType == '0':
+        return "knit"
+    elif needleworkType == '1':
+        return "crochet"
+    elif needleworkType == '2':
+        return "crossStitch"
+
+def generateInstructions(stitchTypeNum, array):
+    stitchType = getStitchType(stitchTypeNum)
+
+    instructionString = ""
+  
+    instructionString += stitchType + " abbreviation list:\n"
+    #print(stitchType, "abbreviation list:")
+    if stitchType == "crochet":
+        stitch0 = "ch"
+        instructionString += "ch - chain\n"
+        #print("ch - chain")
+        stitch1 = "sc"
+        instructionString += "sc - single crochet\n"
+        #print("sc - single crochet")
+        stitch2 = "sc"
+        stitch3 = "sc"
+
+    elif stitchType == "knit":
+        stitch0 = "co"
+        instructionString += "co - cast on\n"
+        #print("co - cast on")
+        stitch1 = "k"
+        instructionString += "k - knit\n"
+        #print("k - knit")
+        stitch2 = "p"
+        instructionString += "p - purl\n"
+        #print("p - purl")
+        stitch3 = "bo"
+        instructionString += "bo - bind off\n"
+        #print("bo - bind off")
+
+    elif stitchType == "crossStitch":
+        stitch0 = "x"
+        instructionString += "x - stitch\n"
+        print("x - stitch")
+        stitch1 = "x"
+        stitch2 = "x"
+        stitch3 = "x"
+    instructionString += "C - color\n"
+    #print("C - color")
+    instructionString += "row 0 (cast on) reads chart left to right\n"
+    #print("row 0 (cast on) reads chart left to right")
+    instructionString += "odd rows (purl) reads chart R to L\n"
+    #print("odd rows (purl) reads chart R to L")
+    instructionString += "even rows (knit) reads chart L to R\n"
+    #print("even rows (knit) reads chart L to R")
+          
+
+    for y in range(len(array)):
+        color = array[y][0]
+        count = 0
+        instructionString += "Row " + str(y) + ": "
+        #print("Row ", y, ":", end=" ", sep="")
+        if y % 2 == 1:
+            row = reversed(array[y])
+        else:
+            row = array[y]
+        for x in row:  
+            if color == x:
+                count += 1
+            else:
+                #row 0 - cast on
+                if y == 0:
+                    instructionString += str(stitch0) + " " + str(count) + " C" + str(color) + " "
+                    #print(stitch0, " ", count," C", color, end=" ", sep="")
+                #last rown - bind off
+                elif y == len(array) - 1:
+                    instructionString += str(stitch3) + " " + str(count) + " C" + str(color) + " "
+                    #print(stitch3, " ", count," C", color, end=" ", sep="")
+                #odd rows - knit
+                elif y % 2 == 1:
+                    instructionString += str(stitch1) + " " + str(count) + " C" + str(color) + " "
+                    #print(stitch1, " ", count," C", color, end=" ", sep="")
+                #even rows - purl
+                else:
+                    instructionString += str(stitch2) + " " + str(count) + " C" + str(color) + " "
+                    #print(stitch2, " ", count," C", color, end=" ", sep="")
+                color = x
+         
+        #row 0 - cast on
+        if y == 0:
+            instructionString += str(stitch0) + " " + str(count) + " C" + str(color) + "\n"
+            #print(stitch0, " ", count," C", color, sep="")
+            #last rown - bind off
+        elif y == len(array) - 1:
+            instructionString += str(stitch3) + " " + str(count) + " C" + str(color) + "\n"
+            #print(stitch3, " ", count," C", color, sep="")
+            #odd rows - knit
+        elif y % 2 == 1:
+            instructionString += str(stitch1) + " " + str(count) + " C" + str(color) + "\n"
+            #print(stitch1, " ", count," C", color, sep="")
+            #even rows - purl
+        else:
+            instructionString += str(stitch2) + " " + str(count) + " C" + str(color) + "\n"
+            #print(stitch2, " ", count," C", color, sep="")
+        
+    instructionString += "Snip yarn/thread and weave in ends"
+    return instructionString

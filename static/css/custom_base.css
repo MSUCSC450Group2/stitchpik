@@ -1,11 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Lemon);
-
 body{
-<<<<<<< HEAD
   font-family: sans-serif;
-=======
-  font-family: Lemon, Serif;
->>>>>>> cd4ca1dc486c82e7aa6d7f022f36313686efed56
   background: none;
   background-color: #FFFFFF;
   background-size: cover;
@@ -30,6 +24,18 @@ nav a {
 .navbar.navbar-inverse.navbar-fixed-top{
   background-color: #181F7D;
 }
+
+.nav li {
+  display: inline; 
+  margin-right: 10px; 
+  color: #FFFFFF;
+}
+
+#navImg {
+  display: inline;  
+  vertical-align: middle;
+}
+</style>
 
 /*login*/
 .form-signin-heading {
@@ -126,6 +132,74 @@ nav a {
   margin-top: 80px;
 }
 
+#my_form li {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  float: left;
+}
+
+#my_form .radio
+{
+	margin: 1em 0 2em 0;
+}
+
+#my_form .radio input
+{
+	float: left;
+	width: auto;
+	clear: both;
+}
+
+#my_form .radio label
+{
+	font-weight: normal;
+}
+
+#my_form input
+{
+	display: block;
+	width: 10em;
+}
+
+#my_form input[type="submit"]
+{
+	clear: both;
+}
+
+#my_form fieldset {
+	float: left;
+	display: block;
+	margin: 0 1em 0 0;
+}
+
+#my_form fieldset legend {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 5px;
+	line-height: 20px;
+}
+
+#my_form label
+{
+	float: left;
+	display: block;
+	margin: .25em .25em 0 0;
+	font-weight: bold;
+}
+
+#my_form select {
+	display: block;
+}
+
+#help {
+	margin-bottom:20px;
+}
+
+.render {
+	margin-bottom: 10px;
+}
+
 /*login success*/
 btn.btn-default.btn-lg.btn-primary{
   margin-top: 180px;
@@ -134,4 +208,11 @@ btn.btn-default.btn-lg.btn-primary{
 
 #margin{
   margin-top: 5px;
+}
+
+.delay{
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  
 }
