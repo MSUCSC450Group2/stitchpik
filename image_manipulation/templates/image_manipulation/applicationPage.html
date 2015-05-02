@@ -1,6 +1,9 @@
 {% extends "image_manipulation/imageManipBase.html" %}
 {% block title %}Application{% endblock %}
-{% block head %}{% endblock %}
+{% block style %} {% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'image_manipulation/css/spectrum.css' %}"/>
+	<link rel="stylesheet" href="{% static 'image_manipulation/css/test.css' %}" />
+{% endblock %}
 {% block content %}
 <hr>
 
@@ -17,7 +20,6 @@
     <!-- image canvas -->
     <div>
       {# will have django img var here #}
-      {% load staticfiles %}
       <img class="delay" src="{% static "/static/image_manipulation/img/loading.gif" %}" alt="image" />
     </div>
         Image is Processing. Please Wait.
@@ -52,6 +54,10 @@
         {{ form.canvasWidth }}
         <h4>Knit Type</h4>
         {{ form.knitType }}
+        <h4>Select colors</h4>
+        {{ form.colorSelect }}
+        <input type="text" id="colorList" hidden name="colorList" value="{{ cList }}"/>
+      	<div class="colorBox" id="box"></div>
       </div>
       <input type="submit" class="btn btn-primary" value="Render" />
     </form>
@@ -59,7 +65,10 @@
 </div>
 {% endblock %}
 {% block script %}
+<script src="{% static 'image_manipulation/js/spectrum.js' %}"></script>
+<script src="{% static 'image_manipulation/js/test.js' %}"></script>
 <script>
+  
 
 $(function(){
     $('#my_form').submit(function(event){
