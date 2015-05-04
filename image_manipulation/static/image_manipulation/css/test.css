@@ -1,0 +1,15 @@
+.color_number {
+	display:inline;
+	margin:8px;
+}
+
+.empty_label {
+	display:inline;
+	margin:8px;
+}
+
+.colorBox {
+  display:inline-block;
+  height:200px;
+  overflow-y:scroll;
+}
