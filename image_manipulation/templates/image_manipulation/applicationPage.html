@@ -1,6 +1,9 @@
 {% extends "image_manipulation/imageManipBase.html" %}
 {% block title %}Application{% endblock %}
-{% block head %}{% endblock %}
+{% block style %} {% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'image_manipulation/css/spectrum.css' %}"/>
+	<link rel="stylesheet" href="{% static 'image_manipulation/css/test.css' %}" />
+{% endblock %}
 {% block content %}
 <hr>
 
@@ -36,6 +39,13 @@
         <label class="radio">Type{{ form.knitType }}</label>
       </fieldset>
       <fieldset>
+  <legend>Select colors</legend>
+    {{ form.colorSelect }}
+    <input type="hidden" id="colorList" name="colorList" value="{{ cList }}"/>
+    <div class="colorBox" id="box"></div>
+      </fieldset>
+
+      <fieldset>
         <legend>Submit Changes</legend>
 	<input type="submit" class="btn btn-primary render" value="Render"/>
       </fieldset>
@@ -62,6 +72,24 @@
 	<input type="submit" value="Upload" />
   </form>
   </div>
+  <hr>
+  <div class="well">
+    <!-- <form id='my_form' method="post" action=".">
+      {% csrf_token %}
+      <div>
+        <h4>Number of Colors</h4>
+        {{ form.numberOfColors }}
+        <h4>Gauge Size</h4>
+        {{ form.gaugeSize }}
+        <h4>Width (in)</h4>
+        {{ form.canvasLength }}
+        <h4>Height (in)</h4>
+        {{ form.canvasWidth }}
+        <h4>Knit Type</h4>
+        {{ form.knitType }}
+              </div>
+      <input type="submit" class="btn btn-primary" value="Render" />
+    </form> -->
   <div id="instructionsArea" class="row">
     {% if instructions == "" %}
     {% else %}
@@ -71,6 +99,8 @@
   </div>
 
   <div id="help">
+    <h4>Working with colors</h4>
+    <a href="{% url 'instructions' %}#videos">Videos</a><br/>
     <h4>Need to learn basics?</h4>
     <a href="{% url 'instructions' %}#links">Useful links</a>
   </div>
@@ -89,7 +119,10 @@
 
 {% endblock %}
 {% block script %}
+<script src="{% static 'image_manipulation/js/spectrum.js' %}"></script>
+<script src="{% static 'image_manipulation/js/test.js' %}"></script>
 <script>
+  
 
 $(function(){
     $('#my_form').submit(function(event){
