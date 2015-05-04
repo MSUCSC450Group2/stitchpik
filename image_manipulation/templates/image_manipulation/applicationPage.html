@@ -1,44 +1,83 @@
 {% extends "image_manipulation/imageManipBase.html" %}
 {% block title %}Application{% endblock %}
-{% block style %}
+
+{% block style %} {% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'image_manipulation/css/spectrum.css' %}"/>
+	<link rel="stylesheet" href="{% static 'image_manipulation/css/test.css' %}" />
 {% endblock %}
 
 {% block content %}
 <hr>
 
 <div class="container-fluid">
-  <div id="userimage">
+
+  <!--The form -->
+    <form id='my_form' class="row" method="post" action=".">
+	{% csrf_token %}
+      <fieldset>
+	<legend>Colors</legend>
+	<label># of Colors{{ form.numberOfColors }}</label>
+      </fieldset>
+      <fieldset>
+	<legend>Gauge
+          {% load staticfiles %}
+          <a href="{% url 'instructions' %}#instr" title="Guage Help">
+            <img src="{% static 'img/question-mark.png' %}" alt="help" />
+          </a>
+        </legend>
+        <label>sts/in {{ form.gaugeSize }}
+        </label>
+      </fieldset>
+      <fieldset>
+	<legend>Project Size
+          <a href="{% url 'instructions' %}#convert" title="Metric Conversion">
+            <img src="{% static 'img/transfer.png' %}" alt="help"/>
+          </a>
+        </legend>
+	<label>Width(in){{ form.canvasLength }}</label>
+	<label>Height(in){{ form.canvasWidth }}</label>
+      </fieldset>
+      <fieldset>
+	<legend>Stitches</legend>
+        <label class="radio">Type{{ form.knitType }}</label>
+      </fieldset>
+      <fieldset>
+  <legend>Select colors</legend>
+    {{ form.colorSelect }}
+    <input type="hidden" id="colorList" name="colorList" value="{{ cList }}"/>
+    <div class="colorBox" id="box"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Submit Changes</legend>
+	<input type="submit" class="btn btn-primary render" value="Render"/>
+      </fieldset>
+    </form>
+
+  <div id="userimage" class="row">
+
     <!-- image canvas -->
-    <div>
       {# will have django img var here #}
-      {% load staticfiles %}
-      <img class="delay" src="../media/{{ image }}" alt="image" />
-    </div> 
+      <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
   </div>
-<div hidden id="loadingimage">
-    <!-- image canvas -->
-    <div>
-      {# will have django img var here #}
-      {% load staticfiles %}
-      <img class="delay" src="{% static "/static/image_manipulation/img/loading.gif" %}" alt="image" />
-    </div>
-        Image is Processing. Please Wait.
-  </div>
-    <div class="imageupload" >
+
+  <div class="row imageupload" >
   <!-- Upload form. Note enctype attribute! -->
   <form method="post" classaction="." enctype="multipart/form-data">
     {% csrf_token %}
-    <p>{{ imgForm.non_field_errors }}</p>
-    <p>{{ imgForm.imgFile.label_tag }} </p>
-    <p>
+    {% if imgForm.imgFile.errors %}
+      <div class="alert alert-danger" role="alert">
+        <img src="{% static 'img/error_red_triangle_20.png' %}" label="!" />
+        <span class="sr-only">Error</span>
         {{ imgForm.imgFile.errors }}
-        {{ imgForm.imgFile }}
-        
-        
-    </p>
-    <p><input type="submit" value="Upload" /></p>
+
+      </div>
+    {% endif %}
+    {{ imgForm.imgFile }}
+	<input type="submit" value="Upload" />
+
   </form>
-    </div>
+  </div>
   <hr>
     <div id=imageChooser class="well">
         <form id="imageChooserForm" method="post" action=".">
@@ -59,28 +98,39 @@
     </form>
     </div>
   <div class="well">
-    <form id='my_form' method="post" action=".">
-      {% csrf_token %}
-
-      <div class="">
-        <h4>Number of Colors</h4>
-        {{ form.numberOfColors }}
-        <h4>Guage Size</h4>
-        {{ form.guageSize }}
-        <h4>Width (in)</h4>
-        {{ form.canvasLength }}
-        <h4>Height (in)</h4>
-        {{ form.canvasWidth }}
-        <h4>Knit Type</h4>
-        {{ form.knitType }}
-        
-      </div>
-      <input type="submit" class="btn btn-primary" value="Render" />
-    </form>
+    
+  <div id="instructionsArea" class="row">
+    {% if instructions == "" %}
+    {% else %}
+      <h2>Instructions</h2>
+      <pre>{{instructions}}</pre>
+    {% endif %}
   </div>
+
+  <div id="help">
+    <h4>Working with colors</h4>
+    <a href="{% url 'instructions' %}#videos">Videos</a><br/>
+    <h4>Need to learn basics?</h4>
+    <a href="{% url 'instructions' %}#links">Useful links</a>
+  </div>
+
 </div>
+
+<div hidden id="loadingimage">
+    <!-- image canvas -->
+    <div class="autoresize">
+      {# will have django img var here #}
+      <img class="delay" src="{% static "/static/image_manipulation/img/loading.gif" %}" alt="image" />
+    </div>
+        Image is Processing. Please Wait.
+  </div> <!--end loadingImage -->
+
+
 {% endblock %}
 {% block script %}
+
 <script src="{% static "/static/js/ApplicationPage.js" %}"></script>
-    
+<script src="{% static 'image_manipulation/js/spectrum.js' %}"></script>
+<script src="{% static 'image_manipulation/js/test.js' %}"></script>
+
 {% endblock %}

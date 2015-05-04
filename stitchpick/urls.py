@@ -37,4 +37,7 @@ urlpatterns = patterns('',
              'django.contrib.auth.views.password_reset_confirm'),
     url(r'^user/password/reset/complete/$', 
              'django.contrib.auth.views.password_reset_complete'),
+    
+    url(r'^instructions/$', 'image_manipulation.views.instructions', name='instructions'),
+    
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

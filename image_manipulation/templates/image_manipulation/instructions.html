@@ -1,0 +1,168 @@
+{% extends "image_manipulation/imageManipBase.html" %}
+{% block title %}Instructions{% endblock %}
+{% block script %}<script src="/static/js/instructions.js"></script>{% endblock %}
+{% block content %}
+
+<br /><br />
+
+<div class="container-fluid">
+   <h1>Instructions</h1>
+   <h2 name="instr">Measuring the gauge</h2>
+   <h3>For knitting and crochet</h3>
+   <div class="row">
+      <div class="col-sm-5">
+		<hr/> 
+		1. Knit/crochet a swatch using pattern, yarn and needles/hook you will use for your project. <hr/>
+		2. Make a swatch that is at least 20 stitches in width and 15 rows in height. The larger the swatch, the more accurate the measurements.<hr/>
+		3. To get the most accurate gauge measurement, wash the swatch, lay it flat and let it dry completely before you measure the gauge.<hr/>
+		4. Take a measuring tape or ruler and measure the width of some number of inner stitches (Picture 1) and the height of some number of inner rows (Picture 2).<hr/>
+		5. Calculate the gauge size using our calculator.<hr/>
+		
+      </div>
+      
+      <div class="col-sm-3">
+	  <p><img id="imgWidth" src='/static/instructions/width.jpg' alt="Width"></p>
+	  <p>Picture 1</p>
+	  <p><img id="imgHeight" src='/static/instructions/height.jpg' alt="Height"></p>
+	  <p>Picture 2</p>
+      </div>
+      
+      <div class="col-sm-4">
+	  <div class="well">
+	      <h3>Calculate gauge size</h3>
+		  <div>
+		  <h4>Sample width (in)</h4>
+		  <input id="sampleWidth" type="text" size="6"/>
+		  <h4>Number of stitches</h4>
+		  <input id="numStitches" type="text" size="3"/>
+		  <h4>Sample height (in)</h4>
+		  <input id="sampleHeight" type="text" size="6"/>
+		  <h4>Number of rows</h4>
+		  <input id="numRows" type="text" size="3"/>
+		  <h4>Gauge size (in):</h4>
+		  <span id="gaugeSize"></span><br/>
+		  <hr/>
+		  <input type="submit" class="btn btn-primary" value="Compute" onclick="computeStitchSize();" />
+		  </div>
+		  <a href="{% url 'application' %}#app">Back to application page</a>
+		  <script>
+		      function computeStitchSize(){
+			  var width = parseFloat(document.getElementById("sampleWidth").value);
+			  var numStitches = parseInt(document.getElementById("numStitches").value);
+			  var height = parseFloat(document.getElementById("sampleHeight").value);
+			  var numRows = parseInt(document.getElementById("numRows").value);
+			  var result = ((Math.abs(width/numStitches)+Math.abs(height/numRows))/2);
+			  if(result){
+			      document.getElementById("gaugeSize").innerHTML = result.toFixed(2);}
+			  else{
+			      document.getElementById("gaugeSize").innerHTML = "Please type valid numbers";}
+		      } 
+		  </script>
+	  </div>
+
+      </div>
+
+  </div>
+  
+  <h3>For cross stitching</h3>
+  <div class="row">
+  
+    <div class="col-sm-5"> 
+	      <hr/> 
+	      1. Take the fabric or canvas you will use for your project.<hr/> 
+	      2. Take a measuring tape or ruler and measure the width of some number of stitches and the height of some number of rows (Picture 3).<hr/>
+	      3. Calculate the gauge size using our calculator.<hr/>
+	      
+    </div>
+    
+    <div class="col-sm-3">
+	<p><img id="imgCanvas" src='/static/instructions/canvas.jpg' alt="Canvas"></p>
+	<p>Picture 3</p>
+    </div>
+    
+    <div class="col-sm-4">
+	<div class="well">
+	      <h3>Convert centimeters to inches</h3>
+	      <div>
+	      <h4>Centimeters</h4>
+	      <input id="centimeters" type="text" size="6"/>
+	      <h4>Inches:</h4>
+	      <span id="inches"></span><br/>
+	      <hr/>
+	      <input type="submit" class="btn btn-primary" value="Convert" onclick="convertCentimetersToInches();" />
+	      </div>
+	      <a href="{% url 'application' %}#inch" name="convert">Back to application page</a>
+	      <script>
+		  function convertCentimetersToInches(){
+		      var centimeters = parseFloat(document.getElementById("centimeters").value);
+		      var result = centimeters*0.3937007874;
+		      if(result){
+			  document.getElementById("inches").innerHTML = result.toFixed(2);}
+		      else{
+			  document.getElementById("inches").innerHTML = "Please type valid number";}
+		  }
+	      </script>
+	  </div>
+    </div>
+    
+  </div>
+
+  
+  <h2>Working with colors.Videos</h2><hr/>
+  <div class="row">
+     
+     
+     <div class="col-sm-4">
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/kscakqPUpvc" frameborder="0" allowfullscreen></iframe>
+	  <h3>How To Add Color Knitting</h3><hr/>
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/lyusrCZzftY" frameborder="0" allowfullscreen></iframe>
+	  <h3>How To Knit Intarsia</h3><hr/>
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/6979knxSLKM" frameborder="0" allowfullscreen></iframe>
+	  <h3>Change Yarn Color In Crochet</h3><hr/>
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/82dp9kK4tK8" frameborder="0" allowfullscreen></iframe>
+	  <h3>Cross stitching. Parking Method</h3><hr/>
+     </div>
+     
+     <div class="col-sm-4">
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/Qbo4sov1gU4" frameborder="0" allowfullscreen></iframe>
+	  <h3>Knitting. Add Color In The Middle</h3><hr/>
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/nZMrDB2g97s" frameborder="0" allowfullscreen></iframe>
+	  <h3>Knitting. Managing Colorwork</h3><hr/>
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/3wAmFSsJOJQ" frameborder="0" allowfullscreen></iframe>
+	  <h3>Crochet. Switch Color In The Middle</h3><hr/>
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/PceviKJHoIY" frameborder="0" allowfullscreen></iframe>
+	  <h3>Cross Stitch On Evenweave Fabric</h3><hr/>
+     </div>
+     
+     <div class="col-sm-4">
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/vEzWdMlKj_Q" frameborder="0" allowfullscreen></iframe>
+	  <h3>Knitting. Three Color Stranding</h3><hr/>
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/l7G4yzCzpHk" frameborder="0" allowfullscreen></iframe>
+	  <h3>Knitting. Introduction To Intarsia</h3><hr/>
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/Tp3ftP4Q9-s" frameborder="0" allowfullscreen></iframe>
+	  <h3>Tunisian Crochet With Color Changes</h3><hr/>
+	  <iframe width="420" height="315" src="https://www.youtube.com/embed/TK1JpqI3428" frameborder="0" allowfullscreen></iframe>
+	  <h3>Learn To Stitch In Half The Time</h3><hr/>
+     </div>
+     
+     
+  </div>
+  
+  
+  
+  <div>
+  <hr/>
+  <h3>Need to learn basics?</h3>
+	      <h4>For knitting and crochet</h4>
+		  <a href="http://pattern-knit.com/index.html"  name="links">http://pattern-knit.com/index.html</a><br/>
+		  <a href="http://www.knittinghelp.com">http://www.knittinghelp.com</a><br/>
+		  <a href="http://www.lionbrand.com/cgi-bin/pg.cgi?page=learningCenter.html">http://www.lionbrand.com/cgi-bin/pg.cgi?page=learningCenter.html</a>
+	      <h4>For cross stitching</h4>
+		  <a href="http://crossstitch.about.com">http://crossstitch.about.com</a><br/>
+		  <a href="http://www.needlework-tips-and-techniques.com">http://www.needlework-tips-and-techniques.com</a>
+		  <hr/>
+  </div>
+  
+</div>
+
+{% endblock %}

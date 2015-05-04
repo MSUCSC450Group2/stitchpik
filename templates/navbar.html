@@ -9,10 +9,11 @@
       <a class="navbar-brand" href="#"></a>
     </div>
     
-    <div id="navbar" class="collapse navbar-collapse">
+    <div id="navbar" class="collapse navbar-collapse">     
       <ul class="nav navbar-nav">
-        <li><a href="#"><img id="logo" src='/static/img/logo_s.png' alt="logo"></a></li>
-        <li><a href='{% url "index" %}'>HOME</a></li>
+	  <span id="navImg">
+	  <li><a href='{% url "index" %}'><img id="logo" src='/static/img/stitchPikLogo.png' alt="logo" width="150px" height="50px"></a>
+	  </span>
         {% if user.is_authenticated %}
           <li><a href="#">User: {{ user.username }}</a></li>
           <li><a href="/logout/">LOGOUT</a></li>
@@ -21,6 +22,7 @@
           <li><a href='{% url "signup" %}'>REGISTER</a></li>
         {% endif %}
         <li><a href='{% url "application" %}'>APPLICATION</a></li>
+        <li><a href='{% url "instructions" %}'>HELP</a></li>
        </ul>
     </div>
       

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Image(models.Model):
-  imgFile = models.ImageField(upload_to='images/%Y/%m/%d')
+  imgFile = models.ImageField(upload_to='image/%Y/%m/%d')
   user = models.ForeignKey(User)
   private = models.BooleanField(default=True)
 
@@ -12,6 +12,9 @@ class Image(models.Model):
   def latestUserImageFile(user):
       images = Image.userImages(user)
       return images.reverse()[0].imgFile if images else None
+
+  def resultImageLocation(imgFile, user):
+      return 'result_' + user.username + '_' + str(imgFile).split('/')[-1]
 
   class Meta:
       app_label = 'image_manipulation'

@@ -27,7 +27,19 @@ $(function(){
         $('#userimage').hide();
         $('.well').hide();
         $('.imageupload').hide();
+        $('#my_form').hide();
+        $('#help').hide();
+	    $('#instructionsArea').hide();
           
     });
 
+});
+
+S(document).ready(function(){
+       $('#userimage').show();
+       $('#loadingimage').hide();
+       $('#my_form').show();
+	$('.imageupload').show();
+	$('#help').show();
+	$('#instructionsArea').show();
 });

@@ -62,8 +62,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'stitchpick',
-        'USER': 'postgres',
-        'PASSWORD': 'x0password0x',
+        'USER': 'root',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -121,13 +121,16 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 if DEBUG:
-   EMAIL_HOST = 'localhost'
-   EMAIL_PORT = '1025'
-   EMAIL_USE_TLS = False
-   DEFAULT_FROM_EMAIL = 'testing@example.com'
-   EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+   EMAIL_HOST = 'smtp.gmail.com'
+   EMAIL_HOST_USER = 'stitchpik555@gmail.com'
+   EMAIL_HOST_PASSWORD = 'stitchforfun777'
+   EMAIL_PORT = '587'
+   EMAIL_USE_TLS = True
+   DEFAULT_FROM_EMAIL = 'stitchpik555@gmail.com'
 
 #for sessions
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_HTTPONLY = True # deny js access
+SESSION_COOKIE_AGE = 31536000
