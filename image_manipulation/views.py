@@ -73,29 +73,67 @@ def savedSessionData(savedOptions):
              'knitType': int(savedOptions.get('knitType')) }
            )
 
+
+def saveImageChoice(request, imagePath):
+    if imagePath != "":   
+        request.session.set_expiry(0)
+        request.session['imageChoice'] = imagePath
+        
+def loadImageChoice(request):
+    return request.session.get('imageChoice', "")
+
+def clearImageChoice(request):
+    if loadImageChoice(request) != "":
+        del request.session['imageChoice']
+    
+
+
 @login_required
 def fetchApplication(request):
+    selectedImage=""
     inputImage = Image.latestUserImageFile(request.user)
     #imagechooser setup
     
     gallery = Image.userImages(request.user)
-    imagesDiv=""
-    for x in gallery:
-        imagesDiv=imagesDiv + '<img src="../media/'+ str(x.imgFile) +'"/>'
+    
+
     resultImage = 'media/result.jpg'
     requestImage = inputImage
     imgForm = ChooseImageForm(request.POST)
-    if imgForm.is_valid():
-        print(imgForm.cleaned_data['chosenImage'])
-        requestImage=imgForm.cleaned_data['chosenImage']
+    
 
     if request.method == 'POST':
-        form = ManipulateImageForm(request.POST)     
+        if imgForm.is_valid():
+            print('set select')
+            print(inputImage)
+            print(imgForm.cleaned_data['chosenImage'])
+            if (request.POST.get("changebutton")):
+                #print(inputImage)
+                chosenImage=imgForm.cleaned_data['chosenImage']
+                saveImageChoice(request, chosenImage)
+                #print('changed')
+                #print(inputImage) 
+        form = ManipulateImageForm(request.POST) 
+        print('check')  
+        print(selectedImage)        
+        print(inputImage)
+         
+            
         if form.is_valid():
+            print('valid')
+            print(inputImage)
             requestImage = '../' + resultImage
             numColors = form.cleaned_data['numberOfColors']
             pixSize = 8
+            lastImage=form.cleaned_data['lastChosenImage']
+            print('pixelate')
+            print(selectedImage)
+            print(inputImage)
+            if (selectedImage != ""):
+                inputImage = selectedImage
             pic = Picture(inputImage)
+            print(resultImage)
+            selectedImage = ""
             pic.pixelate(numColors, pixSize, resultImage)
             #time.sleep(5) #TODO: REPLACE WITH JQUERY
             saveFormDataToSession(form, request)
@@ -110,13 +148,12 @@ def fetchApplication(request):
             form = savedSessionData(savedOptions)
         else:
             form = ManipulateImageForm()
-            
-
+    
     return render_to_response(applicationPage(), {'imgForm': imageUpload(request), 
                               'form' : form, 
                               'imagegallery' : gallery, 
-                               'chooseform' : getUserImages(request),
-                              
+                               'chooseform' : ChooseImageForm(),
+                              'input' : selectedImage,
                               'image' : requestImage },
                               context_instance = RequestContext(request))
 

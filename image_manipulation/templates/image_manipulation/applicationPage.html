@@ -13,7 +13,7 @@
       {# will have django img var here #}
       {% load staticfiles %}
       <img class="delay" src="../media/{{ image }}" alt="image" />
-    </div>
+    </div> 
   </div>
 <div hidden id="loadingimage">
     <!-- image canvas -->
@@ -33,6 +33,8 @@
     <p>
         {{ imgForm.imgFile.errors }}
         {{ imgForm.imgFile }}
+        
+        
     </p>
     <p><input type="submit" value="Upload" /></p>
   </form>
@@ -43,6 +45,8 @@
         {% csrf_token %}
         <div class="">
         {{ chooseform.chosenImage }}
+        <input type="hidden" id="viewChosenImage" name="last chosen image" value="{{ input }}">
+        
         </div>
     <button id="showChooser">Choose a different image</button>
     <div id="imagechoices" class="well">
@@ -50,7 +54,7 @@
     {% for picture in imagegallery %}
         <img class="imageList" src="../media/{{picture.imgFile}}" alt="{{picture.imgFile}}" />
     {% endfor %}
-    <input type="submit"  value="Change Image" />
+    <input type="submit"  name="changebutton" value="Change Image" />
         </div>  
     </form>
     </div>
@@ -69,6 +73,7 @@
         {{ form.canvasWidth }}
         <h4>Knit Type</h4>
         {{ form.knitType }}
+        
       </div>
       <input type="submit" class="btn btn-primary" value="Render" />
     </form>

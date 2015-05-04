@@ -15,6 +15,7 @@ class ManipulateImageForm(forms.Form):
   canvasWidth = forms.DecimalField(label="Canvas Width (in)", initial='12', decimal_places=2)
   knitType = forms.ChoiceField(widget=forms.RadioSelect, choices=KNIT_TYPES, 
                                      label="Knit Type", initial="0")
+  lastChosenImage = forms.CharField(initial="", required=False)
 
 
 
