@@ -39,19 +39,20 @@
 		  <input id="sampleHeight" type="text" size="6"/>
 		  <h4>Number of rows</h4>
 		  <input id="numRows" type="text" size="3"/>
-		  <h4>Gauge size (in):</h4>
+		  <h4>Stitches per inch:</h4>
 		  <span id="gaugeSize"></span><br/>
 		  <hr/>
-		  <input type="submit" class="btn btn-primary" value="Compute" onclick="computeStitchSize();" />
+		  <input type="submit" class="btn btn-primary" value="Compute" onclick="computeStitchPerInch();" />
 		  </div>
 		  <a href="{% url 'application' %}#app">Back to application page</a>
 		  <script>
-		      function computeStitchSize(){
+		      function computeStitchPerInch(){
 			  var width = parseFloat(document.getElementById("sampleWidth").value);
 			  var numStitches = parseInt(document.getElementById("numStitches").value);
 			  var height = parseFloat(document.getElementById("sampleHeight").value);
 			  var numRows = parseInt(document.getElementById("numRows").value);
-			  var result = ((Math.abs(width/numStitches)+Math.abs(height/numRows))/2);
+			  var stitch = ((Math.abs(width/numStitches)+Math.abs(height/numRows))/2);
+			  var result = 1/stitch;
 			  if(result){
 			      document.getElementById("gaugeSize").innerHTML = result.toFixed(2);}
 			  else{
