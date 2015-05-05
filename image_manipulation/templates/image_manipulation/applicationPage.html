@@ -16,22 +16,22 @@
 	{% csrf_token %}
       <fieldset>
 	<legend>Colors</legend>
-	<label># of Colors{{ form.numberOfColors }}</label>
+	<label>Number of Colors{{ form.numberOfColors }}</label>
       </fieldset>
       <fieldset>
 	<legend>Gauge
           {% load staticfiles %}
           <a href="{% url 'instructions' %}#instr" title="Guage Help">
-            <img src="{% static 'img/question-mark.png' %}" alt="help" />
+            <img src="{% static 'img/question-mark.png' %}" alt="help" class="helpImg" />
           </a>
         </legend>
-        <label>sts/in {{ form.gaugeSize }}
+        <label>Stitches per inch {{ form.gaugeSize }}
         </label>
       </fieldset>
       <fieldset>
 	<legend>Project Size
           <a href="{% url 'instructions' %}#convert" title="Metric Conversion">
-            <img src="{% static 'img/transfer.png' %}" alt="help"/>
+            <img src="{% static 'img/transfer.png' %}" alt="help" class="helpImg" />
           </a>
         </legend>
 	<label>Width(in){{ form.canvasLength }}</label>
@@ -58,7 +58,11 @@
 
     <!-- image canvas -->
       {# will have django img var here #}
-      <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
+      {% if image == None %}
+        <img class="delay" src="{% static 'img/blank.jpg' %}" alt="no image" width="100%" />
+      {% else %}
+        <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
+      {% endif %}
   </div>
 
   <div class="row imageupload" >

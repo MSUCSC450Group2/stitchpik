@@ -33,6 +33,7 @@ def getUserImages(request):
         chooseform=ChooseImageForm()
     return chooseform
 
+
 def applicationPage():
     return 'image_manipulation/applicationPage.html'
 
@@ -139,6 +140,11 @@ def deleteSavedFormCookieData(response):
     response.delete_cookie('canvasWidth')
     response.delete_cookie('knitType')
 
+def imageExists(imgPath):
+    if imgPath == "None" or imgPath is None or imgPath == "":
+        return False
+    return True
+
 @login_required
 def fetchApplication(request):
     selectedImage=""
@@ -157,7 +163,7 @@ def fetchApplication(request):
     requestImage = inputImage
     imgForm = ChooseImageForm(request.POST)
     pixelPal = ""
-    dasInstructions = ""
+    dasInstructions = ""    
 
 
     if request.method == 'POST':
@@ -177,12 +183,8 @@ def fetchApplication(request):
                 
                 requestImage= chosenImage
         form = ManipulateImageForm(request.POST) 
-        #print('check')  
-        #print(selectedImage)        
-        #print(inputImage)
-         
-            
-        if form.is_valid():
+
+        if form.is_valid() and imageExists(str(inputImage)): # can't render nill image
 
             getPalette = request.POST['colorList']
             if(getPalette == "" or request.POST['colorSelect'] == '0'):
