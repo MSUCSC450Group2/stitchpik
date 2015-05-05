@@ -35,7 +35,7 @@ nav a {
   display: inline;  
   vertical-align: middle;
 }
-</style>
+
 
 /*login*/
 .form-signin-heading {
@@ -220,5 +220,12 @@ btn.btn-default.btn-lg.btn-primary{
   max-width: 100%;
   width: auto;
   height: auto;
+}
   
+.helpImg {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+  width: 18px;
+  height: 18px;
 }
