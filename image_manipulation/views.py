@@ -11,7 +11,7 @@ from .models import Image
 from .manipulate_lib.sizemanip import reSize
 import time
 import numpy as np
-
+import os.path
 
 def applicationPage():
     return 'image_manipulation/applicationPage.html'
@@ -90,6 +90,18 @@ def deleteSavedFormCookieData(response):
     response.delete_cookie('canvasWidth')
     response.delete_cookie('knitType')
 
+def imageExists(imgPath):
+    if imgPath == "":
+        return False
+
+    try:
+        if not os.path.isfile(imgPath):
+            return False
+    except:
+        print("File doesn't exist")
+    
+    return True
+
 @login_required
 def fetchApplication(request):
     
@@ -102,10 +114,11 @@ def fetchApplication(request):
     requestImage = inputImage
     pixelPal = ""
     dasInstructions = ""
+        
 
     if request.method == 'POST':
         form = ManipulateImageForm(request.POST) 
-        if form.is_valid():
+        if form.is_valid() and imageExists(str('')): # can't render nill image
             getPalette = request.POST['colorList']
             if(getPalette == "" or request.POST['colorSelect'] == '0'):
                 requestImage = '../' + resultImage # django is preappending /media

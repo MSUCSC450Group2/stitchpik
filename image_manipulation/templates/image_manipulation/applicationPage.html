@@ -19,7 +19,7 @@
 	<legend>Gauge
           {% load staticfiles %}
           <a href="{% url 'instructions' %}#instr" title="Guage Help">
-            <img src="{% static 'img/question-mark.png' width="10" height="10" %}" alt="help" class="helpImg" />
+            <img src="{% static 'img/question-mark.png' %}" alt="help" class="helpImg" />
           </a>
         </legend>
         <label>sts/in {{ form.gaugeSize }}
@@ -28,7 +28,7 @@
       <fieldset>
 	<legend>Project Size
           <a href="{% url 'instructions' %}#convert" title="Metric Conversion">
-            <img src="{% static 'img/transfer.png' width="10" height="10" %}" alt="help" class="helpImg" />
+            <img src="{% static 'img/transfer.png' %}" alt="help" class="helpImg" />
           </a>
         </legend>
 	<label>Width(in){{ form.canvasLength }}</label>
@@ -54,7 +54,11 @@
   <div id="userimage" class="row">
     <!-- image canvas -->
       {# will have django img var here #}
-      <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
+      {% if image == None %}
+        <img class="delay" src="{% static 'img/blank.jpg' %}" alt="no image" width="100%" />
+      {% else %}
+        <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
+      {% endif %}
   </div>
 
   <div class="row imageupload" >
