@@ -29,7 +29,7 @@
       
       <div class="col-sm-4">
 	  <div class="well">
-	      <h3>Calculate gauge size</h3>
+	      <h3>Calculate stitches per inch</h3>
 		  <div>
 		  <h4>Sample width (in)</h4>
 		  <input id="sampleWidth" type="text" size="6"/>
@@ -92,7 +92,7 @@
 	      <hr/>
 	      <input type="submit" class="btn btn-primary" value="Convert" onclick="convertCentimetersToInches();" />
 	      </div>
-	      <a href="{% url 'application' %}#inch" name="convert">Back to application page</a>
+	      <a href="{% url 'application' %}#inch"  name="convert">Back to application page</a>
 	      <script>
 		  function convertCentimetersToInches(){
 		      var centimeters = parseFloat(document.getElementById("centimeters").value);
