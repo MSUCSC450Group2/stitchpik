@@ -11,6 +11,8 @@ from .models import Image
 from .manipulate_lib.sizemanip import reSize
 import time
 import numpy as np
+from os import listdir
+
 
 
 def applicationPage():
@@ -96,7 +98,7 @@ def fetchApplication(request):
     imgUploadForm = imageUpload(request) # upload image first
 
     inputImage = Image.latestUserImageFile(request.user)
-
+    print(str(inputImage)+" "+str(type(inputImage)))
     resultImage = 'media/' + Image.resultImageLocation(inputImage, request.user)
 
     requestImage = inputImage
