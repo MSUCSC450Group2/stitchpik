@@ -93,11 +93,13 @@
         </div>
     <button id="showChooser">Choose a different image</button>
     <div id="imagechoices" class="well">
+    <input type="submit"  name="changebutton" value="Change Image" />
+    <hr/>
     {% load staticfiles %}
     {% for picture in imagegallery %}
         <img class="imageList" src="../media/{{picture.imgFile}}" alt="{{picture.imgFile}}" />
     {% endfor %}
-    <input type="submit"  name="changebutton" value="Change Image" />
+    
         </div>  
     </form>
     </div>
