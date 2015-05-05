@@ -13,7 +13,7 @@
 	{% csrf_token %}
       <fieldset>
 	<legend>Colors</legend>
-	<label># of Colors{{ form.numberOfColors }}</label>
+	<label>Number of Colors{{ form.numberOfColors }}</label>
       </fieldset>
       <fieldset>
 	<legend>Gauge
@@ -22,7 +22,7 @@
             <img src="{% static 'img/question-mark.png' %}" alt="help" class="helpImg" />
           </a>
         </legend>
-        <label>sts/in {{ form.gaugeSize }}
+        <label>Stitches per inch {{ form.gaugeSize }}
         </label>
       </fieldset>
       <fieldset>
