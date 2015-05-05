@@ -118,7 +118,7 @@ def fetchApplication(request):
 
     if request.method == 'POST':
         form = ManipulateImageForm(request.POST) 
-        if form.is_valid() and imageExists(str('')): # can't render nill image
+        if form.is_valid() and imageExists(str(inputImage)): # can't render nill image
             getPalette = request.POST['colorList']
             if(getPalette == "" or request.POST['colorSelect'] == '0'):
                 requestImage = '../' + resultImage # django is preappending /media
