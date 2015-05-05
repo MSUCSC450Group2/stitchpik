@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('#imagechooser').hide();
-    alert($('#viewChosenImage').val());
+    
     $('#imagechoices').hide();
     $('#id_chosenImage').hide();
     $('#id_lastChosenImage').val($('#viewChosenImage').val());

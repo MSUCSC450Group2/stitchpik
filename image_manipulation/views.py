@@ -18,10 +18,7 @@ def getUserImages(request):
         chooseform = ChooseImageForm(request.POST)
         if chooseform.is_valid():
             gallery = Image.userImages(request.user)
-            imagesDiv=""
-            for x in gallery:
-                imagesDiv=imagesDiv + '<img src="../media/'+ str(x.imgFile) +'"/>'
-            resultImage = 'media/result.jpg'
+            #resultImage = 'media/result.jpg'
             #requestImage = request.chosenImage
             form = ManipulateImageForm()
            
@@ -44,10 +41,13 @@ def newUploadedImage(request):
                  private = True)
 
 def imageUpload(request):
+    
+
     imgForm = ImageUploadForm(request.POST, request.FILES)
     if "required" in str(imgForm['imgFile'].errors): # for when no image is uploaded
         imgForm = ImageUploadForm()
     elif imgForm.is_valid():
+        clearImageChoice(request) # rid of 'selected' image var
         newImg = newUploadedImage(request)
         newImg.save()
     return imgForm
@@ -103,10 +103,16 @@ def savedSessionData(savedOptions):
 def saveImageChoice(request, imagePath):
     if imagePath != "":   
         request.session.set_expiry(0)
-        request.session['imageChoice'] = imagePath
+        request.session['imageChoice']=imagePath
         
 def loadImageChoice(request):
-    return request.session.get('imageChoice', "")
+    tempPath= request.session.get('imageChoice', "")
+    if tempPath != "":
+        tempImage =Image(imgFile = tempPath, user = request.user, 
+                     private = True)
+        tempPath = tempImage.imgFile
+    return tempPath
+    
 
 def clearImageChoice(request):
     if loadImageChoice(request) != "":
@@ -139,11 +145,12 @@ def fetchApplication(request):
     gallery=Image.userImages(request.user)
     
     imgUploadForm = imageUpload(request) # upload image first
-
+    print("loadimages check" ,loadImageChoice(request))
     if loadImageChoice(request)=="":    
         inputImage = Image.latestUserImageFile(request.user)
     else:
         inputImage = loadImageChoice(request)
+        
 
     resultImage = 'media/' + Image.resultImageLocation(inputImage, request.user)
 
@@ -157,17 +164,22 @@ def fetchApplication(request):
         if imgForm.is_valid():
             print('set select')
             print(inputImage)
-            print(imgForm.cleaned_data['chosenImage'])
+            #print(imgForm.cleaned_data['chosenImage'])
             if (request.POST.get("changebutton")):
                 #print(inputImage)
                 chosenImage=imgForm.cleaned_data['chosenImage']
+                #print(chosenImage)
+                #inputImage= chosenImage
+                print(chosenImage)
                 saveImageChoice(request, chosenImage)
-                #print('changed')
+                print('changed')
                 #print(inputImage) 
+                
+                requestImage= chosenImage
         form = ManipulateImageForm(request.POST) 
-        print('check')  
-        print(selectedImage)        
-        print(inputImage)
+        #print('check')  
+        #print(selectedImage)        
+        #print(inputImage)
          
             
         if form.is_valid():
@@ -178,18 +190,26 @@ def fetchApplication(request):
                 numColors = form.cleaned_data['numberOfColors']
                 pixSize = int(form.cleaned_data['gaugeSize'])
                 imgWidth = 96 * int(form.cleaned_data['canvasWidth'])
+                print("The input image is ", inputImage)
+                print("the request image is ", requestImage)
                 imgHeight = 96 * int(form.cleaned_data['canvasLength'])
+                print(inputImage)
+                print(type(inputImage))
+                #inputImage = '../media/' + inputImage
+                print("The input image is ", inputImage)
                 inputImage = reSize(inputImage,(imgWidth,imgHeight))
                 pixelatedImg = Pixelator(inputImage)
                 numPie = pixelatedImg.pixelate(numColors, pixSize, resultImage)
                 pixelPal = pixelatedImg.pal
                 dasInstructions = generateInstructions(form.cleaned_data['knitType'], numPie)
                 cookieAction = 0
+                
             else:
                 requestImage = '../' + resultImage # django is preappending /media
                 pixSize = int(form.cleaned_data['gaugeSize'])
                 imgWidth = 96 * int(form.cleaned_data['canvasWidth'])
                 imgHeight = 96 * int(form.cleaned_data['canvasLength'])
+                print("the input image is ", inputImage)
                 inputImage = reSize(inputImage,(imgWidth,imgHeight))
                 pixelatedImg = Pixelator(inputImage)
                 palItems = getPalette.split(',')
