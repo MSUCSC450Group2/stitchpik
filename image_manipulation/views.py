@@ -13,6 +13,7 @@ import time
 import numpy as np
 
 
+
 def getUserImages(request):
     if request.method == 'POST':
         chooseform = ChooseImageForm(request.POST)
@@ -151,13 +152,13 @@ def fetchApplication(request):
     gallery=Image.userImages(request.user)
     
     imgUploadForm = imageUpload(request) # upload image first
+
     print("loadimages check" ,loadImageChoice(request))
     if loadImageChoice(request)=="":    
         inputImage = Image.latestUserImageFile(request.user)
     else:
         inputImage = loadImageChoice(request)
         
-
     resultImage = 'media/' + Image.resultImageLocation(inputImage, request.user)
 
     requestImage = inputImage

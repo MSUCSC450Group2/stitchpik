@@ -3,7 +3,7 @@
 
 {% block style %} {% load staticfiles %}
 	<link rel="stylesheet" href="{% static 'image_manipulation/css/spectrum.css' %}"/>
-	<link rel="stylesheet" href="{% static 'image_manipulation/css/test.css' %}" />
+	<link rel="stylesheet" href="{% static 'image_manipulation/css/colorpick.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -19,7 +19,7 @@
 	<label>Number of Colors{{ form.numberOfColors }}</label>
       </fieldset>
       <fieldset>
-	<legend>Gauge
+	<legend>Pixel Size
           {% load staticfiles %}
           <a href="{% url 'instructions' %}#instr" title="Guage Help">
             <img src="{% static 'img/question-mark.png' %}" alt="help" class="helpImg" />
@@ -137,6 +137,30 @@
 
 <script src="{% static "/static/js/ApplicationPage.js" %}"></script>
 <script src="{% static 'image_manipulation/js/spectrum.js' %}"></script>
-<script src="{% static 'image_manipulation/js/test.js' %}"></script>
+<script src="{% static 'image_manipulation/js/colorpick.js' %}"></script>
+<script>
+  
+
+$(function(){
+    $('#my_form').submit(function(event){
+       
+       $('#loadingimage').show();
+        $('#userimage').hide();
+        $('.imageupload').hide();
+	$('#my_form').hide();
+        $('#help').hide();
+	$('#instructionsArea').hide();
+    });
+
+});
+S(document).ready(function(){
+       $('#userimage').show();
+       $('#loadingimage').hide();
+       $('#my_form').show();
+	$('.imageupload').show();
+	$('#help').show();
+	$('#instructionsArea').show();
+});
+</script>
 
 {% endblock %}
