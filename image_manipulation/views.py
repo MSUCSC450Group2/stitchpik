@@ -11,7 +11,6 @@ from .models import Image
 from .manipulate_lib.sizemanip import reSize
 import time
 import numpy as np
-import os.path
 
 def applicationPage():
     return 'image_manipulation/applicationPage.html'
@@ -91,15 +90,8 @@ def deleteSavedFormCookieData(response):
     response.delete_cookie('knitType')
 
 def imageExists(imgPath):
-    if imgPath == "":
+    if imgPath == "None" or imgPath is None or imgPath == "":
         return False
-
-    try:
-        if not os.path.isfile(imgPath):
-            return False
-    except:
-        print("File doesn't exist")
-    
     return True
 
 @login_required
@@ -113,8 +105,7 @@ def fetchApplication(request):
 
     requestImage = inputImage
     pixelPal = ""
-    dasInstructions = ""
-        
+    dasInstructions = ""    
 
     if request.method == 'POST':
         form = ManipulateImageForm(request.POST) 
