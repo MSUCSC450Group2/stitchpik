@@ -20,7 +20,12 @@ class ManipulateImageForm(forms.Form):
   canvasLength = forms.DecimalField(label="Canvas Length (in)", initial='12', decimal_places=2, min_value=0.01)
   canvasWidth = forms.DecimalField(label="Canvas Width (in)", initial='12', decimal_places=2, min_value=0.01)
   knitType = forms.ChoiceField(widget=forms.RadioSelect, choices=KNIT_TYPES, 
-                                 label="Knit Type", initial="0")
+                                     label="Knit Type", initial="0")
+  lastChosenImage = forms.CharField(initial="", required=False)
+                     
   colorSelect = forms.ChoiceField(widget=forms.RadioSelect, choices=DO_KMEANS, label="Select Colors", initial="0", required=False)
   colorList = forms.CharField(label="Color List", required=False)
+
+class ChooseImageForm(forms.Form):
+    chosenImage = forms.CharField(initial="none")
     

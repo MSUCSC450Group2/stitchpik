@@ -79,7 +79,7 @@ class Pixelator: #class assumes input checking will occur before class creation
                              y*pixSize + (pixSize-1)),
                              fill=(gval,gval,gval))
         canvas.save(resultFile)
-        return result.palette
+        return result2.array
       except:
         print("pixelization error, check pixSize and resultFile")
     except:
@@ -118,5 +118,5 @@ class Pixelator: #class assumes input checking will occur before class creation
             gval = (maxValue + outside // 2) % 256
           draw.rectangle((x*pixSize,(y*pixSize)+1,x*pixSize,y*pixSize+(pixSize-1)),fill=(gval,gval,gval))
     canvas.save(resultFile)
-    return palette
+    return result2.array
 

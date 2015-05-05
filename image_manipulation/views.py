@@ -11,8 +11,28 @@ from .models import Image
 from .manipulate_lib.sizemanip import reSize
 import time
 import numpy as np
-from os import listdir
 
+
+
+def getUserImages(request):
+    if request.method == 'POST':
+        chooseform = ChooseImageForm(request.POST)
+        if chooseform.is_valid():
+            gallery = Image.userImages(request.user)
+            #resultImage = 'media/result.jpg'
+            #requestImage = request.chosenImage
+            form = ManipulateImageForm()
+           
+            return render_to_response(applicationPage(), {'imgForm': imageUpload(request), 
+                                  'form' : form, 
+                                  'imagegallery' : gallery, 
+                                   'chooseform' : ChooseImageForm(),
+                                    
+                                  'image' : chooseform.cleaned_data['chosenImage'] },
+                                  context_instance = RequestContext(request))   
+    else:    
+        chooseform=ChooseImageForm()
+    return chooseform
 
 
 def applicationPage():
@@ -23,14 +43,18 @@ def newUploadedImage(request):
                  private = True)
 
 def imageUpload(request):
+    
+
     imgForm = ImageUploadForm(request.POST, request.FILES)
     if "required" in str(imgForm['imgFile'].errors): # for when no image is uploaded
         imgForm = ImageUploadForm()
     elif imgForm.is_valid():
+        clearImageChoice(request) # rid of 'selected' image var
         newImg = newUploadedImage(request)
         newImg.save()
     return imgForm
    
+
 def saveFormDataToCookie(form, response):
     deleteSavedFormCookieData(response)
 
@@ -52,6 +76,7 @@ def getSavedCookieData(request):
         'knitType':int(request.COOKIES['knitType']),
         'colorSelect':0
     } )
+
 
 def saveFormDataToSession(form, request):
     request.session.set_expiry(31536000) # one year
@@ -75,6 +100,30 @@ def savedSessionData(savedOptions):
              'knitType': int(savedOptions.get('knitType')) }
            )
 
+
+
+def saveImageChoice(request, imagePath):
+    if imagePath != "":   
+        request.session.set_expiry(0)
+        request.session['imageChoice']=imagePath
+        
+def loadImageChoice(request):
+    tempPath= request.session.get('imageChoice', "")
+    if tempPath != "":
+        tempImage =Image(imgFile = tempPath, user = request.user, 
+                     private = True)
+        tempPath = tempImage.imgFile
+    return tempPath
+    
+
+def clearImageChoice(request):
+    if loadImageChoice(request) != "":
+        del request.session['imageChoice']
+    
+
+
+
+  
 def setCookie(response, key, value, days_expire = 365):
     if days_expire is None:
         max_age = 365 * 24 * 60 * 60  # one year
@@ -92,40 +141,78 @@ def deleteSavedFormCookieData(response):
     response.delete_cookie('canvasWidth')
     response.delete_cookie('knitType')
 
+def imageExists(imgPath):
+    if imgPath == "None" or imgPath is None or imgPath == "":
+        return False
+    return True
+
 @login_required
 def fetchApplication(request):
+    selectedImage=""
+    gallery=Image.userImages(request.user)
     
     imgUploadForm = imageUpload(request) # upload image first
 
-    inputImage = Image.latestUserImageFile(request.user)
-    print(str(inputImage)+" "+str(type(inputImage)))
+    print("loadimages check" ,loadImageChoice(request))
+    if loadImageChoice(request)=="":    
+        inputImage = Image.latestUserImageFile(request.user)
+    else:
+        inputImage = loadImageChoice(request)
+        
     resultImage = 'media/' + Image.resultImageLocation(inputImage, request.user)
 
     requestImage = inputImage
+    imgForm = ChooseImageForm(request.POST)
     pixelPal = ""
-    dasInstructions = ""
+    dasInstructions = ""    
+
 
     if request.method == 'POST':
+        if imgForm.is_valid():
+            print('set select')
+            print(inputImage)
+            #print(imgForm.cleaned_data['chosenImage'])
+            if (request.POST.get("changebutton")):
+                #print(inputImage)
+                chosenImage=imgForm.cleaned_data['chosenImage']
+                #print(chosenImage)
+                #inputImage= chosenImage
+                print(chosenImage)
+                saveImageChoice(request, chosenImage)
+                print('changed')
+                #print(inputImage) 
+                
+                requestImage= chosenImage
         form = ManipulateImageForm(request.POST) 
-        if form.is_valid():
+
+        if form.is_valid() and imageExists(str(inputImage)): # can't render nill image
+
             getPalette = request.POST['colorList']
             if(getPalette == "" or request.POST['colorSelect'] == '0'):
                 requestImage = '../' + resultImage # django is preappending /media
                 numColors = form.cleaned_data['numberOfColors']
                 pixSize = int(form.cleaned_data['gaugeSize'])
                 imgWidth = 96 * int(form.cleaned_data['canvasWidth'])
+                print("The input image is ", inputImage)
+                print("the request image is ", requestImage)
                 imgHeight = 96 * int(form.cleaned_data['canvasLength'])
+                print(inputImage)
+                print(type(inputImage))
+                #inputImage = '../media/' + inputImage
+                print("The input image is ", inputImage)
                 inputImage = reSize(inputImage,(imgWidth,imgHeight))
                 pixelatedImg = Pixelator(inputImage)
                 numPie = pixelatedImg.pixelate(numColors, pixSize, resultImage)
                 pixelPal = pixelatedImg.pal
                 dasInstructions = generateInstructions(form.cleaned_data['knitType'], numPie)
                 cookieAction = 0
+                
             else:
                 requestImage = '../' + resultImage # django is preappending /media
                 pixSize = int(form.cleaned_data['gaugeSize'])
                 imgWidth = 96 * int(form.cleaned_data['canvasWidth'])
                 imgHeight = 96 * int(form.cleaned_data['canvasLength'])
+                print("the input image is ", inputImage)
                 inputImage = reSize(inputImage,(imgWidth,imgHeight))
                 pixelatedImg = Pixelator(inputImage)
                 palItems = getPalette.split(',')
@@ -140,6 +227,7 @@ def fetchApplication(request):
                 cookieAction = 0
         else:
             cookieAction = 1
+
     else:
         cookieAction = 1
 
@@ -148,12 +236,16 @@ def fetchApplication(request):
         if isSavedCookieData(request):
             form = getSavedCookieData(request)
         else:
-            form  = ManipulateImageForm()
-
+            form = ManipulateImageForm()
+    
+ 
+         
     response = render_to_response(applicationPage(), {
                               'imgForm': imgUploadForm, #imageUpload(reques
                               'form': form,
+                              'imagegallery' : gallery,
                               'image': requestImage,
+                              'chooseform' : ChooseImageForm(),
                               'cList': pixelPal,
                               'colorList': pixelPal,
                               'instructions': dasInstructions},

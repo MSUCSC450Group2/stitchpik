@@ -1,34 +1,37 @@
 {% extends "image_manipulation/imageManipBase.html" %}
 {% block title %}Application{% endblock %}
+
 {% block style %} {% load staticfiles %}
 	<link rel="stylesheet" href="{% static 'image_manipulation/css/spectrum.css' %}"/>
 	<link rel="stylesheet" href="{% static 'image_manipulation/css/colorpick.css' %}" />
 {% endblock %}
+
 {% block content %}
 <hr>
 
 <div class="container-fluid">
+
   <!--The form -->
     <form id='my_form' class="row" method="post" action=".">
 	{% csrf_token %}
       <fieldset>
 	<legend>Colors</legend>
-	<label># of Colors{{ form.numberOfColors }}</label>
+	<label>Number of Colors{{ form.numberOfColors }}</label>
       </fieldset>
       <fieldset>
-	<legend>Gauge
+	<legend>Pixel Size
           {% load staticfiles %}
           <a href="{% url 'instructions' %}#instr" title="Guage Help">
-            <img src="{% static 'img/question-mark.png' %}" alt="help" />
+            <img src="{% static 'img/question-mark.png' %}" alt="help" class="helpImg" />
           </a>
         </legend>
-        <label>sts/in {{ form.gaugeSize }}
+        <label>Stitches per inch {{ form.gaugeSize }}
         </label>
       </fieldset>
       <fieldset>
 	<legend>Project Size
           <a href="{% url 'instructions' %}#convert" title="Metric Conversion">
-            <img src="{% static 'img/transfer.png' %}" alt="help"/>
+            <img src="{% static 'img/transfer.png' %}" alt="help" class="helpImg" />
           </a>
         </legend>
 	<label>Width(in){{ form.canvasLength }}</label>
@@ -52,9 +55,14 @@
     </form>
 
   <div id="userimage" class="row">
+
     <!-- image canvas -->
       {# will have django img var here #}
-      <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
+      {% if image == None %}
+        <img class="delay" src="{% static 'img/blank.jpg' %}" alt="no image" width="100%" />
+      {% else %}
+        <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
+      {% endif %}
   </div>
 
   <div class="row imageupload" >
@@ -66,30 +74,35 @@
         <img src="{% static 'img/error_red_triangle_20.png' %}" label="!" />
         <span class="sr-only">Error</span>
         {{ imgForm.imgFile.errors }}
+
       </div>
     {% endif %}
     {{ imgForm.imgFile }}
 	<input type="submit" value="Upload" />
+
   </form>
   </div>
   <hr>
+    <div id=imageChooser class="well">
+        <form id="imageChooserForm" method="post" action=".">
+        {% csrf_token %}
+        <div class="">
+        {{ chooseform.chosenImage }}
+        <input type="hidden" id="viewChosenImage" name="last chosen image" value="{{ input }}">
+        
+        </div>
+    <button id="showChooser">Choose a different image</button>
+    <div id="imagechoices" class="well">
+    {% load staticfiles %}
+    {% for picture in imagegallery %}
+        <img class="imageList" src="../media/{{picture.imgFile}}" alt="{{picture.imgFile}}" />
+    {% endfor %}
+    <input type="submit"  name="changebutton" value="Change Image" />
+        </div>  
+    </form>
+    </div>
   <div class="well">
-    <!-- <form id='my_form' method="post" action=".">
-      {% csrf_token %}
-      <div>
-        <h4>Number of Colors</h4>
-        {{ form.numberOfColors }}
-        <h4>Gauge Size</h4>
-        {{ form.gaugeSize }}
-        <h4>Width (in)</h4>
-        {{ form.canvasLength }}
-        <h4>Height (in)</h4>
-        {{ form.canvasWidth }}
-        <h4>Knit Type</h4>
-        {{ form.knitType }}
-              </div>
-      <input type="submit" class="btn btn-primary" value="Render" />
-    </form> -->
+    
   <div id="instructionsArea" class="row">
     {% if instructions == "" %}
     {% else %}
@@ -119,6 +132,8 @@
 
 {% endblock %}
 {% block script %}
+
+<script src="{% static "/static/js/ApplicationPage.js" %}"></script>
 <script src="{% static 'image_manipulation/js/spectrum.js' %}"></script>
 <script src="{% static 'image_manipulation/js/colorpick.js' %}"></script>
 <script>
@@ -145,4 +160,5 @@ S(document).ready(function(){
 	$('#instructionsArea').show();
 });
 </script>
+
 {% endblock %}
