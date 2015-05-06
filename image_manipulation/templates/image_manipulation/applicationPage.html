@@ -3,7 +3,7 @@
 
 {% block style %} {% load staticfiles %}
 	<link rel="stylesheet" href="{% static 'image_manipulation/css/spectrum.css' %}"/>
-	<link rel="stylesheet" href="{% static 'image_manipulation/css/test.css' %}" />
+	<link rel="stylesheet" href="{% static 'image_manipulation/css/colorpick.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -34,8 +34,8 @@
             <img src="{% static 'img/transfer.png' %}" alt="help" class="helpImg" />
           </a>
         </legend>
-	<label>Width(in){{ form.canvasLength }}</label>
-	<label>Height(in){{ form.canvasWidth }}</label>
+	<label>Width(in){{ form.canvasWidth }}</label>
+	<label>Height(in){{ form.canvasLength }}</label>
       </fieldset>
       <fieldset>
 	<legend>Stitches</legend>
@@ -55,13 +55,12 @@
     </form>
 
   <div id="userimage" class="row">
-
     <!-- image canvas -->
       {# will have django img var here #}
       {% if image == None %}
-        <img class="delay" src="{% static 'img/blank.jpg' %}" alt="no image" width="100%" />
+        <img class="delay centered-img" src="{% static 'img/blank.jpg' %}" alt="no image" width="100%" />
       {% else %}
-        <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
+        <img class="delay centered-img" src="../media/{{ image }}" alt="image" width="100%" />
       {% endif %}
   </div>
 
@@ -94,11 +93,13 @@
         </div>
     <button id="showChooser">Choose a different image</button>
     <div id="imagechoices" class="well">
+    <input type="submit"  name="changebutton" value="Change Image" />
+    <hr/>
     {% load staticfiles %}
     {% for picture in imagegallery %}
         <img class="imageList" src="../media/{{picture.imgFile}}" alt="{{picture.imgFile}}" />
     {% endfor %}
-    <input type="submit"  name="changebutton" value="Change Image" />
+    
         </div>  
     </form>
     </div>
@@ -136,6 +137,30 @@
 
 <script src="{% static "/static/js/ApplicationPage.js" %}"></script>
 <script src="{% static 'image_manipulation/js/spectrum.js' %}"></script>
-<script src="{% static 'image_manipulation/js/test.js' %}"></script>
+<script src="{% static 'image_manipulation/js/colorpick.js' %}"></script>
+<script>
+  
+
+$(function(){
+    $('#my_form').submit(function(event){
+       
+       $('#loadingimage').show();
+        $('#userimage').hide();
+        $('.imageupload').hide();
+	$('#my_form').hide();
+        $('#help').hide();
+	$('#instructionsArea').hide();
+    });
+
+});
+S(document).ready(function(){
+       $('#userimage').show();
+       $('#loadingimage').hide();
+       $('#my_form').show();
+	$('.imageupload').show();
+	$('#help').show();
+	$('#instructionsArea').show();
+});
+</script>
 
 {% endblock %}
