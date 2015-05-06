@@ -11,7 +11,8 @@ from .models import Image
 from .manipulate_lib.sizemanip import reSize
 import time
 import numpy as np
-
+import os
+from sendfile import sendfile
 
 def getUserImages(request):
     if request.method == 'POST':
@@ -32,7 +33,6 @@ def getUserImages(request):
     else:    
         chooseform=ChooseImageForm()
     return chooseform
-
 
 def applicationPage():
     return 'image_manipulation/applicationPage.html'
@@ -118,10 +118,7 @@ def loadImageChoice(request):
 def clearImageChoice(request):
     if loadImageChoice(request) != "":
         del request.session['imageChoice']
-    
-
-
-
+ 
   
 def setCookie(response, key, value, days_expire = 365):
     if days_expire is None:
@@ -147,6 +144,7 @@ def imageExists(imgPath):
 
 @login_required
 def fetchApplication(request):
+    print(request.user.username)
     selectedImage=""
     gallery=Image.userImages(request.user)
     
@@ -163,10 +161,12 @@ def fetchApplication(request):
     requestImage = inputImage
     imgForm = ChooseImageForm(request.POST)
     pixelPal = ""
-    dasInstructions = ""    
-
-
+    dasInstructions = ""
+    
     if request.method == 'POST':
+        if request.POST.get("delete"):
+            Image.deleteImage(inputImage)
+            inputImage = Image.latestUserImageFile(request.user)
         if imgForm.is_valid():
             print('set select')
             print(inputImage)
@@ -182,8 +182,9 @@ def fetchApplication(request):
                 #print(inputImage) 
                 
                 requestImage= chosenImage
+        
         form = ManipulateImageForm(request.POST) 
-
+        f = open(os.getcwd() + "/Instructions" + "_" + str(request.user.username) + ".txt","w")
         if form.is_valid() and imageExists(str(inputImage)): # can't render nill image
 
             getPalette = request.POST['colorList']
@@ -254,7 +255,7 @@ def fetchApplication(request):
     if cookieAction == 0:
         saveFormDataToCookie(form, response)
     return response
-  
+      
 def instructions(request):
     return render_to_response('image_manipulation/instructions.html', context_instance=RequestContext(request))
 
