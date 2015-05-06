@@ -103,7 +103,7 @@ def savedSessionData(savedOptions):
 
 
 def saveImageChoice(request, imagePath):
-    if imagePath != "":   
+    if imagePath != "" and imagePath != "none":   
         request.session.set_expiry(0)
         request.session['imageChoice']=imagePath
         
