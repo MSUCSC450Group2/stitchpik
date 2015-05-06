@@ -55,13 +55,12 @@
     </form>
 
   <div id="userimage" class="row">
-
     <!-- image canvas -->
       {# will have django img var here #}
       {% if image == None %}
-        <img class="delay" src="{% static 'img/blank.jpg' %}" alt="no image" width="100%" />
+        <img class="delay centered-img" src="{% static 'img/blank.jpg' %}" alt="no image" width="100%" />
       {% else %}
-        <img class="delay" src="../media/{{ image }}" alt="image" width="100%" />
+        <img class="delay centered-img" src="../media/{{ image }}" alt="image" width="100%" />
       {% endif %}
   </div>
 

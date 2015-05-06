@@ -19,7 +19,7 @@ nav {	/*navigation bar*/
 
 nav a {
   color: #FFFFFF;
-}
+-}
 
 .navbar.navbar-inverse.navbar-fixed-top{
   background-color: #181F7D;
@@ -204,6 +204,10 @@ nav a {
 	margin-left:auto;
 	margin-right:auto;
 	width:100%;
+        padding-bottom: 12px;
+        padding-top: 12px;
+        border-bottom: 6px groove #D1D2E5;
+        border-top: 6px groove #D1D2E5;
 }
 
 /*login success*/
@@ -228,4 +232,9 @@ btn.btn-default.btn-lg.btn-primary{
   padding: 0px;
   width: 18px;
   height: 18px;
+}
+
+.centered-img {
+  display: block;
+  margin: 0 auto;
 }
