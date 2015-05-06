@@ -12,6 +12,7 @@ from .manipulate_lib.sizemanip import reSize
 import time
 import numpy as np
 import os
+from sendfile import sendfile
 
 
 def getUserImages(request):
@@ -158,17 +159,19 @@ def fetchApplication(request):
     imgForm = ChooseImageForm(request.POST)
     pixelPal = ""
     dasInstructions = ""
-    
     if request.method == 'POST':
         if request.POST.get("delete"):
             Image.deleteImage(inputImage)
-            inputImage = Image.latestUserImageFile(request.user)
+            #inputImage = Image.latestUserImageFile(request.user)
+        if request.POST.get("textfile"):
+            return sendfile(request,os.getcwd() + "/Instructions" + "_" + str(request.user.username) + ".txt")
+            print("---------------------------",os.getcwd() + "/Instructions" + "_" + str(request.user.username) + ".txt")
         if imgForm.is_valid():
             if (request.POST.get("changebutton")):
                 chosenImage=imgForm.cleaned_data['chosenImage']
                 saveImageChoice(request, chosenImage)
                 requestImage= chosenImage
-        
+        f = open(os.getcwd() + "/Instructions" + "_" + str(request.user.username) + ".txt","w")
         form = ManipulateImageForm(request.POST) 
         if form.is_valid() and imageExists(str(inputImage)): # can't render nill image
             getPalette = request.POST['colorList']
@@ -192,6 +195,8 @@ def fetchApplication(request):
                 numPie = pixelatedImg.palettize(tempPal, pixSize, resultImage)
                 pixelPal = getPalette
             dasInstructions = generateInstructions(form.cleaned_data['knitType'], numPie)
+            f.write(dasInstructions)
+            f.close()
             cookieAction = 0
         else:
             cookieAction = 1

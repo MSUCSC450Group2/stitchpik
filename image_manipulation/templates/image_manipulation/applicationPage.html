@@ -109,6 +109,10 @@
     {% if instructions == "" %}
     {% else %}
       <h2>Instructions</h2>
+	  <form action = "." method = "post">
+		{% csrf_token %}
+		<input type="submit" value="Save As Text File" name="textfile" />	
+	  </form>
       <pre>{{instructions}}</pre>
     {% endif %}
   </div>

@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'stitchpick',
     'login',
     'image_manipulation',
+    'sendfile'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -120,7 +121,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
-
+SENDFILE_BACKEND =  'sendfile.backends.simple'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 if DEBUG:
    EMAIL_HOST = 'smtp.gmail.com'
