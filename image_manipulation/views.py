@@ -175,7 +175,9 @@ def fetchApplication(request):
             return response
             
         if request.POST.get("textfile"):
-            return sendfile(request,os.getcwd() + "/Instructions" + "_" + str(request.user.username) + ".txt")
+            return sendfile(request,os.getcwd() + "/Instructions" + "_" + str(request.user.username) + ".txt",
+                            attachment = True,
+                            attachment_filename = "Instructions" + "_" + str(request.user.username) + ".txt")
             print("---------------------------",os.getcwd() + "/Instructions" + "_" + str(request.user.username) + ".txt")
         if imgForm.is_valid():
             if (request.POST.get("changebutton")):
