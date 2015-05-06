@@ -45,23 +45,23 @@ window.onload=function(){
 	update();
   olist();
 
-  if($("#id_colorSelect_1").prop("checked")) {
+  /*if($("#id_colorSelect_1").prop("checked")) {
     $("#id_numberOfColors").prop('disabled',true);
   }
 
   $("input:radio[name=colorSelect]").click(function() {
     selectHandler($(this).val());
-  });
+  });*/
 }
 
-selectHandler = function(value) {
+/*selectHandler = function(value) {
   if(value == "0") {
     $("#id_numberOfColors").prop('disabled',false);
   }
   else {
     $("#id_numberOfColors").prop('disabled',true);
   }
-}
+}*/
 
 update = function() {
 	$(".basicColor").spectrum({
@@ -95,13 +95,13 @@ colorHandler = function() {
 
   if($(this).val() == "") {
     global_ccount -= 1;
-	  olist();
 		$(this).spectrum("destroy");
 		$(this).prev().remove();
 		$(this).parent().remove();
 		$(this).remove();
     update();
 	}
+	olist();
 }
 
 colorLabel = function() {
