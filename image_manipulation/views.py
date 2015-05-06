@@ -163,8 +163,9 @@ def fetchApplication(request):
         if request.POST.get("delete"):
             Image.deleteImage(inputImage)
             form = getSavedCookieData(request)
+            clearImageChoice(request) # shouldn't load non-existent image
             response = render_to_response(applicationPage(), {
-                              'imgForm': imgUploadForm, #imageUpload(reques
+                              'imgForm': imgUploadForm, 
                               'form': form,
                               'imagegallery' : gallery,
                               'chooseform' : ChooseImageForm(),
