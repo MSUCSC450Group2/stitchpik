@@ -12,7 +12,6 @@ from .manipulate_lib.sizemanip import reSize
 import time
 import numpy as np
 import os
-from sendfile import sendfile
 
 
 def getUserImages(request):
@@ -145,13 +144,9 @@ def imageExists(imgPath):
 
 @login_required
 def fetchApplication(request):
-    print(request.user.username)
     selectedImage=""
     gallery=Image.userImages(request.user)
-    
     imgUploadForm = imageUpload(request) # upload image first
-
-    print("loadimages check" ,loadImageChoice(request))
     if loadImageChoice(request)=="":    
         inputImage = Image.latestUserImageFile(request.user)
     else:
@@ -169,27 +164,14 @@ def fetchApplication(request):
             Image.deleteImage(inputImage)
             inputImage = Image.latestUserImageFile(request.user)
         if imgForm.is_valid():
-            print('set select')
-            print(inputImage)
-            #print(imgForm.cleaned_data['chosenImage'])
             if (request.POST.get("changebutton")):
-                #print(inputImage)
                 chosenImage=imgForm.cleaned_data['chosenImage']
-                #print(chosenImage)
-                #inputImage= chosenImage
-                print(chosenImage)
                 saveImageChoice(request, chosenImage)
-                print('changed')
-                #print(inputImage) 
-                
                 requestImage= chosenImage
         
         form = ManipulateImageForm(request.POST) 
-        print("Val",form.is_valid())
-        print("IE",imageExists(str(inputImage)))
         if form.is_valid() and imageExists(str(inputImage)): # can't render nill image
             getPalette = request.POST['colorList']
-            print("PALETTE",getPalette)
             requestImage = '../' + resultImage # django is preappending /media
             pixSize = int(form.cleaned_data['gaugeSize'])
             imgWidth = 96 * int(form.cleaned_data['canvasWidth'])
@@ -199,7 +181,6 @@ def fetchApplication(request):
             if(getPalette == "" or request.POST['colorSelect'] == '0'):
                 numColors = form.cleaned_data['numberOfColors']
                 numPie = pixelatedImg.pixelate(numColors, pixSize, resultImage)
-                print(numPie)
                 pixelPal = pixelatedImg.pal
             else:
                 palItems = getPalette.split(',')
@@ -260,53 +241,39 @@ def generateInstructions(stitchTypeNum, array):
     instructionString = ""
   
     instructionString += stitchType + " abbreviation list:\n"
-    #print(stitchType, "abbreviation list:")
     if stitchType == "crochet":
         stitch0 = "ch"
         instructionString += "ch - chain\n"
-        #print("ch - chain")
         stitch1 = "sc"
         instructionString += "sc - single crochet\n"
-        #print("sc - single crochet")
         stitch2 = "sc"
         stitch3 = "sc"
 
     elif stitchType == "knit":
         stitch0 = "co"
         instructionString += "co - cast on\n"
-        #print("co - cast on")
         stitch1 = "k"
         instructionString += "k - knit\n"
-        #print("k - knit")
         stitch2 = "p"
         instructionString += "p - purl\n"
-        #print("p - purl")
         stitch3 = "bo"
         instructionString += "bo - bind off\n"
-        #print("bo - bind off")
 
     elif stitchType == "crossStitch":
         stitch0 = "x"
         instructionString += "x - stitch\n"
-        print("x - stitch")
         stitch1 = "x"
         stitch2 = "x"
         stitch3 = "x"
     instructionString += "C - color\n"
-    #print("C - color")
     instructionString += "row 0 (cast on) reads chart left to right\n"
-    #print("row 0 (cast on) reads chart left to right")
     instructionString += "odd rows (knit) reads chart R to L\n"
-    #print("odd rows (purl) reads chart R to L")
     instructionString += "even rows (purl) reads chart L to R\n"
-    #print("even rows (knit) reads chart L to R")
-          
     rowCount = 0
     for y in range(len(array) - 1, 0, -1):
         color = array[y][0]
         count = 0
         instructionString += "Row " + str(rowCount) + ": "
-        #print("Row ", y, ":", end=" ", sep="")
         if rowCount % 2 == 1:
             row = reversed(array[y])
         else:
@@ -318,19 +285,15 @@ def generateInstructions(stitchTypeNum, array):
                 #row 0 - cast on
                 if rowCount == 0:
                     instructionString += str(stitch0) + " " + str(count) + " C" + str(color) + " "
-                    #print(stitch0, " ", count," C", color, end=" ", sep="")
                 #last rown - bind off
                 elif rowCount == len(array) - 1:
                     instructionString += str(stitch3) + " " + str(count) + " C" + str(color) + " "
-                    #print(stitch3, " ", count," C", color, end=" ", sep="")
                 #odd rows - knit
                 elif rowCount % 2 == 1:
                     instructionString += str(stitch1) + " " + str(count) + " C" + str(color) + " "
-                    #print(stitch1, " ", count," C", color, end=" ", sep="")
                 #even rows - purl
                 else:
                     instructionString += str(stitch2) + " " + str(count) + " C" + str(color) + " "
-                    #print(stitch2, " ", count," C", color, end=" ", sep="")
                 count = 1
                 color = x
                 
@@ -338,19 +301,15 @@ def generateInstructions(stitchTypeNum, array):
         #row 0 - cast on
         if rowCount == 0:
             instructionString += str(stitch0) + " " + str(count) + " C" + str(color) + "\n"
-            #print(stitch0, " ", count," C", color, sep="")
             #last rown - bind off
         elif rowCount == len(array) - 1:
             instructionString += str(stitch3) + " " + str(count) + " C" + str(color) + "\n"
-            #print(stitch3, " ", count," C", color, sep="")
             #odd rows - knit
         elif rowCount % 2 == 1:
             instructionString += str(stitch1) + " " + str(count) + " C" + str(color) + "\n"
-            #print(stitch1, " ", count," C", color, sep="")
             #even rows - purl
         else:
             instructionString += str(stitch2) + " " + str(count) + " C" + str(color) + "\n"
-            #print(stitch2, " ", count," C", color, sep="")
         rowCount += 1
         
     instructionString += "Snip yarn/thread and weave in ends"
