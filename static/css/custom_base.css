@@ -244,3 +244,13 @@ max-width: 100%;
   display: block;
   margin: 0 auto;
 }
+
+#resetbtn{
+  margin-top: 10px;
+  margin-left: -125px;
+  width: 700px;
+}
+
+#resetfield{
+  width: 700px;
+}
