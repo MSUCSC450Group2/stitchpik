@@ -162,7 +162,18 @@ def fetchApplication(request):
     if request.method == 'POST':
         if request.POST.get("delete"):
             Image.deleteImage(inputImage)
-            #inputImage = Image.latestUserImageFile(request.user)
+            form = getSavedCookieData(request)
+            response = render_to_response(applicationPage(), {
+                              'imgForm': imgUploadForm, #imageUpload(reques
+                              'form': form,
+                              'imagegallery' : gallery,
+                              'chooseform' : ChooseImageForm(),
+                              'cList': pixelPal,
+                              'colorList': pixelPal,
+                              'instructions': dasInstructions},
+                              context_instance = RequestContext(request))
+            return response
+            
         if request.POST.get("textfile"):
             return sendfile(request,os.getcwd() + "/Instructions" + "_" + str(request.user.username) + ".txt")
             print("---------------------------",os.getcwd() + "/Instructions" + "_" + str(request.user.username) + ".txt")

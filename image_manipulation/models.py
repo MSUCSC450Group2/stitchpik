@@ -18,11 +18,10 @@ class Image(models.Model):
       return 'result_' + user.username + '_' + str(imgFile).split('/')[-1]
     
   def deleteImage(inputImage):
-      model = Image.objects.get(imgFile = str(inputImage)) # database lookup
-      model.delete()
-      os.remove("media/" + str(inputImage))
-      #super(Image,self).delete()
-      #inputImage.delete()
+      model = Image.objects.filter(imgFile = str(inputImage)) # database lookup
+      if model:
+        model.delete()
+        os.remove("media/" + str(inputImage))
        
   class Meta:
       app_label = 'image_manipulation'
