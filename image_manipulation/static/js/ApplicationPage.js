@@ -4,6 +4,7 @@ $(document).ready(function(){
     $('#imagechoices').hide();
     $('#id_chosenImage').hide();
     $('#id_lastChosenImage').val($('#viewChosenImage').val());
+    
     $('#showChooser').click(function(event){
         event.preventDefault();
         $('#imagechoices').toggle();
@@ -17,6 +18,14 @@ $(document).ready(function(){
         $(this).css('border', "solid 2px red");
         
     });
+    
+    /*
+    if($('#id_colorSelect_1').is(':checked')) {
+        //$('#id_numberOfColors').attr('disabled', 'disabled'); 
+        $('#id_numberOfColors').prop('disabled', true);
+    }
+    */
+
 });
 
 
@@ -35,11 +44,22 @@ $(function(){
 
 });
 
-S(document).ready(function(){
-       $('#userimage').show();
-       $('#loadingimage').hide();
-       $('#my_form').show();
-	$('.imageupload').show();
-	$('#help').show();
-	$('#instructionsArea').show();
+/*
+$('#id_colorSelect_1').click(function() { // disabled numColors field
+    if($('#id_colorSelect_1').is(':checked')) { 
+        //$('#id_numberOfColors').attr('disabled', 'disabled'); 
+        $('#id_numberOfColors').prop('disabled', true);
+    }
 });
+
+$('#id_colorSelect_0').click(function() { // turn numColors back on
+    if($('#id_colorSelect_0').is(':checked')) {
+        //$('#id_numberOfColors').attr('disabled', 'disabled'); 
+        $('#id_numberOfColors').prop('disabled', false);
+    } 
+});
+
+$('#renderBt').click(function() { // make sure numColors is enabled
+    $('#id_numberOfColors').prop('disabled', false);
+});
+*/

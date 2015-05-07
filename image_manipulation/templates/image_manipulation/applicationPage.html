@@ -20,12 +20,11 @@
       </fieldset>
       <fieldset>
 	<legend>Pixel Size
-          {% load staticfiles %}
           <a href="{% url 'instructions' %}#instr" title="Guage Help">
             <img src="{% static 'img/question-mark.png' %}" alt="help" class="helpImg" />
           </a>
         </legend>
-        <label>Stitches per inch {{ form.gaugeSize }}
+        <label>Approx. Stitch {{ form.gaugeSize }}
         </label>
       </fieldset>
       <fieldset>
@@ -50,7 +49,7 @@
 
       <fieldset>
         <legend>Submit Changes</legend>
-	<input type="submit" class="btn btn-primary render" value="Render"/>
+	<input type="submit" id="renderBt" class="btn btn-primary render" value="Render"/>
       </fieldset>
     </form>
 
