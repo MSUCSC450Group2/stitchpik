@@ -123,13 +123,12 @@ TEMPLATE_LOADERS = (
 )
 SENDFILE_BACKEND =  'sendfile.backends.simple'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-if DEBUG:
-   EMAIL_HOST = 'smtp.gmail.com'
-   EMAIL_HOST_USER = 'stitchpik555@gmail.com'
-   EMAIL_HOST_PASSWORD = 'stitchforfun777'
-   EMAIL_PORT = '587'
-   EMAIL_USE_TLS = True
-   DEFAULT_FROM_EMAIL = 'stitchpik555@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'stitchpik555@gmail.com'
+EMAIL_HOST_PASSWORD = 'stitchforfun00'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'stitchpik555@gmail.com'
 
 #for sessions
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
