@@ -296,7 +296,7 @@ def generateInstructions(stitchTypeNum, array):
     instructionString += "odd rows (knit) reads chart R to L\n"
     instructionString += "even rows (purl) reads chart L to R\n"
     rowCount = 0
-    for y in range(len(array) - 1, 0, -1):
+    for y in range(len(array) - 1, -1, -1):
         color = array[y][0]
         count = 0
         instructionString += "Row " + str(rowCount) + ": "
