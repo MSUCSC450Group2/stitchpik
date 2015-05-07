@@ -101,11 +101,14 @@ def savedSessionData(savedOptions):
            )
 
 
-
+# saves selected image path or returns false when not an acceptable path
 def saveImageChoice(request, imagePath):
     if imagePath != "" and imagePath != "none":   
         request.session.set_expiry(0)
         request.session['imageChoice']=imagePath
+        return True
+    else:
+        return False
         
 def loadImageChoice(request):
     tempPath= request.session.get('imageChoice', "")
@@ -148,7 +151,7 @@ def fetchApplication(request):
     selectedImage=""
     gallery=Image.userImages(request.user)
     imgUploadForm = imageUpload(request) # upload image first
-    if loadImageChoice(request)=="":    
+    if loadImageChoice(request)=="":
         inputImage = Image.latestUserImageFile(request.user)
     else:
         inputImage = loadImageChoice(request)
@@ -170,6 +173,7 @@ def fetchApplication(request):
                               'imagegallery' : gallery,
                               'chooseform' : ChooseImageForm(),
                               'cList': pixelPal,
+                              'image': Image.latestUserImageFile(request.user),
                               'colorList': pixelPal,
                               'instructions': dasInstructions},
                               context_instance = RequestContext(request))
@@ -180,13 +184,16 @@ def fetchApplication(request):
                             attachment = True,
                             attachment_filename = "Instructions" + "_" + str(request.user.username) + ".txt")
             print("---------------------------",os.getcwd() + "/Instructions" + "_" + str(request.user.username) + ".txt")
+
         if imgForm.is_valid():
             if (request.POST.get("changebutton")):
                 chosenImage=imgForm.cleaned_data['chosenImage']
-                saveImageChoice(request, chosenImage)
-                requestImage= chosenImage
+                if saveImageChoice(request, chosenImage):
+                    requestImage= chosenImage
+
         f = open(os.getcwd() + "/Instructions" + "_" + str(request.user.username) + ".txt","w")
         form = ManipulateImageForm(request.POST) 
+
         if form.is_valid() and imageExists(str(inputImage)): # can't render nill image
             getPalette = request.POST['colorList']
             requestImage = '../' + resultImage # django is preappending /media
