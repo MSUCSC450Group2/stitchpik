@@ -2,7 +2,7 @@ Django==1.7.5
 chardet==2.0.1
 colorama==0.2.5
 command-not-found==0.3
-html5lib==0.999
+html5lib==0.999999999
 psycopg2==2.6
 pycurl==7.19.3
 pygobject==3.12.0
